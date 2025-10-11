@@ -1,0 +1,9 @@
+build
+build_debug
+*.swp
+src/addatabase.*
+*.sqlite3
+src/cmake_cache.m4
+src/cmake_cache.txt
+Makefile-old
+
