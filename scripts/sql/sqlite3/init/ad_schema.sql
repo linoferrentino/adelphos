@@ -4,7 +4,7 @@
 -- this is the data database
 -- there is then the session/gui database which holds
 -- temporary data, but it is not here.
-.open ad_db.sqlite3
+--.open ad_db.sqlite3
 
 
 -- the configuration table.
@@ -67,18 +67,10 @@ create table l0_group (
 	group_id integer primary key,
 
 	-- this is the parent group for myself.
-	-- an l0 group is part of a l1 group, always.
+	-- an l0group without a parent is not much useful
 	parent_group_id integer,
 
 	name text,
-
-	-- administrator_id integer,
-
-	-- the joining password for adults.
-	-- join_pass_adult text,
-
-	-- the joining passowrd for minors
-	-- join_pass_minor text,
 
 	-- the credit limit for this group, for adults
 	credit_limit_adults real,
@@ -142,31 +134,20 @@ create table adelphos (
 	cheque_next_id integer,
 
 	-- this is the credit limit inside the l1 group is written in the
-	-- family 
-	-- credit_limit real,
+	-- family, the overall credit limit of all the adelphoi in level zero
+	-- must be below that limit
 
-	-- it is not really an interest, because it has not an expiry date.
-	-- it is the commission I charge for a credit to pass through me
-	--commission real,
-
-	-- the system tries to balance these two amounts, if I pay too much
-	-- I lower the rate around me
-	-- if I pay too little I raise the rate around me TBD
-	-- total_commissions_paid integer,
-	-- total_commissions_gained integer,
        
 	foreign key (l0_id) references l0_group (group_id)
-
-	-- every adelphos can have a certain number of cheques
 );
 
 -- only the l1 members are stored in a table, as only l1
 -- groups are totally connected.
 create table l1_members (
 
-	l1_group_id integer,
-	l0_group_id integer,
-	is_administrator integer,
+	l1_group_id integer      not null,
+	l0_group_id integer      not null,
+	is_administrator integer not null,
 
 	primary key (l0_group_id, l1_group_id),
 	foreign key (l0_group_id) references l0_group (group_id),

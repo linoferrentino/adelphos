@@ -3,3 +3,10 @@ add_executable(adtest
 )
 
 target_link_libraries(adtest PUBLIC adelphos)
+
+
+INSTALL(TARGETS adtest
+  RUNTIME DESTINATION bin
+)
+
+

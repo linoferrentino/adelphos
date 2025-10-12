@@ -6,3 +6,9 @@ add_executable(adcli
 target_include_directories(adelphos PUBLIC ../lib)
 target_link_libraries(adcli PUBLIC adelphos)
 target_link_libraries(adcli PUBLIC readline)
+
+INSTALL(TARGETS adcli
+  RUNTIME DESTINATION bin
+)
+
+

@@ -1,6 +1,7 @@
 
 add_library(adelphos SHARED
 	adelphos.c
+	addb.c
 )
 
 target_include_directories(adelphos PUBLIC ../common)

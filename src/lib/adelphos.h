@@ -54,12 +54,17 @@ typedef int8_t ad_res;
 #define AD_ERR (-1)
 
 
+/* I can initialize the adelphos library with a transient db or a normal
+ * db, but in that case if it exists it is opened, otherwise it is
+ * created from scratch.  */
 
+/* the common name of a transient db in sqlite3 */
+#define AD_INIT_TRANSIENT  ":memory:"
+/* in case of NULL string the default db is opened.*/
+#define AD_INIT_PERSISTENT NULL
 
-/*typedef void* ad_credit_route;*/
-
-
-int ad_init(void);
+/* not all databases support a transient connection */
+int ad_init(int is_transient, const char* conn_string);
 
 int ad_close(void);
 

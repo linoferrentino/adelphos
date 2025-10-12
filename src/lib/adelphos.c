@@ -41,13 +41,15 @@ static struct {
 };
 
 
-int ad_init(void)
+int ad_init(int is_transient, const char *conn_string)
 {
 	int res = AD_OK;
 	int rc;
 	if (__sync_val_compare_and_swap(&priv.init, 0, 1) != 0) {
 		goto end;
 	}
+
+	/* let's search if this is a temporary db, */
 
 	res = AD_ERR;
 	rc = sqlite3_open(ADELPHOS_DB, &priv.db);
