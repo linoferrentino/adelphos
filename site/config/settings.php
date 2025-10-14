@@ -9,7 +9,14 @@ ini_set('display_errors', '1');
 // Settings
 $settings = [];
 
-// ...
+// Project root dir (1 parent)
+$settings['root_dir'] = dirname(__DIR__, 1);
+
+
+$settings['renderer'] = [
+    // Template path
+    'path' => $settings['root_dir'] . '/templates',
+];
 
 return $settings;
 

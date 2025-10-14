@@ -5,6 +5,7 @@ use Slim\App;
 use Slim\Factory\AppFactory;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Slim\Views\PhpRenderer;
 
 return [
     'settings' => function () {
@@ -26,6 +27,15 @@ return [
 
         return $app;
     },
+
+
+    PhpRenderer::class => function (ContainerInterface $container) {
+
+	$settings = $container->get('settings')['renderer'];
+        return new PhpRenderer($settings['path']);
+
+    },
+
 
     'logger' => function(ContainerInterface $c) {
 	    $logger = new \Monolog\Logger('my_logger');
