@@ -9,7 +9,10 @@ final class HomeAction
 {
     public function __invoke(Request $request, Response $response): Response
     {
-        $response->getBody()->write('Hello, World!');
+        $response->getBody()->write('Hello, LINO');
+
+	//$this->get("logger")->addInfo('Something interesting happened');
+	//var_dump($this->$logger);
 
         return $response;
     }
