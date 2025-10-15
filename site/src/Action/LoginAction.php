@@ -8,7 +8,7 @@ use Slim\Views\PhpRenderer;
 use Psr\Log\LoggerInterface;
 use Odan\Session\SessionInterface;
 
-final class HomeAction
+final class LoginAction
 {
 
 
@@ -36,7 +36,7 @@ final class HomeAction
 	    $attributes = [
 		    // Attributes that will be accessible as variables in the template with the key being the variable name
 		    'pageTitle' => 'Home', // $pageTitle -> 'Home'
-		    'name' => 'Lino Ferrentino ' . strval($new_val)
+		    'name' => 'Login here! ' . strval($new_val)
 	    ];
 	    // Attributes can also be added individually with the addAttribute() method
 	    $this->renderer->addAttribute('appName', 'Slim App');

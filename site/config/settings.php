@@ -18,6 +18,20 @@ $settings['renderer'] = [
     'path' => $settings['root_dir'] . '/templates',
 ];
 
+$settings['logger'] = [
+    // Log file location in the logs folder in the project root
+    'path' => dirname(__DIR__) . '/logs',
+    // Default log level
+    'level' => \Monolog\Level::Debug,
+];
+
+
+$settings['session'] = [
+    'name' => 'session-name',
+    // 5h session lifetime
+    'lifetime' => 18000, // Time in seconds
+];
+
 return $settings;
 
 ?>

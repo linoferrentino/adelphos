@@ -5,7 +5,8 @@
         "nyholm/psr7-server": "^1.1",
         "php-di/php-di": "^7.1",
         "monolog/monolog": "^3.9",
-        "slim/php-view": "^3.4"
+        "slim/php-view": "^3.4",
+        "odan/session": "^6.4"
     },
     "autoload": {
     "psr-4": {
