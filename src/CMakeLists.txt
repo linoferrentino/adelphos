@@ -9,6 +9,10 @@ set (Adelphos_VERSION_MAINT 1)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wfatal-errors")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -rdynamic" )
 
+configure_file (
+  "${PROJECT_SOURCE_DIR}/include/adelphos_config.h.in"
+  "${PROJECT_BINARY_DIR}/include/adelphos_config.h"
+)
 
 include_directories("${PROJECT_BINARY_DIR}/include")
 
@@ -17,4 +21,5 @@ add_subdirectory(common)
 add_subdirectory(lib)
 add_subdirectory(cli)
 add_subdirectory(test)
+add_subdirectory(daemon)
 

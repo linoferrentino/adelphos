@@ -12,4 +12,4 @@ $this->setLayout('layout.html.php')
 
 <h1><?= $pageTitle ?></h1>
 
-<p>Welcome to the <?= $appName ?>, <?= $name ?>!</p>
+<p class="test_style_inside">Here: <?= $appName ?>, <?= $name ?>!</p>

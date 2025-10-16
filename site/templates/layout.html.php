@@ -11,10 +11,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="assets/css/style.css">
     <title><?= $appName ?> <?= $pageTitle ? " - $pageTitle" : '' ?></title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+
+
 </head>
 <body>
-    <main><?= $content ?></main>
+
+<main class="main-content">
+
+
+    <?= $content ?>
+
+</main>
 </body>
 </html>

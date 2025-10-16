@@ -1,5 +1,17 @@
-//#include "EmbeddableWebServer.h"
-
+/*
+ *
+ *
+ * adelphos CLI interface
+ *
+ * Copyright (c) 2025. Pasqualino Ferrentino.
+ * lino.ferrentino@gmail.com
+ *
+ * Licence: GPL3 or above.
+ *
+ *
+ *
+ *
+ */
 
 #include <stdio.h>
 #include <readline/readline.h>
@@ -7,7 +19,6 @@
 #include <stdlib.h>
 
 
-/*#include "acrypt.h"*/
 #include "misc.h"
 #include "adelphos.h"
 #include "cli.h"
@@ -30,7 +41,7 @@ int main(int argc, const char *argv[])
 	char *cmd;
 	using_history();
 
-	rc = ad_init();
+	rc = ad_init(0, NULL);
 	ok_or_goto_fail(rc == AD_OK);
 
 	cli_init();

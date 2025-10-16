@@ -32,4 +32,5 @@ struct addb_h
 
 int addb_open_transient(struct addb_h **dbh)
 {
+	return 0;
 }

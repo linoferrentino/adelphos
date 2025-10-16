@@ -1,0 +1,26 @@
+/*
+ *
+ *
+ *
+ * configuration file for adelphos,
+ *
+ * it will be generated with cmake.
+ *
+ * Copyright (c) 2025. Pasqualino Ferrentino.
+ * lino.ferrentino@gmail.com
+ *
+ * Licence: GPL3 or above.
+ 
+ *
+ *
+ *
+ */
+#ifndef _adelphos_config_h_
+#define _adelphos_config_h_
+
+#define ADELPHOS_TAG           "@ADELPHOSTAG@"
+#define ADELPHOS_BUILD_TYPE    "@CMAKE_BUILD_TYPE@"
+#define ADELPHOS_GITREV        "@GITREV@"
+
+
+#endif
