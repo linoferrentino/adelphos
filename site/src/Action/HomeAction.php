@@ -18,8 +18,18 @@ final class HomeAction
 	    private SessionInterface $session
     ) {}
 
-
     public function __invoke(Request $request, Response $response): Response
+    {
+	    $attributes = [
+
+		    'help_page' => ''
+	    
+	    ];
+	    // Rendering the home.html.php template
+	    return $this->renderer->render($response, 'home/home.html.php', $attributes);
+    }
+
+    public function invoke_OLD(Request $request, Response $response): Response
     {
 	    if ($this->session->has('ntimes')) {
 		    $ntimes = $this->session->get('ntimes');

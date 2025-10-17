@@ -20,7 +20,7 @@ $container = (new ContainerBuilder())
 $app = $container->get(App::class);
 
 //$app->setBasePath('/site/public');
-$app->setBasePath('/app');
+//$app->setBasePath('/app');
 
 return $app;
 

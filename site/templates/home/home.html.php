@@ -1,15 +1,29 @@
 <?php
-/**
- * @var \Slim\Views\PhpRenderer $this PhpRenderer instance
- * @var string $pageTitle
- * @var string $appName
- * @var string $name
- */
 
  // Set layout
 $this->setLayout('layout.html.php')
+
 ?>
 
-<h1><?= $pageTitle ?></h1>
-
+<!--
 <p class="test_style_inside">Here: <?= $appName ?>, <?= $name ?>!</p>
+-->
+
+<h3>Login here in ἀδελφός </h3>
+
+    <form action="/app/user/do_login"
+          id="form-container" class="form" method="post" autocomplete="on">
+
+<div class="form-row">
+            <label for="userid">Userid </label>
+            <input name="userid" type="text" id="userid"><br>
+</div>
+<div class="form-row">
+            <label for"password">Password </label>
+            <input  id="password" type="password" name="password"><br>
+</div>
+<div class="form-row">
+	    <input type="submit" value="Login">
+</div>
+    </form>
+
