@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
 
-  <title>ἀδελφός</title>
+  <title>ἀδελφός : the self organizing trust network. </title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
 
@@ -24,8 +24,8 @@
 <body>
   <div class="container">
     <aside class="sidebar">
-      <h2 class="test_style_inside">ἀδελφός</h2>
       <nav>
+	
         <a href="/" >Home</a>
        <!-- <a href="/login/login/to" >Login</a>
         <a href="/dopay/393" >Pay</a> -->
@@ -34,29 +34,56 @@
       </nav>
     </aside>
     <main class="main-content">
-      <header class="topbar">
-        <h3>Welcome to the brotherhood network — share, connect, grow.
-	      </header>
+      <header class="top-content">
 
-      <section class="topcontent">
+      <h2 class="test_style_inside">ἀδελφός, the multi-level, self-organizing trust network.</h2>
+	<h4>The site is in construction. You can visit it, but all data entered will be erased before first public release (expected 1q26).</h4>
+      </header>
+
+      <div class="middle-content">
 
     <?= $content ?>
-<!--
-    <iframe id="appFrame" src="https://www.adelphos.it/app/" frameborder="0"></iframe>
--->
-      </section>
 
-      <section class="content">
+      </div>
 
-      <iframe id="helpFrame" src="https://www.adelphos.it/grav/<?= $help_page ?>" frameborder="0"></iframe>
+      <div class="bottom-content">
 
-      </section>
+      <iframe id="helpFrame" src="https://www.adelphos.it/grav/<?= $help_page ?>" style="border=none;" ></iframe>
+
+
+
+      </div>
     </main>
   </div>
 
 <footer>
   <p>&copy; 2025 Lino Ferrentino. ἀδελφός is licensed under GPLv3 <a href="mailto:info@adelphos.it">Info</a>
 	<a href="https://github.com/linoferrentino/adelphos">Adelphos repository (github)</a>
+<hr>
+
+<div class="bottom_debug_panel"/>
+
+<p> Debug panel, just for development, please ignore </p>
+
+<?= date(DATE_RFC2822);  ?>
+
+<?php
+for ($i = 1; ; $i++) {
+    if ($i > 10) {
+        break;
+    }
+    echo "<p>" . $i . "</p>";
+}
+
+?>
+
+</div>
+
+
+<!--
+<-?= $pars ?>
+-->
+
 </footer>
 
 

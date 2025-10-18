@@ -27,15 +27,14 @@ final class UserDoRegisterAction
 	    $params = (array)$request->getParsedBody();
 
 	    // Get a single POST parameter
-	    $userid = $params['userid'] ?? 'n/a';
-	    $password = $params['password'] ?? 'n/a';
+	    //$userid = $params['userid'] ?? 'n/a';
+	    //$password = $params['password'] ?? 'n/a';
 
 
 	    // Attributes array passed to the template renderer via the third parameter of the render method
 	    $attributes = [
-		    // Attributes that will be accessible as variables in the template with the key being the variable name
-		    'pageTitle' => 'Home', // $pageTitle -> 'Home'
-		    'name' => 'will register user ' . $userid . ' pass ' . $password
+		    'help_page' => '',
+	            'pars' => print_r($params, true)
 	    ];
 	    
 	    // Rendering the home.html.php template

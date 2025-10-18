@@ -5,9 +5,6 @@ $this->setLayout('layout.html.php')
 
 ?>
 
-<!--
-<p class="test_style_inside">Here: <?= $appName ?>, <?= $name ?>!</p>
--->
 
 <h3>Login here in ἀδελφός </h3>
 
