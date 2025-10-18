@@ -7,6 +7,8 @@ return function (App $app) {
 
 	$app->get('/', \App\Action\HomeAction::class);
 
+	$app->get('/about', \App\Action\AboutAction::class);
+
 	$app->get('/login', \App\Action\LoginAction::class);
 	$app->get('/login/login/to', \App\Action\LoginAction::class);
 

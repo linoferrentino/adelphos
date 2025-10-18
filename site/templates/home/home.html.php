@@ -12,7 +12,7 @@ $this->setLayout('layout.html.php')
           id="form-container" class="form" method="post" autocomplete="on">
 
 <div class="form-row">
-            <label for="userid">Userid </label>
+            <label for="userid">User</label>
             <input name="userid" type="text" id="userid"><br>
 </div>
 <div class="form-row">
@@ -20,7 +20,7 @@ $this->setLayout('layout.html.php')
             <input  id="password" type="password" name="password"><br>
 </div>
 <div class="form-row">
-	    <input type="submit" value="Login">
+	    <input type="button" value="Login" onclick="alert('to do!');">
 </div>
     </form>
 

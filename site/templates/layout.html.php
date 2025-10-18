@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
 
-  <title>ἀδελφός : the self organizing trust network. </title>
+  <title>ἀδελφός : the self-organizing, multi level, trust network. </title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
 
@@ -30,7 +30,7 @@
        <!-- <a href="/login/login/to" >Login</a>
         <a href="/dopay/393" >Pay</a> -->
         <a href="/user/register">Register</a>
-        <a href="#">About</a>
+        <a href="/about">About</a>
       </nav>
     </aside>
     <main class="main-content">
@@ -67,7 +67,8 @@
 
 <?= date(DATE_RFC2822);  ?>
 
-<?php
+<!--
+< ?php
 for ($i = 1; ; $i++) {
     if ($i > 10) {
         break;
@@ -75,10 +76,11 @@ for ($i = 1; ; $i++) {
     echo "<p>" . $i . "</p>";
 }
 
-?>
+? >
 
 </div>
 
+-->
 
 <!--
 <-?= $pars ?>
