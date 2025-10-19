@@ -36,9 +36,10 @@
     <main class="main-content">
       <header class="top-content">
 
-      <h2 class="test_style_inside">ἀδελφός, the multi-level, self-organizing trust network.</h2>
-	<h4>The site is in construction. You can visit it, but all data entered will be erased before first public release (expected 1q26).</h4>
-      </header>
+      <h2 class="test_style_inside">ἀδελφός, the multi-level, self-organizing
+trust network.</h2> <h4>The site is in construction, you are encouraged to use
+the site, but all data might be erased before 1st release (expected February
+2026)</h4> </header>
 
       <div class="middle-content">
 
@@ -66,6 +67,18 @@
 <p> Debug panel, just for development, please ignore </p>
 
 <?= date(DATE_RFC2822);  ?>
+
+
+<?php
+
+
+	if (isset($pars)) { 
+		echo "<br> Parameters </br>";
+		var_dump($pars);
+		echo "<br>";
+	}
+
+?>
 
 <!--
 < ?php

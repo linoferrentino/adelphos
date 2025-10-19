@@ -5,7 +5,29 @@
 $this->setLayout('layout.html.php')
 ?>
 
-<h3>Register here in ἀδελφός </h3>
+<h3>Here you will register in ἀδελφός: Step 1, please read the help below</h3>
+
+
+ <form action="/user/do_register_step_2"
+          id="form-container" class="form" method="post" autocomplete="on">
+
+
+<div class="form-row">
+ <label for="currencies">Your currency:</label>
+        <select id="currencies" name="currency">
+            <option value="dollar">Dollar</option>
+            <option value="euro">Euro</option>
+            <option value="yen">Yen</option>
+            <option value="swiss">Pound</option>
+        </select>
+</div>
+<div class="form-row">
+        <button type="submit">Submit</button>
+</div>
+</form>
+
+
+<!--
 
 <p>Have you got an invite code? Join here or start a new trust net from the start.</p>
 
@@ -94,3 +116,6 @@ function toggleVisibility_all(id) {
 }
 
 </script>
+
+
+-->

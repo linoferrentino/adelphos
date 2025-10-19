@@ -16,6 +16,7 @@ return function (App $app) {
 	$app->get('/user/register', \App\Action\UserRegisterAction::class);
 
 	$app->post('/user/do_register', \App\Action\UserDoRegisterAction::class);
+	$app->post('/user/do_register_step_2', \App\Action\UserDoRegisterStepTwoAction::class);
 
 	$app->get('/dopay/{id}', \App\Action\DoPayAction::class);
 

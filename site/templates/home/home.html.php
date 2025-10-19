@@ -7,6 +7,7 @@ $this->setLayout('layout.html.php')
 
 
 <h3>Login here in ἀδελφός </h3>
+<h3>There will be some demo users, please stay tuned</h3>
 
     <form action="/app/user/do_login"
           id="form-container" class="form" method="post" autocomplete="on">
