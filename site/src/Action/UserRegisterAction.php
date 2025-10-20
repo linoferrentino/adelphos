@@ -9,7 +9,6 @@ use Psr\Log\LoggerInterface;
 use Odan\Session\SessionInterface;
 
 
-
 final class UserRegisterAction 
 {
 
@@ -21,6 +20,11 @@ final class UserRegisterAction
 
 	public function __invoke(Request $request, Response $response): Response
 	{
+
+		//$al = $this->html("ma che blelo");
+
+		/* here we remove session data for the user. */
+		$this->session->delete(\SES_REGISTRATION_KEY);
 
 		$attributes = [
 			'help_page' => 'create_user'

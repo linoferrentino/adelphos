@@ -72,9 +72,9 @@ the site, but all data might be erased before 1st release (expected February
 <?php
 
 
-	if (isset($pars)) { 
+	if (isset($session)) { 
 		echo "<br> Parameters </br>";
-		var_dump($pars);
+		var_dump($session);
 		echo "<br>";
 	}
 

@@ -22,7 +22,7 @@ $this->setLayout('layout.html.php')
         </select>
 </div>
 <div class="form-row">
-        <button type="submit">Submit</button>
+        <button type="submit">Next...</button>
 </div>
 </form>
 
