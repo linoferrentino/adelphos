@@ -20,7 +20,7 @@ final class UserDoRegisterStepThreeAction
 	    $params = (array)$request->getParsedBody();
 
 	    $attributes = [
-		    'help_page' => 'create_user_step_three',
+		    'help_page' => 'money-in-adelphos',
 	            'pars' => print_r($params, true)
 	    ];
 	    

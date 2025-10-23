@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\PhpRenderer;
 use Psr\Log\LoggerInterface;
 use Odan\Session\SessionInterface;
+use Odan\Session\FlashInterface;
 
 final class HomeAction
 {
@@ -20,12 +21,28 @@ final class HomeAction
 
     public function __invoke(Request $request, Response $response): Response
     {
+
+	    // is there already a user? If yes you should render the Login menu
+	    // otherwise put the register action.
+	    if ($this->session->get('user_id') !== null) {
+	    	return $this->renderer->render($response, 'home/home_logged.html.php', $attributes);
+	    }
+
+
+	    $menu_items = [
+		    "<a href=\"/user/register\">Register</a>",
+	    ];
+
+	    
+	    // Rendering the home.html.php template
 	    $attributes = [
 
-		    'help_page' => ''
+		    'help_page' => '',
+
+		    'menu_items' => $menu_items
+
 	    
 	    ];
-	    // Rendering the home.html.php template
 	    return $this->renderer->render($response, 'home/home.html.php', $attributes);
     }
 

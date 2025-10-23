@@ -1,5 +1,6 @@
 <?php
 
+/** @var \Odan\Session\FlashInterface $flash */
 ?>
 
 <!DOCTYPE html>
@@ -27,19 +28,84 @@
       <nav>
 	
         <a href="/" >Home</a>
-       <!-- <a href="/login/login/to" >Login</a>
-        <a href="/dopay/393" >Pay</a> -->
-        <a href="/user/register">Register</a>
+
+<?php
+
+// these are the menu which are dynamically generated
+if (isset($menu_items)) {
+	foreach ($menu_items as $menu) {
+		echo("$menu\n");
+	}
+}
+
+
+?>
+
+
+
         <a href="/about">About</a>
+
       </nav>
     </aside>
     <main class="main-content">
       <header class="top-content">
 
+<?php
+
+if (isset($flash)) {
+foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
+	foreach ($flashMessages as $msg) {
+		echo ("<div class=\"flahs-message flash-$flashCategory\">");
+		echo ("<h3>" );
+		if ($flashCategory == 'success' ) {
+			echo ("🤗" );
+		} else if ($flashCategory == 'error' ) {
+			echo ("😤" );
+		} else if ($flashCategory == 'info' ) {
+			echo ("😏" );
+		} else {
+			echo ("😕" );
+
+		}
+		echo (" " . $msg . "</h3></div>");
+	}
+}
+} else {
+?>
+
       <h2 class="test_style_inside">ἀδελφός, the multi-level, self-organizing
 trust network.</h2> <h4>The site is in construction, you are encouraged to use
 the site, but all data might be erased before 1st release (expected February
-2026)</h4> </header>
+2026)</h4> 
+
+
+<?php
+
+}
+
+
+
+
+?>
+
+
+
+
+</header>
+
+<div class="breadcrumb">
+  <a href="/">Home</a>
+  <span>›</span>
+  <a href="/summary">Summary</a>
+  <span>›</span>
+  <a href="/buy">Buy</a>
+  <span>›</span>
+  <a href="/define-trust">Define Trust</a>
+  <span>›</span>
+  <a href="/review">Review</a>
+</div>
+
+
 
       <div class="middle-content">
 
@@ -80,39 +146,12 @@ the site, but all data might be erased before 1st release (expected February
 
 ?>
 
-<!--
-< ?php
-for ($i = 1; ; $i++) {
-    if ($i > 10) {
-        break;
-    }
-    echo "<p>" . $i . "</p>";
-}
-
-? >
-
-</div>
-
--->
-
-<!--
-<-?= $pars ?>
--->
 
 </footer>
 
 
 
 </body>
-<script>
-    function loadHelp(section) {
-      const helpFrame = document.getElementById('helpFrame');
-
-      helpFrame.src = 'https://www.adelphos.it/grav/' + section;
-    }
-
-</script>
-
 
 
 

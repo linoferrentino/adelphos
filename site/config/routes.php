@@ -9,7 +9,9 @@ return function (App $app) {
 
 	$app->get('/about', \App\Action\AboutAction::class);
 
-	$app->get('/login', \App\Action\LoginAction::class);
+	$app->post('/login', \App\Action\LoginAction::class);
+
+	$app->get('/summary', \App\Action\SummaryAction::class);
 
 	$app->get('/user/register', \App\Action\UserRegisterAction::class);
 

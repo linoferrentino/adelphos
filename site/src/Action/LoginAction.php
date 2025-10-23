@@ -19,7 +19,60 @@ final class LoginAction
     ) {}
 
 
+    // Just a private function to authenticate, for the demo
+    private function _do_authenticate($userid) : bool
+    {
+	    if ( $userid == 'alice.smith@manhattan_01') {
+		    return true;
+	    } else {
+		    return false;
+	    }
+    }
+
+
+
+
     public function __invoke(Request $request, Response $response): Response
+    {
+	    // I take the parameters
+	    $params = (array)$request->getParsedBody();
+
+	    $json_params = json_encode($params);
+
+	    // I put the params in the session, this is the step two, so there are only these
+	    $this->session->set(\SES_REGISTRATION_KEY, $json_params);
+
+	    $flash = $this->session->getFlash();
+
+	    $userid = $params['userid'];
+
+	    $res = $this->_do_authenticate($userid);
+
+	    if ($res === true) {
+	    	$flash->add('success', 'login successful');
+
+        	return $response->withStatus(302)->withHeader('Location', '/summary');
+
+		/*return $this->redirectHandler->redirectToUrl(
+			$response,
+			'/summary', []);*/
+	    } else {
+	    	$flash->add('error', 'wrong credentials');
+	    }
+	    
+
+	    $attributes = [
+		    'help_page' => '',
+		    'session' => $this->session,
+		    'flash' => $flash
+	    ];
+	
+
+	    return $this->renderer->render($response, 'home/home.html.php', $attributes);
+
+    }
+
+    public function __invoke_OLD(Request $request, Response $response): Response
     {
 	    if ($this->session->has('ntimes')) {
 		    $ntimes = $this->session->get('ntimes');
