@@ -49,16 +49,15 @@ final class LoginAction
 	    $res = $this->_do_authenticate($userid);
 
 	    if ($res === true) {
+
 	    	$flash->add('success', 'login successful');
 
         	return $response->withStatus(302)->withHeader('Location', '/summary');
-
-		/*return $this->redirectHandler->redirectToUrl(
-			$response,
-			'/summary', []);*/
-	    } else {
-	    	$flash->add('error', 'wrong credentials');
-	    }
+	    } 
+	    
+	    
+	    $flash->add('error', 'wrong credentials');
+	    
 	    
 
 	    $attributes = [

@@ -52,6 +52,39 @@ if (isset($menu_items)) {
 
 <?php
 
+if (isset($bread_crumbs)) {
+
+?>
+
+
+<h4 class="test_style_inside">ἀδελφός, the multi-level, self-organizing
+trust network.</h4> 
+
+<?php
+
+echo ("<div class=\"breadcrumb\">");
+	$val = 0;
+	foreach( $bread_crumbs as $key => $value) {
+		if ($val != 0) {
+			echo("<span>›</span>");
+		} else {
+			$val++;
+		}
+		echo("<a href=\"$value\">" . $key . "</a>");
+	}
+echo("</div>");
+} else {
+?>
+
+<h2 class="test_style_inside">ἀδελφός, the multi-level, self-organizing
+trust network.</h2> <h4>The site is in construction, with some demo data. 
+It will be restarted periodically until 1st release (expected end Q1 2026)</h4> 
+
+
+<?php
+}
+
+
 if (isset($flash)) {
 foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 	foreach ($flashMessages as $msg) {
@@ -73,15 +106,20 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 } else {
 ?>
 
-      <h2 class="test_style_inside">ἀδελφός, the multi-level, self-organizing
-trust network.</h2> <h4>The site is in construction, you are encouraged to use
-the site, but all data might be erased before 1st release (expected February
-2026)</h4> 
-
+      
 
 <?php
 
 }
+
+
+?>
+
+
+</header>
+
+
+<?php
 
 
 
@@ -91,23 +129,7 @@ the site, but all data might be erased before 1st release (expected February
 
 
 
-</header>
-
-<div class="breadcrumb">
-  <a href="/">Home</a>
-  <span>›</span>
-  <a href="/summary">Summary</a>
-  <span>›</span>
-  <a href="/buy">Buy</a>
-  <span>›</span>
-  <a href="/define-trust">Define Trust</a>
-  <span>›</span>
-  <a href="/review">Review</a>
-</div>
-
-
-
-      <div class="middle-content">
+      <div class="summary-scroll">
 
     <?= $content ?>
 
@@ -125,7 +147,7 @@ the site, but all data might be erased before 1st release (expected February
 
 <footer>
   <p>&copy; 2025 Lino Ferrentino. ἀδελφός is licensed under GPLv3 <a href="mailto:info@adelphos.it">Info</a>
-	<a href="https://github.com/linoferrentino/adelphos">Adelphos repository (github)</a>
+	<a href="https://github.com/linoferrentino/adelphos">Source code</a>
 <hr>
 
 <div class="bottom_debug_panel"/>

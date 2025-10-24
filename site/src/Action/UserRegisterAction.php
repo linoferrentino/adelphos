@@ -25,8 +25,15 @@ final class UserRegisterAction
 		/* here we remove session data for the user. */
 		$this->session->delete(\SES_REGISTRATION_KEY);
 
+		$bread_crumbs = [
+			'Home' => '/',
+			'choose currency' => '/user/register'
+		];
+
+
 		$attributes = [
-			'help_page' => 'create_user'
+			'help_page' => 'create_user',
+			'bread_crumbs' => $bread_crumbs
 		];
 
 		// Rendering the home.html.php template

@@ -25,11 +25,18 @@ final class UserDoRegisterStepTwoAction
 
 	    // I put the params in the session, this is the step two, so there are only these
 	    $this->session->set(\SES_REGISTRATION_KEY, $json_params);
-	    
+
+	    $bread_crumbs = [
+		    'Home' => '/',
+		    'choose currency' => '/user/register',
+		    'choose name/family' => '/user/do_register_step_2'
+	    ];
+
 
 	    $attributes = [
 		    'help_page' => 'create_user_step_two',
-		    'session' => $this->session 
+		    'session' => $this->session,
+		    'bread_crumbs' => $bread_crumbs
 	    ];
 	    
 	    return $this->renderer->render($response, 'user/create_step_two.html.php', $attributes);

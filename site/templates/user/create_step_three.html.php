@@ -12,16 +12,18 @@ $this->setLayout('layout.html.php')
           id="form-container" class="form" method="post" autocomplete="off">
 
 <div class="form-row">
-            <label for="userid">Trusts for unreedemable money (tbel):</label>
+            <label for="userid">Trusts for unreedemable money (tbel): </label>
             <input name="userid" type="text" id="userid" value='10'>
 </div>
 <div class="form-row">
-            <label for"family">Trust for reedemable money (tbel):</label>
+            <label for"family">Trust for reedemable money (tbel):
             <input  id="family" type="text" name="family" value='20'>
+</label>
 </div>
 <div class="form-row">
-            <label for"interest">Interest for 90 days:</label>
+            <label for"interest">Interest for 90 days:
             <input  id="interest" type="text" name="interest" value='0.5'>
+</label>
 </div>
 <div class="form-row">
         <button type="submit">Next...</button>
