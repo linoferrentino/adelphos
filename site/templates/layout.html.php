@@ -57,7 +57,7 @@ if (isset($bread_crumbs)) {
 ?>
 
 
-<h4 class="test_style_inside">ἀδελφός, the multi-level, self-organizing
+<h4 class="test_style_inside">ἀδελφός, the self-organizing, multi-level
 trust network.</h4> 
 
 <?php
@@ -76,7 +76,7 @@ echo("</div>");
 } else {
 ?>
 
-<h2 class="test_style_inside">ἀδελφός, the multi-level, self-organizing
+<h2 class="test_style_inside">ἀδελφός, the self-organizing, multi-level
 trust network.</h2> <h4>The site is in construction, with some demo data. 
 It will be restarted periodically until 1st release (expected end Q1 2026)</h4> 
 
