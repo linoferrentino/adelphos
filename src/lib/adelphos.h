@@ -88,7 +88,6 @@ struct generic_pars {
 
 
 struct create_l0_group_pars {	 
-	char *city_id;
 	char *name;
 	char *pass_adult;
 	char *pass_minor;

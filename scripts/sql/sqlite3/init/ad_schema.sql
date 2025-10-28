@@ -15,11 +15,8 @@ create table adelphos_conf(
 ) without rowid;
 
 -- increment this for every change
-insert into adelphos_conf(key, value) values ("schema_version", "2");
--- defaults for the channels
-insert into adelphos_conf(key, value) values ("default_l0_trust", "25");
--- how much the internal trust increments for every cycle.
-insert into adelphos_conf(key, value) values ("default_l0_increment", "0.1");
+insert into adelphos_conf(key, value) values ("schema_version", "3");
+
 
 
 
@@ -29,17 +26,20 @@ create table currency (
 	name   text,
 
 	-- this is the symbol as it is written in the Forex exchange
-	symbol text
+	symbol text,
+
+	-- human value, the amount of currency which is used to make one Tao
+	hv real
 
 );
 
 -- just some currencies
-insert into currency(cur_id, name, symbol) values(0, 'Euro', 'EUR');
-insert into currency(cur_id, name, symbol) values(1, 'Dollar', 'USD');
-insert into currency(cur_id, name, symbol) values(2, 'English Pound', 'GBP');
-insert into currency(cur_id, name, symbol) values(3, 'Swiss Frank', 'CHF');
-insert into currency(cur_id, name, symbol) values(4, 'Yen', 'JPY');
---- other may follow...
+insert into currency(cur_id, name, symbol, hv) values(0, 'Euro', 'EUR', 1);
+insert into currency(cur_id, name, symbol, hv) values(1, 'Dollar', 'USD', 1);
+insert into currency(cur_id, name, symbol, hv) values(2, 'English Pound', 'GBP', 1);
+insert into currency(cur_id, name, symbol, hv) values(3, 'Swiss Frank', 'CHF', 1);
+insert into currency(cur_id, name, symbol, hv) values(4, 'Yen', 'JPY', 100);
+--- other will follow...
 
 
 -- a group can have a level
@@ -116,15 +116,19 @@ create table adelphos (
 
 	name text,
 
-	-- just to have some identification.
 	email text,
 
 	phone text,
 
+	-- every adelphos has its own public key.
+	public_key blob,
+
+	-- the private key is NOT stored, but only visualized one time
+
 	-- her password encrypted. 
 	ad_pass text,
 
-	-- 0 adult, 1 minor, if adult he/she is also administrator
+	-- 0 adult, 1 minor
 	is_minor integer,
 
 	-- an adelphos is part of a group of level zero, his/her family
@@ -133,16 +137,19 @@ create table adelphos (
 	-- every adelphos has a counter for his/her cheques
 	cheque_next_id integer,
 
-	-- this is the credit limit inside the l1 group is written in the
-	-- family, the overall credit limit of all the adelphoi in level zero
-	-- must be below that limit
-
        
-	foreign key (l0_id) references l0_group (group_id)
+	foreign key (l0_id) references l0_group (group_id),
+
+	-- the email is unique in the system.
+	unique (email) on conflict abort
 );
 
 -- only the l1 members are stored in a table, as only l1
 -- groups are totally connected.
+
+-- No! All groups are totally connected, we do not have
+-- the members here.
+/*
 create table l1_members (
 
 	l1_group_id integer      not null,
@@ -154,6 +161,7 @@ create table l1_members (
 	foreign key (l1_group_id) references l1_group (group_id)
 
 ) without rowid;
+*/
 
 
 
