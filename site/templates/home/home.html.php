@@ -6,7 +6,7 @@ $this->setLayout('layout.html.php')
 ?>
 
 
-<h4>Login here in ἀδελφός. There is a demo user: alice.smith@manhattan_01, empty password</h4>
+<h4>Login here in ἀδελφός. If you have an invite code, click on the link instead or enter it here.</h4>
 
     <form action="/login"
           id="form-container" class="form" method="post" autocomplete="on">
