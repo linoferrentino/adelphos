@@ -1,314 +1,144 @@
-# Adelphos, the self organizing, multi level trust network. 
 
 
+# Adelphos: The Self-Organizing, Multi-Level Trust Network
 
-> 40 καὶ ἀποκριθεὶς ὁ βασιλεὺς ἐρεῖ αὐτοῖς, Ἀμὴν λέγω ὑμῖν, ἐφ'
-> ὅσον ἐποιήσατε ἑνὶ τούτων τῶν ἀδελφῶν μου τῶν ἐλαχίστων, ἐμοὶ
-> ἐποιήσατε.
->
+> 40 καὶ ἀποκριθεὶς ὁ βασιλεὺς ἐρεῖ αὐτοῖς, Ἀμὴν λέγω ὑμῖν, ἐφ' ὅσον ἐποιήσατε ἑνὶ τούτων τῶν ἀδελφῶν μου τῶν ἐλαχίστων, ἐμοὶ ἐποιήσατε.  
+>  
+> The King will answer them, ‘Most certainly I tell you, because you did it to one of the least of these my brothers, you did it to me.’  
+> <cite>- Matthew 25:40</cite>
 
-> the King will answer them, ‘Most certainly I tell you, because
-> you did it to one of the least of these my brothers, you did it
-> to me.’ <cite>- Matthew 25:40 </cite>
+## Table of Contents
+- [What is Adelphos?](#what-is-adelphos)
+- [Differences from Systems like LETS or Ripple](#differences-from-systems-like-lets-or-ripple)
+- [Economy and Trust Within Families](#economy-and-trust-within-families)
+- [Level Zero (L0): The Family Unit](#level-zero-l0-the-family-unit)
+- [Level One (L1): The Cohort](#level-one-l1-the-cohort)
+- [Self-Organizing Nature of Adelphos](#self-organizing-nature-of-adelphos)
+- [Not a Ponzi Scheme](#not-a-ponzi-scheme)
+- [Measuring Trust in Adelphos](#measuring-trust-in-adelphos)
+- [Money in Adelphos](#money-in-adelphos)
+- [License](#license)
 
+## What is Adelphos?
+Adelphos (from the ancient Greek word for "brother") is a system that enables users across regions or countries to exchange goods and services using a hybrid of real currency (cash or deferred payments) and virtual credit. It builds on natural human trust starting from small groups like families, scaling fractally to larger structures like neighborhoods or communities. This creates a self-organizing network where trust grows organically, reducing reliance on traditional banking.
 
-## What is it?
-
-adelphos is at its core a system that enables users of different
-regions, even countries, to share goods and services using in
-part a virtual currency and in part real currency, either real
-(in cash) or deferred (an IOU).
-
-The system exploits the natural human trust between families to
-grow fractally similar structures at other levels.
-
-## Differences from other systems like LETS or Ripple
-
-In the LETS system the curreny is virtual, the users exchange
-credits but those credits do no exit the system.
-
-In the Ripple system there is a mesh of interconnections, but
-there is not a fractal structure.
-
+## Differences from Systems like LETS or Ripple
+- **LETS (Local Exchange Trading Systems)**: Uses purely virtual credits that cannot leave the system, limiting flexibility for real-world needs.
+- **Ripple**: Relies on a mesh of interconnections for credit paths, but lacks Adelphos' fractal hierarchy, which mimics social structures for more intuitive scaling and risk management.
 
 ## 🏡 Economy and Trust Within Families
-
-Let’s begin by understanding how trust and economy function in a family.
-
-Despite cultural differences, most families share two universal traits:
-- **Mutual trust**
-- **Shared responsibility**
+Families form the core of human trust and economy, regardless of culture. Key traits include:
+- **Mutual trust**: Members rely on each other without constant tracking.
+- **Shared responsibility**: Debts or obligations are collective.
 
 Examples:
-- Families divide chores and maintain shared spaces.
-- Parents give children pocket money.
-- Spouses often share a joint account for bills and expenses.
+- Parents cover a child's mistakes (e.g., breaking a window).
+- Spouses share financial liabilities, even with separate assets.
 
-If a child breaks a window, the parents pay.  
-If a spouse takes on debt, the other may be liable — even with separate assets.
-
-### 🧠 Key Principles
-
-1. **Members are responsible for each other’s debts.**  
-2. **The family acts as a single economic unit.**
-
-This is the foundation of **Level Zero (L0) Trust** in ἀδελφός.
-
----
+These principles underpin Adelphos' **Level Zero (L0) Trust**.
 
 ## 👨‍👩‍👧‍👦 Level Zero (L0): The Family Unit
+In Adelphos, an L0 group isn't limited to biological families—it's any small unit acting as one economically.
 
-In ἀδελφός, a Level Zero group is not necessarily a biological family, but it behaves like one.
+Characteristics:
+- **Shared ledger**: No individual accounts; all transactions are group-wide.
+- **Full mutual responsibility**: Members are liable for all debts, including Redeemable Money (RM) and Unredeemable Money (UM).
+- **External view**: The group appears as a single entity to outsiders.
 
-### Characteristics:
-- A shared ledger for all members (no individual accounts)
-- Full mutual responsibility for all debts (Reedemable  and unreedemable)
-- The external world sees the group as a **single entity**
+Each group enters with a fixed equity (risk limit), capping total debt to prevent overextension.
 
-Each member is liable for all money issued by the group — whether **redeemable (RM)** or **unredeemable (UM)**.
+## 🧑‍🤝‍🧑 Level One (L1): The Cohort
+L1 groups represent close friends or trusted allies—people you trust deeply but don't share daily finances with.
 
----
+Key differences from L0:
+- No shared living or joint accounts.
+- Trust is limited: Informal for small exchanges, formal (e.g., IOUs) for larger ones.
 
-## 🧑‍🤝‍🧑 Level One (L1): The cohort
+Example:
+> Alice and Lucy are close friends. They exchange small gifts without tracking debts. But if Lucy sells school books to Alice for $200, she expects cash or a formal IOU.
 
-Level One represents our **closest friends** — those we trust deeply but don’t
-share daily life with.
+In Adelphos, L1 cohorts pool equities from L0 groups, exposing a portion (e.g., 50%) externally while maintaining internal trust.
 
-### Key Differences from L0:
-- No shared living space or joint account
-- Trust exists, but is **limited to certain transactions**
-
-#### 🧾 Example
-
-> Alice and Lucy are teenage friends.  
-
-> They buy each other small gifts — earrings, bracelets — without tracking who owes what.  
-
-> But when Lucy wants to sell her school books to Alice for $200, she expects
-> real money or a formal promise (RM).
-
-### Characteristics of L1:
-- Not part of the same family (L0)
-- Willing to accept RM or UM for **larger expenses**
-- For small exchanges, trust is informal and untracked
-
-In adelphos the level one is called the cohort.
-
----
-
-## 🧬 Self-Organizing Nature of ἀδελφός
-
+## 🧬 Self-Organizing Nature of Adelphos
+Adelphos grows fractally: Higher levels (e.g., L2 neighborhoods) mimic lower ones, with admins, pooled equities, and shared responsibilities. This allows organic expansion from families to communities, using routing like DNS for efficient credit paths (O(log n) complexity in balanced trees).
 
 ## 🚫 Not a Ponzi Scheme
+Adelphos is the opposite of a Ponzi scheme. In Ponzi models, the top exploits the bottom without responsibility. Here, higher levels are liable for lower ones' debts, distributing risk upward and encouraging accountability.
 
-adelphos is the opposite of a Ponzi Scheme.
+## 🤝 Measuring Trust in Adelphos
+Trust defies simple definition but, in Adelphos, it's the credit you're willing to extend—quantified by amount and time.
 
-In a Ponzi Scheme there is a pyramid, the top is fed by the
-bottom, but the top does not do anything, it sits like a
-parasite.
+### 💡 What Is Trust?
+If Alice sells Bob a $300 phone and accepts a 30-day IOU, she's trusting him for $300 over that period. Longer delays may include interest (e.g., $310 after a year for 3%).
 
-Instead in adelphos the top is responsible for the debts of the
-previous levels.
+### 📐 Trust as a Measurable Concept
+Trust is the delayed payment you're willing to accept. Example:
+> Selling a €4,000 car to a friend for €3,500 cash + €500 IOU yields a 12.5% trust ratio.
 
+Adelphos records IOUs, making trust quantifiable and relational.
 
-# 🤝 Trust in ἀδελφός
+### 🧭 Philosophy of Trust
+Adelphos shifts from scarcity-based money to credit-based exchange without fully replacing currencies. Users set personal trust thresholds to limit risk.
 
-Trust, like love, escapes a formal definition. However, in **ἀδελφός**, trust is measured as the amount of money we are willing to postpone for a person or group.
+### 📊 The Axiom of Adelphos
+One unit of trust equals one unit of currency exchanged. We denote currency as τ (Tao).
 
----
+### 🧮 The Human Unit
+Currencies vary; the "human unit" (τ_HV) is the smallest meaningful amount (e.g., $1 in the US, 1,000 pre-Euro Lire in Italy).
 
-## 💡 What Is Trust?
+### 📏 The Trust-bel: Unit of Trust
+Trust is measured in trust-bel (tb):
+```
+trust-bel = 10 * log10(τ / τ_HV)
+```
+Where τ is postponed currency, τ_HV is the human unit.
 
-If Alice sells a used phone to Bob for $300 and Bob promises to pay in a month, Alice is trusting Bob for **$300 over 30 days**.
+Example 1 (USA):
+> Alice lends Bob $100 (τ_HV = $1).  
+> tb = 10 * log10(100 / 1) = 20 tb.
 
-Thus, trust is a **function of two variables**:
-- **Quantity** (amount of money)
-- **Time** (duration of delay)
+Example 2 (pre-Euro Italy):
+> Anna lends Bruno 1,000,000 Lire (τ_HV = 1,000 Lire).  
+> tb = 10 * log10(1,000,000 / 1,000) = 30 tb.
 
-In real life, longer delays often require **interest** to compensate for risk. For example:
+The logarithmic scale reflects how trust grows non-linearly.
 
-> Bob promises Alice that if she waits one year, he will pay her $310 — a 3% interest.
+### 🧠 Trust in Practice
+Trust-bel standardizes comparisons across currencies (e.g., using USD exchange rates for Yen). It's used for credit limits and routing.
 
----
+## 💰 Money in Adelphos
+Money is either real (external cash) or deferred (internal credit).
 
-## 📐 Trust as a Measurable Concept
+Deferred types:
+- **Redeemable Money (RM)**: IOU with a due date; may accrue interest.
+- **Unredeemable Money (UM)**: Credit without a repayment date; lower trust typically.
 
-In ἀδελφός, trust is defined as the **amount of delayed money** we are willing to sacrifice in the present.
+### 🔁 Redeemable Money (RM)
+Users set RM trust levels, limiting acceptance.
 
-When I receive a payment from someone, I give **trust** to them, and that trust is proportional to the **credit** I extend.
+Example:
+> Alice buys a $300 phone from Bob (20 tb trust).  
+> RM_max = 10^(20 / 10) * $1 = $100.  
+> She pays $200 cash + $100 RM IOU.
 
-### 🧾 Example
+RM is spendable within limits.
 
-> Suppose we sell a used car to our wife’s best friend, Lucy.  
-> The market price is €4,000. Lucy has only €3,500.  
-> We accept €3,500 in cash and €500 as an IOU.  
-> The trust ratio is:  
-> `500 / 4000 = 12.5%`
+Further Example:
+> Bob uses $60 RM for Lucy's lessons (she accepts up to $100). He has $40 left.
 
-This 12.5% represents the **trust** we place in Lucy. The system records this IOU, and the trust becomes quantifiable.
+Observations:
+- Trust is relational (Lucy trusts the IOU issuer).
+- Credit accumulates; exceeding limits requires cash.
 
----
+### 🌀 Unredeemable Money (UM)
+Similar to RM but indefinite. Users set separate (often lower) trust levels.
 
-## 🧭 Philosophy of Trust in ἀδελφός
-
-Trust is the **amount of credit** I’m willing to accept from another party. ἀδελφός does not aim to replace national currencies entirely — it encourages a gradual shift from **scarcity-based money** to **credit-based exchange**.
-
-Each participant defines their own **trust threshold** when joining the system, limiting their exposure and risk.
-
----
-
-## 📊 The Axiom of ἀδελφός
-
-We use a **logarithmic scale** to model trust, because doubling the amount of credit doesn’t necessarily double the trust.
-
-### 🔺 Axiom:
-> _One unit of trust equals one unit of currency exchanged._
-
-To represent currency generically, we use the Greek letter **Tao (τ)**.
-
----
-
-## 🧮 The Human Unit
-
-Currencies vary widely in value. The **human unit** is the smallest amount of money that can buy something meaningful in a given country.
-
-Examples:
-- In pre-Euro Italy, 1 Lira was meaningless — but **1,000 Lire** could buy a coffee.
-- In hyperinflated economies, the human unit might be **1 million** of the local currency.
-- In the US, **$1** is a usable human unit.
-
-We use the human unit to compute **trust as a dimensionless value**.
-
----
-
-## 📏 The Trust-bel: Unit of Trust
-
-Trust is measured using the **trust-bel (tb)**, defined as:
-
-    trust-bel = 10 * log10(τ / τ_HV)
-
-
-
-Where:
-- `τ` = amount of postponed currency
-- `τ_HV` = human value of currency
-
----
-
-### 🧮 Example 1: USA
-
-Alice lends Bob **$100**.  
-Human value in the US = **$1**
-
-
-trust-bel = 10 * log10(100 / 1) = 10 * 2 = 20 tb
-
-
----
-
-### 🧮 Example 2: Italy (pre-Euro)
-
-Anna lends Bruno **1,000,000 Lire**.  
-Human value = **1,000 Lire**
-
-trust-bel = 10 * log10(1,000,000 / 1,000) = 10 * 3 = 30 tb
-
-
-Even though the amount increased fivefold (from $100 to €500), the trust-bel only increased by 10 units — reflecting the logarithmic nature of trust.
-
----
-
-## 🧠 Trust in Practice
-
-In ἀδελφός, trust-bel will be used throughout the system. The **human value** is approximated using the average exchange rate between the local currency and the dollar.
-
-Examples:
-- For Yen, we use **100 Yen** as the human unit, since $1 ≈ ¥100.
-
-
-# 💰 Money in ἀδελφός
-
-In ἀδελφός, money can be either:
-
-- **Real money** — traditional currency exchanged outside the system
-- **Deferred money** — credit exchanged within the system
-
-Deferred money comes in two forms:
-- **Redeemable Money (RM)** — credit with a specified due date
-- **Unredeemable Money (UM)** — credit without a defined repayment date
-
----
-
-## 🔁 Redeemable Money (RM)
-
-Redeemable money functions like an IOU: a promise to pay a specific amount by a future date (e.g., “after 180 days” or “after one year”).
-
-Each user defines their **trust level** in ἀδελφός, which determines how much RM they’re willing to accept from others. This is calculated using the inverse of the trust-bel formula.
-
-### 🧾 Example
-
-> Alice wants to buy a used phone from Bob for $300.  
-> Bob has registered in ἀδελφός with a trust level of **20tb**.  
-> Using the inverse trust formula:
->
-> ```
-> RM_max = 10^(20 / 10) × τ_HV = 100 × $1 = $100
-> ```
->
-> Bob can accept **$100 in RM**. The remaining **$200 must be paid in cash**.
-
-The cash exchange happens outside ἀδελφός. Bob certifies receipt of the $200, Alice confirms she received the phone, and ἀδελφός records the $100 IOU.
-
----
-
-## 🔄 Using RM in the System
-
-RM is **spendable** within ἀδελφός. Bob can use the $100 credit from Alice to purchase goods or services from other users — as long as their trust limits allow it.
-
-### 🧾 Example
-
-> Bob wants to take French lessons from Lucy, who charges **$20/hour** and has a trust level of **20tb**.  
-> Bob books **3 hours** for **$60**.  
-> Lucy accepts RM up to **$100**, so Bob pays entirely in RM.  
-> He now has **$40 RM** remaining.
-
----
-
-### 🧠 Observations
-
-1. **Trust is relational**: Lucy must trust Alice (the original issuer of the RM) to accept Bob’s payment. This will be explored further in the discussion of **Level Zero and Level One groups**.
-
-2. **Credit is cumulative**: If Lucy already holds $60 in RM, her remaining trust capacity is $40.  
-   > If John wants 5 hours of lessons for $100, he can only pay **$40 in RM** and must cover the rest with **real money**.
-
----
-
-## 🌀 Unredeemable Money (UM)
-
-UM works similarly to RM, but without a defined repayment date. Each user has separate trust levels for RM and UM — typically, trust in UM is lower due to its non-convertibility.
-
-Though UM may be convertible in special cases (to be discussed later), for now:
-
-> **1 UM = 1 RM in system value**
-
----
-
-## ⚖️ Key Differences Between RM and UM
-
-- **Interest**: RM may accrue interest; UM does not.
-- **Responsibility**:
-  - Users are responsible for all RM and UM they issue.
-  - They are **only responsible for RM** issued by friends they’ve invited into ἀδελφός.
-
-
-
-
-
-
-
+Key Differences:
+- RM may include interest; UM does not.
+- Users are fully liable for their own RM/UM, but only RM from invited friends.
 
 ## License
+Copyright (c) Lino Ferrentino 2025. This project is licensed under the GPLv3 License.
 
-Copyright (c) Lino Ferrentino 2025.
+---
 
-This project is licensed under the GPLv3 License 
