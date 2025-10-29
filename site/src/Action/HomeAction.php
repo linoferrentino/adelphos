@@ -31,22 +31,14 @@ final class HomeAction
 
 	    $menu_items = [
 		    "<a href=\"/user/register\">Register</a>",
+		    "<a href=\"/user/got_invite\">Got invite</a>"
 	    ];
-	    /*
-
-	    $bread_crumbs = [
-		    'Home' => '/'
-	    ];
-	     */
-
 	    
 	    // Rendering the home.html.php template
 	    $attributes = [
 
 		    'help_page' => '',
-		    'menu_items' => $menu_items/*,
-		    'bread_crumbs' => $bread_crumbs*/
-
+		    'menu_items' => $menu_items
 	    
 	    ];
 	    return $this->renderer->render($response, 'home/home.html.php', $attributes);

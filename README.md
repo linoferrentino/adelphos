@@ -1,6 +1,6 @@
 
 
-# Adelphos: The Self-Organizing, Multi-Level Trust Network
+# Adelphos: The Self-Organizing, fractal Trust Network
 
 > 40 καὶ ἀποκριθεὶς ὁ βασιλεὺς ἐρεῖ αὐτοῖς, Ἀμὴν λέγω ὑμῖν, ἐφ' ὅσον ἐποιήσατε ἑνὶ τούτων τῶν ἀδελφῶν μου τῶν ἐλαχίστων, ἐμοὶ ἐποιήσατε.  
 >  

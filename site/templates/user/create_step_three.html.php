@@ -1,7 +1,6 @@
 <?php
 
 
- // Set layout
 $this->setLayout('layout.html.php')
 ?>
 

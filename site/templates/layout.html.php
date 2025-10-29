@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
 
-  <title>ἀδελφός : the self-organizing, multi level, trust network. </title>
+  <title>ἀδελφός : the self-organizing, fractal trust network. </title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
 
@@ -76,7 +76,7 @@ echo("</div>");
 } else {
 ?>
 
-<h2 class="test_style_inside">ἀδελφός, the self-organizing, multi-level
+<h2 class="test_style_inside">ἀδελφός, the self-organizing, fractal 
 trust network.</h2> <h4>The site is in construction, with some demo data. 
 It will be restarted periodically until 1st release (expected end Q1 2026)</h4> 
 
