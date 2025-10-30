@@ -21,11 +21,13 @@ final class UserGotInviteAction
 	public function __invoke(Request $request, Response $response, array $args): Response
 	{
 
-		$queryParams = json_encode($request->getQueryParams(), JSON_PRETTY_PRINT);
+		$queryParams = $request->getQueryParams();
 
 		$query_string = $request->getUri()->getQuery();
 
 		$invite_code = $queryParams['invite_code'] ?? null;
+
+		$headers = $request->getHeaders();
 
 		$bag = [
 			'date' => date(DATE_RFC2822),
@@ -33,7 +35,8 @@ final class UserGotInviteAction
 			'query_string' => $query_string,
 			'invite_code' => $invite_code,
 			'get' => $_GET,
-			'super_args' => $args
+			'super_args' => $args,
+			'headers' => $headers
 		];
 
 

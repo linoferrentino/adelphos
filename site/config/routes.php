@@ -1,6 +1,8 @@
 
 <?php
 
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 
 return function (App $app) {
@@ -23,6 +25,13 @@ return function (App $app) {
 
 	/* a user gets an invitation to join a family, level zero. */
 	$app->get('/user/got_invite', \App\Action\UserGotInviteAction::class);
+
+
+
+	$app->get('/params', function (Request $request, Response $response) {
+		$response->getBody()->write('Hello World');
+		return $response;
+	});
 
 };
 
