@@ -31,7 +31,7 @@ final class HomeAction
 
 	    $menu_items = [
 		    "<a href=\"/user/register\">Register</a>",
-		    "<a href=\"/user/got_invite\">Got invite</a>"
+		    "<a href=\"/user/got_invite?invite_code=29393\">Got invite</a>"
 	    ];
 	    
 	    // Rendering the home.html.php template

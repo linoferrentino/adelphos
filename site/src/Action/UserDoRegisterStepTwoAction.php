@@ -32,11 +32,17 @@ final class UserDoRegisterStepTwoAction
 		    'choose name/family' => '/user/do_register_step_2'
 	    ];
 
+	    
+	    $bag = [
+		    'test' => 'hello',
+		    'session' => $this->session
+	    ];
+
 
 	    $attributes = [
 		    'help_page' => 'create_user_step_two',
-		    'session' => $this->session,
-		    'bread_crumbs' => $bread_crumbs
+		    'bread_crumbs' => $bread_crumbs,
+		    'bag' => $bag,
 	    ];
 	    
 	    return $this->renderer->render($response, 'user/create_step_two.html.php', $attributes);

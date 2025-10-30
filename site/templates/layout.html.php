@@ -154,16 +154,21 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 
 <p> Debug panel, just for development, please ignore </p>
 
-<?= date(DATE_RFC2822);  ?>
-
 
 <?php
 
 
-	if (isset($session)) { 
-		echo "<br> Parameters </br>";
-		var_dump($session);
-		echo "<br>";
+	if (isset($bag['session'])) { 
+		echo "<br> session is </br><pre>";
+		var_dump($bag['session']);
+		echo "</pre><br>";
+}
+
+	if (isset($bag)) {
+		echo "<br> BAG </br> <pre>";
+		echo json_encode($bag, JSON_PRETTY_PRINT);
+		echo "</pre><br>";
+
 	}
 
 ?>

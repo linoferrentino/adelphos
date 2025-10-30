@@ -18,11 +18,28 @@ final class UserGotInviteAction
 		private SessionInterface $session
 	) {}
 
-	public function __invoke(Request $request, Response $response): Response
+	public function __invoke(Request $request, Response $response, array $args): Response
 	{
 
+		$queryParams = json_encode($request->getQueryParams(), JSON_PRETTY_PRINT);
 
-		$attributes = [];
+		$query_string = $request->getUri()->getQuery();
+
+		$invite_code = $queryParams['invite_code'] ?? null;
+
+		$bag = [
+			'date' => date(DATE_RFC2822),
+			'query_params' => $queryParams,
+			'query_string' => $query_string,
+			'invite_code' => $invite_code,
+			'get' => $_GET,
+			'super_args' => $args
+		];
+
+
+		$attributes = [
+			'bag' => $bag
+		];
 
 
 		// if there is already a user, then it is useless
