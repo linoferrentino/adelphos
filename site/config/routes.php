@@ -27,12 +27,10 @@ return function (App $app) {
 	$app->get('/user/got_invite', \App\Action\UserGotInviteAction::class);
 
 
+	$app->get('/requests/create_currency', \App\Action\RequestsCreateCurrency::class);
+	//$app->get('/admin/create_currency', \App\Action\UserGotInviteAction::class);
 
-	$app->get('/params', function (Request $request, Response $response) {
-		$response->getBody()->write('Hello World');
-		return $response;
-	});
-
+	
 };
 
 

@@ -28,23 +28,19 @@ final class UserDoRegisterStepTwoAction
 
 	    $bread_crumbs = [
 		    'Home' => '/',
-		    'choose currency' => '/user/register',
-		    'choose name/family' => '/user/do_register_step_2'
-	    ];
-
-	    
-	    $bag = [
-		    'test' => 'hello',
-		    'session' => $this->session
+		    'name/family' => '/user/register',
+		    'currency' => '/user/do_register_step_2'
 	    ];
 
 
 	    $attributes = [
 		    'help_page' => 'create_user_step_two',
 		    'bread_crumbs' => $bread_crumbs,
-		    'bag' => $bag,
+		    'json_params' => $json_params
 	    ];
 	    
+            $attributes = make_bag_parameters($attributes, $this->session);
+
 	    return $this->renderer->render($response, 'user/create_step_two.html.php', $attributes);
 
     }

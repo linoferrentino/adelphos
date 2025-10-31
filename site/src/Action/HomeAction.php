@@ -28,10 +28,15 @@ final class HomeAction
 	    	return $this->renderer->render($response, 'home/home_logged.html.php', $attributes);
 	    }
 
+	    // menu items are dependent from the state of the application.
+
+
+	    // at the start the attributes are an empty array.
+	    //$attributes = [];
 
 	    $menu_items = [
 		    "<a href=\"/user/register\">Register</a>",
-		    "<a href=\"/user/got_invite?invite_code=29393\">Got invite</a>"
+		    "<a href=\"/user/got_invite?invite_code=23934\">Got invite</a>"
 	    ];
 	    
 	    // Rendering the home.html.php template
@@ -41,6 +46,9 @@ final class HomeAction
 		    'menu_items' => $menu_items
 	    
 	    ];
+
+	    $attributes = make_bag_parameters($attributes);
+
 	    return $this->renderer->render($response, 'home/home.html.php', $attributes);
     }
 

@@ -27,7 +27,7 @@ final class UserRegisterAction
 
 		$bread_crumbs = [
 			'Home' => '/',
-			'choose currency' => '/user/register'
+			'name/family' => '/user/register'
 		];
 
 
@@ -35,6 +35,8 @@ final class UserRegisterAction
 			'help_page' => 'create_user',
 			'bread_crumbs' => $bread_crumbs
 		];
+
+		$attributes = make_bag_parameters($attributes);
 
 		// Rendering the home.html.php template
 		return $this->renderer->render($response, 'user/register.html.php', $attributes);

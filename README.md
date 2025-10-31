@@ -26,7 +26,7 @@ Adelphos (from the ancient Greek word for "brother") is a system that enables us
 - **LETS (Local Exchange Trading Systems)**: Uses purely virtual credits that cannot leave the system, limiting flexibility for real-world needs.
 - **Ripple**: Relies on a mesh of interconnections for credit paths, but lacks Adelphos' fractal hierarchy, which mimics social structures for more intuitive scaling and risk management.
 
-## 🏡 Economy and Trust Within Families
+##  Economy and Trust Within Families
 Families form the core of human trust and economy, regardless of culture. Key traits include:
 - **Mutual trust**: Members rely on each other without constant tracking.
 - **Shared responsibility**: Debts or obligations are collective.
@@ -37,7 +37,7 @@ Examples:
 
 These principles underpin Adelphos' **Level Zero (L0) Trust**.
 
-## 👨‍👩‍👧‍👦 Level Zero (L0): The Family Unit
+## Level Zero (L0): The Family Unit
 In Adelphos, an L0 group isn't limited to biological families—it's any small unit acting as one economically.
 
 Characteristics:
@@ -47,7 +47,7 @@ Characteristics:
 
 Each group enters with a fixed equity (risk limit), capping total debt to prevent overextension.
 
-## 🧑‍🤝‍🧑 Level One (L1): The Cohort
+## Level One (L1): The Cohort
 L1 groups represent close friends or trusted allies—people you trust deeply but don't share daily finances with.
 
 Key differences from L0:
@@ -59,31 +59,31 @@ Example:
 
 In Adelphos, L1 cohorts pool equities from L0 groups, exposing a portion (e.g., 50%) externally while maintaining internal trust.
 
-## 🧬 Self-Organizing Nature of Adelphos
+##  Self-Organizing Nature of Adelphos
 Adelphos grows fractally: Higher levels (e.g., L2 neighborhoods) mimic lower ones, with admins, pooled equities, and shared responsibilities. This allows organic expansion from families to communities, using routing like DNS for efficient credit paths (O(log n) complexity in balanced trees).
 
-## 🚫 Not a Ponzi Scheme
+##  Not a Ponzi Scheme
 Adelphos is the opposite of a Ponzi scheme. In Ponzi models, the top exploits the bottom without responsibility. Here, higher levels are liable for lower ones' debts, distributing risk upward and encouraging accountability.
 
-## 🤝 Measuring Trust in Adelphos
+##  Measuring Trust in Adelphos
 Trust defies simple definition but, in Adelphos, it's the credit you're willing to extend—quantified by amount and time.
 
-### 💡 What Is Trust?
+###  What Is Trust?
 If Alice sells Bob a $300 phone and accepts a 30-day IOU, she's trusting him for $300 over that period. Longer delays may include interest (e.g., $310 after a year for 3%).
 
-### 📐 Trust as a Measurable Concept
+###  Trust as a Measurable Concept
 Trust is the delayed payment you're willing to accept. Example:
 > Selling a €4,000 car to a friend for €3,500 cash + €500 IOU yields a 12.5% trust ratio.
 
 Adelphos records IOUs, making trust quantifiable and relational.
 
-### 🧭 Philosophy of Trust
+###  Philosophy of Trust
 Adelphos shifts from scarcity-based money to credit-based exchange without fully replacing currencies. Users set personal trust thresholds to limit risk.
 
-### 📊 The Axiom of Adelphos
+###  The Axiom of Adelphos
 One unit of trust equals one unit of currency exchanged. We denote currency as τ (Tao).
 
-### 🧮 The Human Unit
+###  The Human Unit
 Currencies vary; the "human unit" (τ_HV) is the smallest meaningful amount (e.g., $1 in the US, 1,000 pre-Euro Lire in Italy).
 
 ### 📏 The Trust-bel: Unit of Trust
@@ -103,17 +103,17 @@ Example 2 (pre-Euro Italy):
 
 The logarithmic scale reflects how trust grows non-linearly.
 
-### 🧠 Trust in Practice
+###  Trust in Practice
 Trust-bel standardizes comparisons across currencies (e.g., using USD exchange rates for Yen). It's used for credit limits and routing.
 
-## 💰 Money in Adelphos
+##  Money in Adelphos
 Money is either real (external cash) or deferred (internal credit).
 
 Deferred types:
 - **Redeemable Money (RM)**: IOU with a due date; may accrue interest.
 - **Unredeemable Money (UM)**: Credit without a repayment date; lower trust typically.
 
-### 🔁 Redeemable Money (RM)
+###  Redeemable Money (RM)
 Users set RM trust levels, limiting acceptance.
 
 Example:
@@ -130,12 +130,80 @@ Observations:
 - Trust is relational (Lucy trusts the IOU issuer).
 - Credit accumulates; exceeding limits requires cash.
 
-### 🌀 Unredeemable Money (UM)
+###  Unredeemable Money (UM)
 Similar to RM but indefinite. Users set separate (often lower) trust levels.
 
 Key Differences:
 - RM may include interest; UM does not.
 - Users are fully liable for their own RM/UM, but only RM from invited friends.
+
+
+## Defining Your Trust Levels
+
+You’ll define two trust thresholds:
+- **RM (Redeemable Money)** — credit with a due date
+- **UM (Unredeemable Money)** — credit without a due date
+
+### Key Principle
+
+> You control how much personal money you allow into the system.
+> But you are also responsible for converting it back to real money if you choose to leave.
+
+### 🧾 Example: Bob Registers
+
+Bob sets:
+- **RM trust**: 20tb → `10^(20/10) × $1 = $100`
+- **UM trust**: 10tb → `10^(10/10) × $1 = $10`
+
+This means:
+- Bob can **receive up to $100 in RM** and **$10 in UM**
+- These limits also define how much **credit he can extend to others**
+
+###  Bob Buys a Phone from Alice
+
+Alice has:
+- RM trust: 30tb → `$1000`
+- UM trust: 20tb → `$100`
+
+The phone costs **$300**.
+Even though Alice is willing to accept all $300 in RM, Bob’s RM limit is only $100.
+
+So Bob pays:
+- `$100 in RM`
+- `$10 in UM`
+- `$190 in real money (cash)`
+
+> **Reciprocity Principle**
+> If a user sets low trust, others will offer them limited trust in return.
+
+##  Two Ways to Enter ἀδελφός
+
+1. **Register independently**
+   - You build your trust network from scratch
+   - You are responsible for those you invite
+
+2. **Join via invitation**
+   - You are not responsible for users who joined before you
+   - You are responsible for those you invite
+
+> Your responsibility is always capped by the trust level you chose at registration.
+> Invited users may choose high trust, but their effective trust is limited by their inviter’s endorsement.
+
+---
+
+### Example: Bob Invites Alice
+
+Bob registers with:
+- RM trust: 25tb → `$316`
+- UM trust: 15tb → `$31.6`
+
+If Alice issues a **$100 RM cheque**, Bob’s remaining liability is:
+- `$316 - $100 = $216`
+
+> This reflects how **endorsement creates responsibility**.
+> If Alice defaults, Bob is liable — up to his declared trust capacity.
+
+
 
 ## License
 Copyright (c) Lino Ferrentino 2025. This project is licensed under the GPLv3 License.

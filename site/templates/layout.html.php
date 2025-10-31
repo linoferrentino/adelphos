@@ -32,7 +32,9 @@
 <?php
 
 // these are the menu which are dynamically generated
-if (isset($menu_items)) {
+	$menu_items = $bag['menu_items'] ?? null;
+
+	if (isset ($menu_items) ) {
 	foreach ($menu_items as $menu) {
 		echo("$menu\n");
 	}
@@ -52,12 +54,14 @@ if (isset($menu_items)) {
 
 <?php
 
+$bread_crumbs = $bag['bread_crumbs'] ?? null;
+
 if (isset($bread_crumbs)) {
 
 ?>
 
 
-<h4 class="test_style_inside">ἀδελφός, the self-organizing, multi-level
+<h4 class="test_style_inside">ἀδελφός, the self-organizing, fractal
 trust network.</h4> 
 
 <?php
@@ -137,9 +141,24 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 
       <div class="bottom-content">
 
+<?php
+
+	$help_page = $bag['help_page'] ?? null;
+	if (isset($help_page)) {
+
+?>
+
       <iframe id="helpFrame" src="https://www.adelphos.it/grav/<?= $help_page ?>" style="border=none;" ></iframe>
 
+<?php
+	} else {
 
+?>
+
+      <iframe id="helpFrame" src="https://www.adelphos.it/grav/" style="border=none;" ></iframe>
+<?php
+	}
+?>
 
       </div>
     </main>
@@ -150,27 +169,30 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 	<a href="https://github.com/linoferrentino/adelphos">Source code</a>
 <hr>
 
-<div class="bottom_debug_panel"/>
+<div class="bottom_debug_panel">
 
-<p> Debug panel, just for development, please ignore </p>
+<?php
+
+	$dbgvalue = $bag['_bag_debug_value'] ?? 'n';
+
+	if ($dbgvalue == 'y') {
+
+
+?>
+
 
 
 <?php
 
 
-	if (isset($bag['session'])) { 
-		echo "<br> session is </br><pre>";
-		var_dump($bag['session']);
-		echo "</pre><br>";
-}
+		echo "<br> Debug info, please ignore: </br> <pre>";
+		echo html(json_encode($bag, JSON_PRETTY_PRINT));
 
-	if (isset($bag)) {
-		echo "<br> BAG </br> <pre>";
-		echo json_encode($bag, JSON_PRETTY_PRINT);
-		echo "</pre><br>";
-
+	} else {
+		echo ("<pre> no debug " . $dbgvalue);
 	}
 
+	echo "</pre></div>";
 ?>
 
 
