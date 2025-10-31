@@ -84,6 +84,7 @@ echo("</div>");
 trust network.</h2> <h4>The site is in construction, with some demo data. 
 It will be restarted periodically until 1st release (expected end Q1 2026)</h4> 
 
+<!-- style="border=none; -->
 
 <?php
 }
@@ -111,6 +112,7 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 ?>
 
       
+<!-- style="border=none; -->
 
 <?php
 
@@ -119,21 +121,15 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 
 ?>
 
+<!-- style="border=none; -->
 
 </header>
 
 
-<?php
 
 
 
-
-?>
-
-
-
-
-      <div class="summary-scroll">
+      <div class="center-content">
 
     <?= $content ?>
 
@@ -147,15 +143,18 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 	if (isset($help_page)) {
 
 ?>
+<!-- style="border=none; -->
 
-      <iframe id="helpFrame" src="https://www.adelphos.it/grav/<?= $help_page ?>" style="border=none;" ></iframe>
+      <iframe id="help-frame" src="https://www.adelphos.it/grav/<?= $help_page ?>"  ></iframe> 
 
 <?php
 	} else {
 
 ?>
 
-      <iframe id="helpFrame" src="https://www.adelphos.it/grav/" style="border=none;" ></iframe>
+<!-- style="border=none; -->
+
+      <iframe id="help-frame" src="https://www.adelphos.it/grav/"  ></iframe>
 <?php
 	}
 ?>

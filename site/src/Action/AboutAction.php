@@ -28,6 +28,8 @@ final class AboutAction
 		    'help_page' => 'about',
 	    ];
 	    
+            $attributes = make_bag_parameters($attributes, $this->session);
+
 	    return $this->renderer->render($response, 'general/about.html.php', $attributes);
 
     }
