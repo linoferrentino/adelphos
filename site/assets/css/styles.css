@@ -1,0 +1,359 @@
+
+:root {
+  --bg-color: #F0F5C5;
+  --text-color: #BAC154;
+  --accent-color: #A3B86C;
+  --cta-color: #D98E5F;
+  --font-family: 'Noto Serif', serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  /* This will be changed. */
+  height: 90vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 6rem;
+  background-color: var(--accent-color);
+  padding: 1rem;
+  /*color: white;*/
+  /*float: right;*/
+  /*height: 70vh;*/
+}
+
+/* Main content */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top bar */
+.top-content {
+  background-color: var(--accent-color);
+  padding: 1rem;
+  font-size: 1rem;
+  color: white;
+}
+
+
+/*
+.topbar  {
+  height: 5rem;
+}
+*/
+
+
+.sidebar h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.sidebar nav a {
+  display: block;
+  margin: 1rem 0;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.sidebar nav a:hover {
+  color: var(--cta-color);
+}
+
+
+.center-content {
+	flex-grow: 1;
+  max-height: 60vh; /* Adjust as needed */
+  overflow-y: auto;
+  padding-right: 0.5rem; /* Prevent scrollbar overlap */
+  margin-bottom: 0.1rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 6px;
+  background-color: var(--bg-color);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+
+.bottom-content {
+  max-height: 30vh; /* Adjust as needed */
+  background-color: var(--bg-color);
+  padding: 0;
+  color: white;
+  font-size: 2rem;
+  flex-grow: 1;
+  border-radius: 6px;
+  margin: 0.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+
+.help-frame {
+  width: 100%;
+  height:100%;
+}
+
+
+
+/* Page content */
+.content {
+  padding: 0.1rem;
+  height: 70vh;
+}
+
+.topcontent {
+  padding: 0.2rem;
+  height: 30vh;
+}
+
+
+.bottom-content iframe {
+  padding-right: 0.5rem; 
+  width: 99%;
+  max-width: 99%;
+  height: 90%;
+}
+
+
+.form-container-new {
+  display: flex;
+  /*flex-direction: column;*/
+  gap: 20px;
+  max-width: 500px; /* More natural width than 20% */
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: var(--bg-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.form-container-new {
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+.form-submit {
+  background-color: #f9fbe7;
+  font-family: var(--font-family);
+  float: right;
+}
+
+.form-submit:hover {
+  background-color: var(--accent-color);
+}
+
+
+
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 500px; 
+  margin: 2rem auto;
+  padding: 1rem; 
+  background-color: var(--bg-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  /*align-items: center;
+  justify-content: center;*/
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start; 
+}
+
+.form-input {
+	flex: 0;
+	flex-grow : 1;
+	max-width: 5rem;
+	font-family: var(--font-family);
+	/*width: 80%;*/
+	/*margin: 0 30% 0 4%;*/
+  	/*background-color: var(--bg-color);*/
+	background-color: #f9fbe7;
+	/*background-color: red;*/
+}
+
+.form-label {
+  flex: 10;
+  flex-grow : 5;
+  text-align: right;
+  margin-right: 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--text-color);
+  justify-content: left;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+
+}
+
+
+.bottom_debug_panel {
+
+  	color: var(--cta-color);
+	 font-family: 'Courier New', Courier, monospace;
+}
+
+
+/* Flash message container */
+.flash-message {
+  font-family: var(--font-family);
+  padding: 1rem;
+  margin: 1rem auto;
+  border-radius: 6px;
+  width: 90%;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Success */
+.flash-success {
+  background-color: #dff5c5;
+  color: #4c7c2f;
+  border-left: 6px solid #A3B86C;
+}
+
+/* Warning */
+.flash-warning {
+  background-color: #fff4c2;
+  color: #a67c00;
+  border-left: 6px solid #BAC154;
+}
+
+/* Info */
+.flash-info {
+  background-color: #e0f0e9;
+  color: #2e6f5c;
+  border-left: 6px solid #A3B86C;
+}
+
+/* Error */
+.flash-error {
+  background-color: #fdd8d2;
+  color: #a94442;
+  border-left: 6px solid #D98E5F;
+}
+
+
+
+.breadcrumb {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 0.75rem 1rem;
+  margin: 1rem auto;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: left;
+  gap: 0.5rem;
+}
+
+.breadcrumb a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.breadcrumb a:hover {
+  color: var(--cta-color);
+  text-decoration: underline;
+}
+
+.breadcrumb span {
+  color: var(--text-color);
+}
+
+
+
+.summary-container {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+}
+
+.login-info {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.flash-message {
+  font-family: var(--font-family);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.flash-info {
+  background-color: #e0f0e9;
+  color: #2e6f5c;
+  border-left: 6px solid var(--accent-color);
+}
+
+.flash-warning {
+  background-color: #fff4c2;
+  color: #a67c00;
+  border-left: 6px solid var(--text-color);
+}
+
+.flash-success {
+  background-color: #dff5c5;
+  color: #4c7c2f;
+  border-left: 6px solid var(--accent-color);
+}
+
+.balance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.balance-table th,
+.balance-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+.balance-table th {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.balance-table td {
+  background-color: #f9fbe7;
+}

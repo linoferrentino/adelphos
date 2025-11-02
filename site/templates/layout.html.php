@@ -10,7 +10,8 @@
 
   <title>ἀδελφός : the self-organizing, fractal trust network. </title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css">
+<!--    <link rel="stylesheet" href="/styles.css"> -->
+    <link rel="stylesheet" href="/assets/css/styles.css">
 
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
