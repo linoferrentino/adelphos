@@ -12,8 +12,9 @@ $this->setLayout('layout.html.php')
  <form action="/user/do_register_step_3"
           id="select-currency-form" class="form-container" method="post" autocomplete="on">
 
+<div class="form-row">
 
- <label for="currencies">Your currency:</label>
+ <label class='form-label' for="currencies">Your currency:</label>
         <select id="currencies" name="currency">
             <option value="dollar">Dollar</option>
             <option value="euro">Euro</option>
@@ -21,14 +22,15 @@ $this->setLayout('layout.html.php')
             <option value="swiss">Swiss Franch</option>
             <option value="Pound">GBP Pound</option>
         </select>
+</div>
+
+<div class="form-row" style="justify-content: space-between;">
 
         <button type="submit" class="form-submit">Next...</button>
+
+<button class="form-submit" type="button" onclick="alert('please email to adelphos@adelphos.it, I will add it')">My currency is not listed.</button>
+</div>
 </form>
-<!-- <form action="/user/create_currency"
-          id="select-currency-form" class="form-container" method="post" autocomplete="on"> -->
-<button class="form-submit" onclick="alert('please email to adelphos@adelphos.it, I will add it');">My currency is not listed...</button>
-<!--
-</form> -->
 
 
 

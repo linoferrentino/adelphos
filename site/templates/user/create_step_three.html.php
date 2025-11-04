@@ -4,9 +4,10 @@
 $this->setLayout('layout.html.php')
 ?>
 
-<h3>Register in ἀδελφός: Step 3, set your family equity (trust)</h3>
+<h3>Step 3, set your family equity (trust in the system)</h3>
 
-<p> In ἀδελφός trust and credit are two sides of the same coin.</p>
+<p> In adelphos trust and credit are linked: change one and the other will
+follow.</p>
 
     <form action="/user/do_register_step_4"
           id="form-container" class="form-container" method="post" autocomplete="off">

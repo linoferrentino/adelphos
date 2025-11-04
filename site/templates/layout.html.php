@@ -67,7 +67,9 @@ trust network.</h4>
 
 <?php
 
-echo ("<div class=\"breadcrumb\">");
+//echo ("<div class=\"breadcrumb-line\"> <div class=\"breadcrumb\">");
+echo ("<div class=\"breadcrumb-line\"><div class=\"breadcrumb\">");
+//echo ("<div class=\"breadcrumb\">");
 	$val = 0;
 	foreach( $bread_crumbs as $key => $value) {
 		if ($val != 0) {
@@ -77,7 +79,10 @@ echo ("<div class=\"breadcrumb\">");
 		}
 		echo("<a href=\"$value\">" . $key . "</a>");
 	}
-echo("</div>");
+//echo("</div><h3>help</h3></div>");
+echo("</div><button style='check' onclick='toggleHelp();'>help</h3></div>");
+//echo("</div>hello</div>");
+//echo("</div>");
 } else {
 ?>
 
@@ -127,16 +132,16 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 </header>
 
 
+<div class="overlay-container">
 
 
-
-      <div class="center-content">
+      <div class="center-content" id='center-content'>
 
     <?= $content ?>
 
       </div>
 
-      <div class="bottom-content">
+      <div class="bottom-content" id='bottom-content'>
 
 <?php
 
@@ -161,6 +166,9 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 ?>
 
       </div>
+</div> <!--overlay-->
+
+
     </main>
   </div>
 
@@ -202,6 +210,13 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 
 </body>
 
+<script>
+function toggleHelp() {
+	const bottom_content=document.getElementById('bottom-content');
+	bottom_content.style = "display:block;";
+	}
+}
+</script>
 
 
 </html>

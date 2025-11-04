@@ -20,13 +20,24 @@ final class UserDoRegisterStepThreeAction
     {
 
 	    $params = (array)$request->getParsedBody();
+	    $json_params = json_encode($params);
+
+	    $bread_crumbs = [
+		    'Home' => '/',
+		    'name/family' => '/user/register',
+		    'currency' => '/user/do_register_step_2',
+		    'l₀ trust levels' => '/user/do_register_step_3'
+	    ];
+
 
 	    $attributes = [
 		    'help_page' => 'money-in-adelphos',
-	            'pars' => print_r($params, true)
+		    'bread_crumbs' => $bread_crumbs,
+		    'json_params' => $json_params
 	    ];
-
+	    
             $attributes = make_bag_parameters($attributes, $this->session);
+
 	    
 	    return $this->renderer->render($response, 'user/create_step_three.html.php', $attributes);
 
