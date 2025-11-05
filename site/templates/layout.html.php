@@ -80,8 +80,10 @@ echo ("<div class=\"breadcrumb-line\"><div class=\"breadcrumb\">");
 		echo("<a href=\"$value\">" . $key . "</a>");
 	}
 //echo("</div><h3>help</h3></div>");
-echo("</div><button style='check' onclick='toggleHelp();'>help</h3></div>");
+//echo("</div><button class=\"breadcrumb\" style='check' onclick='toggleHelp();'>help</h3></div>");
+echo("</div><h3 class=\"breadcrumb\" onclick='toggleHelp();' id='get_help_id' >help</h3></div>");
 //echo("</div>hello</div>");
+//echo("</div></div>");
 //echo("</div>");
 } else {
 ?>
@@ -212,9 +214,21 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 
 <script>
 function toggleHelp() {
+
+	const get_help_id = document.getElementById('get_help_id');
+
 	const bottom_content=document.getElementById('bottom-content');
-	bottom_content.style = "display:block;";
+
+	if (get_help_id.innerHTML == "Hide help") {
+		get_help_id.innerHTML = "Help";
+		bottom_content.style = "display:none;";
+	} else {
+		get_help_id.innerHTML = "Hide help";
+		bottom_content.style = "display:block;";
 	}
+
+
+
 }
 </script>
 

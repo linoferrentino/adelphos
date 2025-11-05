@@ -89,9 +89,10 @@ body {
 
 .bottom-content {
 	position: absolute;
-	top: 40%;
-	height: 50vh;
+	top: 0;
 	left: 0;
+	height: 72vh;
+	right: 20px;
 	width: 100%;
 	z-index: 10;
   max-height: 99vh; 
@@ -262,13 +263,17 @@ body {
 
 
 .breadcrumb-line {
+	
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: baseline;
+  /*padding: 0.75rem 1rem;
+  margin: 1rem auto;*/
+  
 }
 
-.breadcrumb {
+.breadcrumb-old {
   font-family: var(--font-family);
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -279,7 +284,23 @@ body {
   display: flex;
   flex-wrap: nowrap;
   align-items: baseline;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.breadcrumb {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 0.75rem 0.5rem;
+  /*margin: 1rem auto;*/
+  margin: 0.5rem auto;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  /*display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  justify-content: flex-start;*/
   gap: 0.5rem;
 }
 
@@ -294,8 +315,18 @@ body {
   text-decoration: underline;
 }
 
+.breadcrumb-line h3:hover {
+  color: var(--cta-color);
+  text-decoration: underline;
+}
+
+
+
 .breadcrumb span {
   color: var(--text-color);
+  /*margin: 1rem auto;
+  gap: 0.5rem;*/
+  padding: 0.9rem 0.5rem;
 }
 
 
