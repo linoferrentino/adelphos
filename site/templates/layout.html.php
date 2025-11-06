@@ -6,6 +6,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SRYXYBGRKD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SRYXYBGRKD');
+</script>
+
+
     <meta charset="UTF-8">
 
   <title>ἀδελφός : the self-organizing, fractal trust network. </title>
@@ -56,8 +69,19 @@
 <?php
 
 $bread_crumbs = $bag['bread_crumbs'] ?? null;
+$flash = $bag['flash'] ?? null;
 
-if (isset($bread_crumbs)) {
+if ((isset($bread_crumbs) == false) && (isset($flash)) == false  ) {
+
+?>
+
+<h2 class="test_style_inside">ἀδελφός, the self-organizing, fractal 
+trust network.</h2> <h4>The site is in construction, data entered will be deleted. 1st release expected in Spring 2026</h4> 
+
+<?php
+
+
+} else {
 
 ?>
 
@@ -66,7 +90,7 @@ if (isset($bread_crumbs)) {
 trust network.</h4> 
 
 <?php
-
+if (isset($bread_crumbs)) {
 //echo ("<div class=\"breadcrumb-line\"> <div class=\"breadcrumb\">");
 echo ("<div class=\"breadcrumb-line\"><div class=\"breadcrumb\">");
 //echo ("<div class=\"breadcrumb\">");
@@ -85,24 +109,14 @@ echo("</div><h3 class=\"breadcrumb\" onclick='toggleHelp();' id='get_help_id' >h
 //echo("</div>hello</div>");
 //echo("</div></div>");
 //echo("</div>");
-} else {
-?>
-
-<h2 class="test_style_inside">ἀδελφός, the self-organizing, fractal 
-trust network.</h2> <h4>The site is in construction, with some demo data. 
-It will be restarted periodically until 1st release (expected end Q1 2026)</h4> 
-
-<!-- style="border=none; -->
-
-<?php
-}
+} 
 
 
 if (isset($flash)) {
 foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 	foreach ($flashMessages as $msg) {
-		echo ("<div class=\"flahs-message flash-$flashCategory\">");
-		echo ("<h3>" );
+		echo ("<div class=\"flash-message flash-$flashCategory\">");
+		echo ("<p>" );
 		if ($flashCategory == 'success' ) {
 			echo ("🤗" );
 		} else if ($flashCategory == 'error' ) {
@@ -113,23 +127,16 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 			echo ("😕" );
 
 		}
-		echo (" " . $msg . "</h3></div>");
+		echo (" " . $msg . "</p></div>");
 	}
 }
-} else {
-?>
-
-      
-<!-- style="border=none; -->
-
-<?php
+}
 
 }
 
-
 ?>
 
-<!-- style="border=none; -->
+
 
 </header>
 
@@ -197,6 +204,13 @@ foreach ($flash->all() ?? [] as $flashCategory => $flashMessages) {
 
 		echo "<br> Debug info, please ignore: </br> <pre>";
 		echo html(json_encode($bag, JSON_PRETTY_PRINT));
+
+		$session_ob = $bag['_bag_session_ob'] ?? null;
+
+		if ($session_ob != null) {
+			echo("<h1> session </h1>");
+			var_dump($session_ob);
+		}
 
 	} else {
 		echo ("<pre> no debug " . $dbgvalue);

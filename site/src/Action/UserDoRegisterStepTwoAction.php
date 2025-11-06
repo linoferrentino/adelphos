@@ -15,6 +15,9 @@ final class UserDoRegisterStepTwoAction
 	private SessionInterface $session
     ) {}
 
+    // a function that gets the currencies defined into the system: this is directly linked to
+    // the database.
+
 
     public function __invoke(Request $request, Response $response, array $args): Response
     {

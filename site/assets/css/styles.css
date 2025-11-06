@@ -221,14 +221,15 @@ body {
 /* Flash message container */
 .flash-message {
   font-family: var(--font-family);
-  padding: 1rem;
-  margin: 1rem auto;
+  /*padding: 0.1rem;
+  margin: 0.1rem 0.2rem;*/
   border-radius: 6px;
   width: 90%;
   max-width: 600px;
+  font-weight: bold;
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  align-items: space-between;
+  /*gap: 0.1rem;*/
   font-size: 1rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }

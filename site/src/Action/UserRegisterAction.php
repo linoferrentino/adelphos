@@ -21,9 +21,8 @@ final class UserRegisterAction
 	public function __invoke(Request $request, Response $response): Response
 	{
 
-
-		/* here we remove session data for the user. */
-		$this->session->delete(\SES_REGISTRATION_KEY);
+		// here we remove session data for the user.
+		//$this->session->delete(\SES_REGISTRATION_KEY);
 
 		$bread_crumbs = [
 			'Home' => '/',
@@ -36,7 +35,7 @@ final class UserRegisterAction
 			'bread_crumbs' => $bread_crumbs
 		];
 
-		$attributes = make_bag_parameters($attributes);
+		$attributes = make_bag_parameters($attributes, $this->session);
 
 		// Rendering the home.html.php template
 		return $this->renderer->render($response, 'user/register.html.php', $attributes);

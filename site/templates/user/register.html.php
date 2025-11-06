@@ -5,7 +5,7 @@
 $this->setLayout('layout.html.php')
 ?>
 
-<h3>Step 1, tell me about yourself and your inner trust group: the family</h3>
+<h3>Step 1, yourself and your family (help is available, click above) </h3>
 
 
     <form action="/user/do_register_step_2"

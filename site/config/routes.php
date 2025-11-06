@@ -11,7 +11,6 @@ return function (App $app) {
 
 	$app->get('/about', \App\Action\AboutAction::class);
 
-	$app->post('/login', \App\Action\LoginAction::class);
 
 	$app->get('/summary', \App\Action\SummaryAction::class);
 
@@ -22,6 +21,8 @@ return function (App $app) {
 	$app->post('/user/do_register_step_2', \App\Action\UserDoRegisterStepTwoAction::class);
 	$app->get('/user/do_register_step_2', \App\Action\UserDoRegisterStepTwoAction::class);
 	$app->post('/user/do_register_step_3', \App\Action\UserDoRegisterStepThreeAction::class);
+	$app->get('/user/login', \App\Action\LoginAction::class);
+	$app->post('/user/login_do', \App\Action\LoginDoAction::class);
 
 	/* a user gets an invitation to join a family, level zero. */
 	$app->get('/user/got_invite', \App\Action\UserGotInviteAction::class);

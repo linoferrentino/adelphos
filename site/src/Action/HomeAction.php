@@ -31,12 +31,10 @@ final class HomeAction
 	    // menu items are dependent from the state of the application.
 
 
-	    // at the start the attributes are an empty array.
-	    //$attributes = [];
-
 	    $menu_items = [
+		    "<a href=\"/user/login\">Login</a>",
 		    "<a href=\"/user/register\">Register</a>",
-		    "<a href=\"/user/got_invite?invite_code=23934\">Got invite</a>"
+		    "<a href=\"/user/got_invite\">Got invite</a>"
 	    ];
 	    
 	    // Rendering the home.html.php template

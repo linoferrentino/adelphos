@@ -8,13 +8,11 @@ use Slim\Views\PhpRenderer;
 use Psr\Log\LoggerInterface;
 use Odan\Session\SessionInterface;
 
-final class LoginAction
+final class LoginDoAction
 {
-
 
     public function __construct(
 	    private PhpRenderer $renderer,
-	    private LoggerInterface $logger,
 	    private SessionInterface $session
     ) {}
 
@@ -29,10 +27,7 @@ final class LoginAction
 	    }
     }
 
-
-
-
-    public function __invoke_new(Request $request, Response $response): Response
+    public function __invoke(Request $request, Response $response): Response
     {
 	    // I take the parameters
 	    $params = (array)$request->getParsedBody();
@@ -58,51 +53,20 @@ final class LoginAction
 	    
 	    $flash->add('error', 'wrong credentials');
 	    
-	    
-
 	    $attributes = [
 		    'help_page' => '',
 		    'session' => $this->session,
 		    'flash' => $flash
 	    ];
 	
+	    $attributes = make_bag_parameters($attributes);
 
 	    return $this->renderer->render($response, 'home/home.html.php', $attributes);
 
     }
 
-    public function __invoke(Request $request, Response $response): Response
-    {
-	    /*
-	    if ($this->session->has('ntimes')) {
-		    $ntimes = $this->session->get('ntimes');
-		    $new_val = intval($ntimes) + 1; 
-	    } else {
-		    $new_val = 1;
-	    }
-            $this->session->set('ntimes', strval($new_val));
-	     */
 
-
-
-	    $bread_crumbs = [
-		    'Home' => '/',
-		    'login' => '/user/login'
-	    ];
-
-
-	    $attributes = [
-		    'help_page' => 'login_help',
-		    'bread_crumbs' => $bread_crumbs
-	    ];
-
-	    $attributes = make_bag_parameters($attributes);
-
-
-	    // Rendering the home.html.php template
-	    return $this->renderer->render($response, 'user/login_user.html.php', $attributes);
-
-    }
 }
+
 
 ?>
