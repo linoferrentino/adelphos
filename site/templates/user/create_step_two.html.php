@@ -7,6 +7,12 @@ $this->setLayout('layout.html.php')
 
 
 <h3>Step 2, choose your currency.</h3>
+<?php
+
+	$currencies = $bag['currencies'];
+
+?>
+
 
 
  <form action="/user/do_register_step_3"
@@ -16,11 +22,20 @@ $this->setLayout('layout.html.php')
 
  <label class='form-label' for="currencies">Your currency:</label>
         <select id="currencies" name="currency">
-            <option value="dollar">Dollar</option>
-            <option value="euro">Euro</option>
-            <option value="yen">Yen</option>
-            <option value="swiss">Swiss Franch</option>
-            <option value="Pound">GBP Pound</option>
+
+<?php
+
+
+	foreach ($currencies as $cur) {
+
+		echo ("<option value=\"" . $cur->id  .  "\">" . $cur->name . "</option>");
+
+	}
+
+
+?>
+
+
         </select>
 </div>
 

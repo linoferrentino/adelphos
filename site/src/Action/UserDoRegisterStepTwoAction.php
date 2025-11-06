@@ -6,13 +6,15 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\PhpRenderer;
 use Odan\Session\SessionInterface;
+use App\Backend\AdelphosBE;
 
 final class UserDoRegisterStepTwoAction
 {
 
     public function __construct(
 	    private PhpRenderer $renderer,
-	private SessionInterface $session
+	    private SessionInterface $session,
+	    private AdelphosBE $backend
     ) {}
 
     // a function that gets the currencies defined into the system: this is directly linked to
@@ -21,6 +23,10 @@ final class UserDoRegisterStepTwoAction
 
     public function __invoke(Request $request, Response $response, array $args): Response
     {
+
+	    // let's get the currencies!
+	    $currencies = $this->backend->get_currencies()->currencies;
+
 
 	    $params = (array)$request->getParsedBody();
 
@@ -39,7 +45,8 @@ final class UserDoRegisterStepTwoAction
 	    $attributes = [
 		    'help_page' => 'create_user_step_two',
 		    'bread_crumbs' => $bread_crumbs,
-		    'json_params' => $json_params
+		    'json_params' => $json_params,
+		    'currencies' => $currencies
 	    ];
 	    
             $attributes = make_bag_parameters($attributes, $this->session);

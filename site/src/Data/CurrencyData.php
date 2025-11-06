@@ -1,6 +1,6 @@
 <?php
 
-namespace \App\Data;
+namespace App\Data;
 
 
 /*
@@ -11,13 +11,14 @@ namespace \App\Data;
  * a symbol in the forex exchange like (USD)
  *
  */
-class CurrencyData {
+readonly class CurrencyData {
 
-	private function __construct(
+	public function __construct(
+		public int $id,
 		public string $name,
 		public string $symbol,
 		public string $forex_string,
-		public double $human_value) {
+		public float $human_value) {
 	
 	}
 

@@ -2,6 +2,20 @@
 <?php
 
 
+// I instantiate a backend based on a connection string.
+function  instantiate_back_end(string $backend_conn) : \App\Backend\AdelphosBE {
+
+
+	// for now we only support the mock backend
+	if ($backend_conn == 'mock') {
+		return new \App\Backend\mock\MockAdelphosBE();
+	}
+
+	throw new Exception("Unsupported backend " . $backend_conn);
+
+}
+
+
 /*
  * The menu items are dependent from the state of the application
  *

@@ -11,6 +11,9 @@ use Monolog\Formatter\LineFormatter;
 use Odan\Session\SessionInterface;
 use Odan\Session\SessionManagerInterface;
 use Odan\Session\PhpSession;
+use App\Backend\AdelphosBE;
+use App\Backend\AdelphosBE\instantiate_back_end;
+use App\Backend\AdelphosBE\mock\MockAdelphosBe;
 
 return [
     'settings' => function () {
@@ -71,6 +74,13 @@ return [
         return new PhpSession($options);
     },
 
+    AdelphosBE::class => function (ContainerInterface $container) {
+        $options = $container->get('settings')['adelphos-backend'];
+	#return \App\Backend\instantiate_back_end($options['backend-instance']);
+	return instantiate_back_end($options['backend-instance']);
+
+	//    return new \App\Backend\mock\MockAdelphosBE();
+    }
 
     
 

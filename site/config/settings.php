@@ -32,6 +32,11 @@ $settings['session'] = [
     'lifetime' => 18000, // Time in seconds
 ];
 
+// adelphos backend
+$settings['adelphos-backend'] = [
+	'backend-instance' => 'mock'
+];
+
 return $settings;
 
 ?>
