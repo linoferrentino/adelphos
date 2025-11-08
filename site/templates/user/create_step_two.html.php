@@ -21,7 +21,7 @@ $this->setLayout('layout.html.php')
 <div class="form-row">
 
  <label class='form-label' for="currencies">Your currency:</label>
-        <select id="currencies" name="currency">
+        <select id="currencies" name="currency_id">
 
 <?php
 

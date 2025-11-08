@@ -9,11 +9,26 @@ $this->setLayout('layout.html.php')
 <p> In adelphos trust and credit are linked: change one and the other will
 follow.</p>
 
+
+<?php
+
+	$currencies = $bag['currencies'];
+	$params = $bag['params'];
+
+	
+	$cur_id = $params['currency_id'];
+	$currency = $currencies[$cur_id];
+	$symbol = $currency['symbol'];
+	$human_value = $currency['human_value'];
+
+?>
+
+
     <form action="/user/do_register_step_4"
           id="form-container" class="form-container" method="post" autocomplete="off">
 
 <div class="form-row">
-            <label class='form-label' for="userid"> Equity ($)  </label>
+	    <label class='form-label' for="userid"> Equity (<?= $symbol ?>)  </label>
             <input class="form-input" name="userid" type="text" id="equity_cur" value='1'>
             <label class='form-label' for="userid"> Trust (τ-bel) </label>
             <input class="form-input" name="userid" type="text" id="equity_tbel" value='0'>
@@ -43,7 +58,7 @@ const equit_tbel = document.getElementById("equity_tbel");
 
 equity_cur.addEventListener('input', (event) => {
 
-	tbel_value = 10 * Math.log10(equity_cur.value);
+        tbel_value = 10 * Math.log10(equity_cur.value / <?= $human_value ?>);
 
 	equity_tbel.value =  tbel_value;
 
@@ -51,7 +66,7 @@ equity_cur.addEventListener('input', (event) => {
 
 equity_tbel.addEventListener('input', (event) => {
 
-	cur_value = Math.pow(10, equity_tbel.value / 10);
+	cur_value = <?= $human_value ?> *Math.pow(10, equity_tbel.value / 10);
 	equity_cur.value = cur_value;
 
 });

@@ -35,6 +35,9 @@ final class UserDoRegisterStepTwoAction
 	    // I put the params in the session, this is the step two, so there are only these
 	    $this->session->set(\SES_REGISTRATION_KEY, $json_params);
 
+	    // the currencies are needed in the next step to get the symbol and human value
+	    $this->session->set(\SES_CURRENCIES, json_encode($currencies));
+
 	    $bread_crumbs = [
 		    'Home' => '/',
 		    'name/family' => '/user/register',

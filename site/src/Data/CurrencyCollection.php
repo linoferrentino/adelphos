@@ -28,11 +28,11 @@ class CurrencyCollection {
 		$chf = new CurrencyData(5, "Swiss Franch", "₣", "JPY", 0.81);
 
 		$this->currencies = [
-			$usd,
-			$euro,
-			$gbp,
-			$yen,
-			$chf
+			$usd->id => $usd,
+			$euro->id => $euro,
+			$gbp->id => $gbp,
+			$yen->id => $yen,
+			$chf->id => $chf
 		];
 	}
 

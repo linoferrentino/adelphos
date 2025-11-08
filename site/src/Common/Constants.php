@@ -1,6 +1,7 @@
 <?php
 
-define('SES_REGISTRATION_KEY', 'session-registration-key');
+define('SES_REGISTRATION_KEY', 'ses-registration-key');
+define('SES_CURRENCIES', 'ses-currencies');
 
 // if the AD_DEBUG is true many things are allowed.
 define('AD_DEBUG', 'y');

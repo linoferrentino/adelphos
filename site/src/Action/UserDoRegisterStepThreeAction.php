@@ -20,7 +20,14 @@ final class UserDoRegisterStepThreeAction
     {
 
 	    $params = (array)$request->getParsedBody();
-	    $json_params = json_encode($params);
+
+	    $old_params_json = json_decode($this->session->get(\SES_REGISTRATION_KEY), true);
+
+	    $currencies = json_decode($this->session->get(\SES_CURRENCIES), true);
+
+	    $params = array_merge($params, $old_params_json);
+
+	    //$json_params = json_encode($params);
 
 	    $bread_crumbs = [
 		    'Home' => '/',
@@ -33,7 +40,8 @@ final class UserDoRegisterStepThreeAction
 	    $attributes = [
 		    'help_page' => 'money-in-adelphos',
 		    'bread_crumbs' => $bread_crumbs,
-		    'json_params' => $json_params
+		    'params' => $params,
+		    'currencies' => $currencies
 	    ];
 	    
             $attributes = make_bag_parameters($attributes, $this->session);
