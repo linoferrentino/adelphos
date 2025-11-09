@@ -14,6 +14,10 @@ use Odan\Session\PhpSession;
 use App\Backend\AdelphosBE;
 use App\Backend\AdelphosBE\instantiate_back_end;
 use App\Backend\AdelphosBE\mock\MockAdelphosBe;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Transport;
 
 return [
     'settings' => function () {
@@ -78,8 +82,14 @@ return [
         $options = $container->get('settings')['adelphos-backend'];
 	#return \App\Backend\instantiate_back_end($options['backend-instance']);
 	return instantiate_back_end($options['backend-instance']);
+    },
 
-	//    return new \App\Backend\mock\MockAdelphosBE();
+
+    MailerInterface::class => function (ContainerInterface $container) {
+        $settings = $container->get('settings')['mailer'];
+        $dsn = $settings['dsn'];
+        $eventDispatcher = $container->get(EventDispatcherInterface::class);
+        return new Mailer(Transport::fromDsn($dsn, $eventDispatcher));
     }
 
     

@@ -6,7 +6,9 @@
         "php-di/php-di": "^7.1",
         "monolog/monolog": "^3.9",
         "slim/php-view": "^3.4",
-        "odan/session": "^6.4"
+        "odan/session": "^6.4",
+        "symfony/mailer": "^7.3",
+        "symfony/mailjet-mailer": "^7.3"
     },
     "autoload": {
     "psr-4": {

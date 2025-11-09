@@ -7,8 +7,7 @@ src/cmake_cache.m4
 src/cmake_cache.txt
 Makefile-old
 vendor
-#composer.json
-#composer.lock
 BACK*
 REF*
 logs
+site/config/env/env.php

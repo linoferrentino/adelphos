@@ -1,42 +1,31 @@
 <?php
 
-// Should be set to 0 in production
-error_reporting(E_ALL);
+/**
+ * This file loads the default and environment-specific settings.
+ * Documentation: https://samuel-gfeller.ch/docs/Configuration.
+ */
 
-// Should be set to '0' in production
-ini_set('display_errors', '1');
+// Load default settings
+// MUST NOT be require_once otherwise test settings are included only once and not again for the next tests
+$settings = require __DIR__ . '/defaults.php';
 
-// Settings
-$settings = [];
+// Load secret configuration
+if (file_exists(dirname(__DIR__, 2) . '/env.php')) {
+    require dirname(__DIR__, 2) . '/env.php'; // Take env outside project dir if existing
+} elseif (file_exists(__DIR__ . '/env/env.php')) {
+    require __DIR__ . '/env/env.php';
+}
 
-// Project root dir (1 parent)
-$settings['root_dir'] = dirname(__DIR__, 1);
+// Set APP_ENV if not already set
+$_ENV['APP_ENV'] = $_ENV['APP_ENV'] ?? $_SERVER['APP_ENV'] ?? 'dev';
 
-
-$settings['renderer'] = [
-    // Template path
-    'path' => $settings['root_dir'] . '/templates',
-];
-
-$settings['logger'] = [
-    // Log file location in the logs folder in the project root
-    'path' => dirname(__DIR__) . '/logs',
-    // Default log level
-    'level' => \Monolog\Level::Debug,
-];
-
-
-$settings['session'] = [
-    'name' => 'session-name',
-    // 5h session lifetime
-    'lifetime' => 18000, // Time in seconds
-];
-
-// adelphos backend
-$settings['adelphos-backend'] = [
-	'backend-instance' => 'mock'
-];
+// Overwrite previous config with APP_ENV specific values ("env", "test", "prod", "github", etc.)
+if (isset($_ENV['APP_ENV'])) {
+    $appEnvConfigFile = __DIR__ . '/env/env.' . $_ENV['APP_ENV'] . '.php';
+    if (file_exists($appEnvConfigFile)) {
+        // e.g. env.test.php
+        require $appEnvConfigFile;
+    }
+}
 
 return $settings;
-
-?>
