@@ -8,7 +8,7 @@ $this->setLayout('layout.html.php')
 <h3>Step 1, yourself and your family (help is available, click above) </h3>
 
 
-    <form action="/user/do_register_step_2"
+    <form action="/user/do_register"
           id="reg_step_1" class="form-container" method="post" autocomplete="off">
 
 <div class="form-row">

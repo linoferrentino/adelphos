@@ -18,6 +18,11 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Mailer\EventListener\EnvelopeListener;
+use Symfony\Component\Mailer\EventListener\MessageListener;
+use Symfony\Component\Mailer\EventListener\MessageLoggerListener;
 
 return [
     'settings' => function () {
@@ -90,9 +95,26 @@ return [
         $dsn = $settings['dsn'];
         $eventDispatcher = $container->get(EventDispatcherInterface::class);
         return new Mailer(Transport::fromDsn($dsn, $eventDispatcher));
+    },
+
+    // Event dispatcher for mailer. Required to retrieve emails when testing.
+    EventDispatcherInterface::class => function () {
+        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher->addSubscriber(new MessageListener());
+        $eventDispatcher->addSubscriber(new EnvelopeListener());
+        $eventDispatcher->addSubscriber(new MessageLoggerListener());
+
+        return $eventDispatcher;
     }
 
-    
+
+/*,
+
+    ResponseFactoryInterface::class => function (ContainerInterface $container) {
+        return $container->get(Psr17Factory::class);
+    },
+     */
+
 
 ];
 

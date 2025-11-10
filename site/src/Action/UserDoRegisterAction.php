@@ -1,0 +1,107 @@
+<?php
+
+namespace App\Action;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Views\PhpRenderer;
+use Odan\Session\SessionInterface;
+use App\Backend\AdelphosBE;
+use Cake\Validation\Validator;
+use App\Module\Validation\Exception\ValidationException;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
+use App\Infrastructure\Service\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+
+final class UserDoRegisterAction
+{
+
+    public function __construct(
+	    private PhpRenderer $renderer,
+	    private SessionInterface $session,
+	    private AdelphosBE $backend,
+	    private MailerInterface $mailer
+
+    ) {
+    
+	    // OK, this is the constructor.
+    
+    
+    }
+
+    public function __invoke(Request $request, Response $response): Response
+    {
+
+	    $params = (array)$request->getParsedBody();
+
+	    /*
+	    $json_params = json_encode($params);
+	     */
+
+
+	    $validator = new Validator();
+
+	    $validator->email('email', false, "Invalid Email");
+
+	    $errors = $validator->validate($params);
+
+	    if ($errors) {
+		    throw new ValidationException($errors);
+	    }
+		/////////////////////////////////////////////////////////
+	    //
+	    //
+
+	    // Create email object
+	    $email = new Email();
+	    // Set sender and reply-to address
+	    $email->from(new Address('adelphos@adelphos.it', 'Sender Name'));
+
+	    // Set subject
+	    $email->subject('Welcome to adelphos');
+
+	    // Get body HTML from template password-reset.email.php
+	    /*$body = $this->mailer->getContentFromTemplate(
+		    'mail/register_mail.html.php',
+		    ['name' => 'lino']
+	    );*/
+	    // Set body
+	    $body = "<h1>hello</h1>";
+	    $email->html($body);
+
+	    // Add recipients and priority
+	    $email->to(new Address($params['email'],  "nome cognome"))
+	   ->priority(Email::PRIORITY_HIGH);
+
+	    // Send email
+	    $this->mailer->send($email);
+
+
+
+
+	    //////////////////////////////////////////////////
+
+	    $bread_crumbs = [
+		    'Home' => '/',
+		    'name/family' => '/user/register',
+		    'Enter code' => '/user/do_register_step_2'
+	    ];
+
+
+	    $attributes = [
+		    'help_page' => 'create_user_step_two',
+		    'bread_crumbs' => $bread_crumbs,
+		    'params' => $params,
+		    'errors' => $errors
+	    ];
+	    
+            $attributes = make_bag_parameters($attributes, $this->session);
+
+	    return $this->renderer->render($response, 'user/registration_wait_code.html.php', $attributes);
+
+    }
+
+}
+
+?>

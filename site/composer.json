@@ -8,7 +8,8 @@
         "slim/php-view": "^3.4",
         "odan/session": "^6.4",
         "symfony/mailer": "^7.3",
-        "symfony/mailjet-mailer": "^7.3"
+        "symfony/mailjet-mailer": "^7.3",
+        "cakephp/validation": "^5.2"
     },
     "autoload": {
     "psr-4": {
