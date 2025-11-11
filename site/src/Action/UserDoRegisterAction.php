@@ -11,8 +11,8 @@ use Cake\Validation\Validator;
 use App\Module\Validation\Exception\ValidationException;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
-use App\Infrastructure\Service\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
+use App\Module\Mail\Service\Mailer;
 
 final class UserDoRegisterAction
 {
@@ -21,7 +21,8 @@ final class UserDoRegisterAction
 	    private PhpRenderer $renderer,
 	    private SessionInterface $session,
 	    private AdelphosBE $backend,
-	    private MailerInterface $mailer
+	    //private MailerInterface $mailer
+	    private Mailer $mailer
 
     ) {
     
@@ -62,12 +63,12 @@ final class UserDoRegisterAction
 	    $email->subject('Welcome to adelphos');
 
 	    // Get body HTML from template password-reset.email.php
-	    /*$body = $this->mailer->getContentFromTemplate(
-		    'mail/register_mail.html.php',
+	    $body = $this->mailer->getContentFromTemplate(
+		    'mails/register_mail.html.php',
 		    ['name' => 'lino']
-	    );*/
+	    );
 	    // Set body
-	    $body = "<h1>hello</h1>";
+	    //$body = "<h1>hello</h1>";
 	    $email->html($body);
 
 	    // Add recipients and priority
@@ -75,7 +76,7 @@ final class UserDoRegisterAction
 	   ->priority(Email::PRIORITY_HIGH);
 
 	    // Send email
-	    $this->mailer->send($email);
+	    //$this->mailer->send($email);
 
 
 
