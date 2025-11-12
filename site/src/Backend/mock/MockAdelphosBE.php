@@ -4,6 +4,7 @@ namespace App\Backend\mock;
 
 use App\Backend\AdelphosBE;
 use App\Data\CurrencyCollection;
+use App\Data\UserData;
 
 /*
  * MockAdelphosBe the mock backend used to test the application.
@@ -25,6 +26,11 @@ class MockAdelphosBE implements AdelphosBE {
 
 		return new CurrencyCollection();
 	}
+
+	public function add_user(UserData $user){
+
+	}
+	
 }
 
 

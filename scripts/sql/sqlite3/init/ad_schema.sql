@@ -19,14 +19,16 @@ insert into adelphos_conf(key, value) values ("schema_version", "3");
 
 
 
-
 create table currency (
 	cur_id integer primary key,
 
 	name   text,
 
-	-- this is the symbol as it is written in the Forex exchange
+	-- this is the usually one character used to visualize it
 	symbol text,
+	
+	-- the value which is stored in FOREX
+	forex_string,
 
 	-- human value, the amount of currency which is used to make one Tao
 	hv real
@@ -34,11 +36,13 @@ create table currency (
 );
 
 -- just some currencies
-insert into currency(cur_id, name, symbol, hv) values(0, 'Euro', 'EUR', 1);
-insert into currency(cur_id, name, symbol, hv) values(1, 'Dollar', 'USD', 1);
-insert into currency(cur_id, name, symbol, hv) values(2, 'English Pound', 'GBP', 1);
-insert into currency(cur_id, name, symbol, hv) values(3, 'Swiss Frank', 'CHF', 1);
-insert into currency(cur_id, name, symbol, hv) values(4, 'Yen', 'JPY', 100);
+begin;
+insert into currency(cur_id, name, symbol, forex_string, hv) values(0, 'Euro', '€', 'EUR', 1);
+insert into currency(cur_id, name, symbol, forex_string, hv) values(1, 'Dollar', '$', 'USD', 1);
+insert into currency(cur_id, name, symbol, forex_string, hv) values(2, 'English Pound', '£"', 'GBP', 0.76);
+insert into currency(cur_id, name, symbol, forex_string, hv) values(3, 'Swiss Frank', '₣', 'CHF', 0.81);
+insert into currency(cur_id, name, symbol, forex_string, hv) values(4, 'Yen', '¥', 'JPY', 100);
+commit;
 --- other will follow...
 
 

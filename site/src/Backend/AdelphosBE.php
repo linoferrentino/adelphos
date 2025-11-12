@@ -3,6 +3,7 @@
 namespace App\Backend;
 
 use App\Data\CurrencyCollection;
+use App\Data\UserData;
 
 
 /*
@@ -26,6 +27,10 @@ interface AdelphosBE
 
 	public function get_currencies() : CurrencyCollection;
 
+
+	// we can register a new user, with a user password
+
+	public function add_user(UserData $user);
 
 }
 
