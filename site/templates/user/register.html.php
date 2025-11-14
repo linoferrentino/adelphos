@@ -6,6 +6,7 @@ $this->setLayout('layout.html.php')
 ?>
 
 <h3>Step 1, yourself and your family (help is available, click above) </h3>
+<!-- <p> <x?= $bag['daemon_answer'] ?> </p> -->
 
 
     <form action="/user/do_register"
@@ -38,3 +39,27 @@ $this->setLayout('layout.html.php')
 </div>
     </form>
 
+<script>
+$(document).ready(function () {
+   $('#reg_step_1').submit(function (e) {
+       e.preventDefault(); // Prevent default form submission
+       $.ajax({
+           url: '/user/do_register',
+           type: 'POST',
+           data: { email: $('#email').val() }, // Send form data
+           success: function (response) {
+               console.log(response.message); // Handle success
+               alert(response.message);
+           },
+
+	   error: function(xhr, status, error) {
+		   var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : "An error occurred";
+		   alert("Error: " + errorMessage);
+	   }
+           
+       });
+   });
+});
+
+
+</script>

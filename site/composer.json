@@ -9,7 +9,8 @@
         "odan/session": "^6.4",
         "symfony/mailer": "^7.3",
         "symfony/mailjet-mailer": "^7.3",
-        "cakephp/validation": "^5.2"
+        "cakephp/validation": "^5.2",
+        "samuelgfeller/slim-error-renderer": "^1.2"
     },
     "autoload": {
     "psr-4": {

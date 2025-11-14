@@ -23,6 +23,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Mailer\EventListener\EnvelopeListener;
 use Symfony\Component\Mailer\EventListener\MessageListener;
 use Symfony\Component\Mailer\EventListener\MessageLoggerListener;
+use SlimErrorRenderer\Middleware\ExceptionHandlingMiddleware;
+use SlimErrorRenderer\Middleware\NonFatalErrorHandlingMiddleware;
 
 return [
     'settings' => function () {
@@ -85,7 +87,6 @@ return [
 
     AdelphosBE::class => function (ContainerInterface $container) {
         $options = $container->get('settings')['adelphos-backend'];
-	#return \App\Backend\instantiate_back_end($options['backend-instance']);
 	return instantiate_back_end($options['backend-instance']);
     },
 
@@ -105,15 +106,31 @@ return [
         $eventDispatcher->addSubscriber(new MessageLoggerListener());
 
         return $eventDispatcher;
+    },
+
+    ExceptionHandlingMiddleware::class => function (ContainerInterface $container) {
+	    $settings = $container->get('settings');
+	    $app = $container->get(App::class);
+
+	    return new ExceptionHandlingMiddleware(
+		    $app->getResponseFactory(),
+		    $settings['error']['log_errors'] ? $container->get(LoggerInterface::class) : null,            
+		    $settings['error']['display_error_details'],
+		    $settings['public']['main_contact_email'] ?? null
+	    );
+    },
+
+
+    NonFatalErrorHandlingMiddleware::class => function (ContainerInterface $container) {
+        $settings = $container->get('settings');
+
+        return new NonFatalErrorHandlingMiddleware(
+            $settings['error']['display_error_details'],
+            $settings['error']['log_errors'] ? $container->get(LoggerInterface::class) : null,
+        );
     }
 
 
-/*,
-
-    ResponseFactoryInterface::class => function (ContainerInterface $container) {
-        return $container->get(Psr17Factory::class);
-    },
-     */
 
 
 ];

@@ -21,28 +21,35 @@ final readonly class ValidationExceptionMiddleware implements MiddlewareInterfac
 	       	$this->responseFactory = $responseFactory;
 	}
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
-        try {
-            return $handler->handle($request);
-        } catch (ValidationException $validationException) {
-            // Create response (status code and header are added later)
-            $response = $this->responseFactory->createResponse();
+	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+	{
+		try {
+			return $handler->handle($request);
+		} catch (ValidationException $validationException) {
+			// Create response (status code and header are added later)
+			$response = $this->responseFactory->createResponse();
 
-            $responseData = [
-                'status' => 'error',
-                'message' => $validationException->getMessage(),
-                // The error format is already transformed to the format that the frontend expects in the exception.
-                'data' => ['errors' => $validationException->validationErrors],
-            ];
+			$responseData = [
+				'status' => 'error',
+				'message' => $validationException->getMessage(),
+				// The error format is already transformed to the format that the frontend expects in the exception.
+				'data' => ['errors' => $validationException->validationErrors],
+			];
 
-            //return $this->jsonResponder->encodeAndAddToResponse($response, $responseData, 422);
+			//return $this->jsonResponder->encodeAndAddToResponse($response, $responseData, 422);
 
-	    $response->getBody()->write((string)json_encode($responseData, 
-		    JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR));
-	    $response = $response->withStatus(422);
 
-	    return $response->withHeader('Content-Type', 'application/json');
-        }
-    }
+
+			//throw new \Exception((string)json_encode($responseData, 
+			//	    JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR));
+
+
+			$response->getBody()->write((string)json_encode($responseData, 
+				JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR));
+			$response = $response->withStatus(422);
+
+			return $response->withHeader('Content-Type', 'application/json');
+
+		}
+	}
 }

@@ -1,7 +1,9 @@
 <?php
 
 use Slim\App;
+use SlimErrorRenderer\Middleware\ExceptionHandlingMiddleware;
 use App\Application\Middleware\ValidationExceptionMiddleware;
+use SlimErrorRenderer\Middleware\NonFatalErrorHandlingMiddleware;
 
 return function (App $app) {
 	
@@ -15,10 +17,16 @@ return function (App $app) {
 
 
 	//$app->add(\App\Application\Middleware\ValidationExceptionMiddleware::class);
-	$app->add(new ValidationExceptionMiddleware($app->getResponseFactory()));
+	//$app->add(new ValidationExceptionMiddleware($app->getResponseFactory()));
 
 	// Handle exceptions
 	$app->addErrorMiddleware(true, true, true);
+
+	
+	//$app->add(NonFatalErrorHandlingMiddleware::class); 
+	
+
+	//$app->add(ExceptionHandlingMiddleware::class);
 };
 
 ?>

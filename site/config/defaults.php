@@ -34,8 +34,17 @@ $settings['session'] = [
 
 // adelphos backend
 $settings['adelphos-backend'] = [
-	'backend-instance' => 'mock'
+	'backend-instance' => 'sock'
 ];
+
+
+$settings['error'] = [
+    // Must be set to false in production
+    'display_error_details' => true,
+    // Whether to log errors or not
+    'log_errors' => false,
+];
+
 
 return $settings;
 

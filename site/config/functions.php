@@ -7,8 +7,8 @@ function  instantiate_back_end(string $backend_conn) : \App\Backend\AdelphosBE {
 
 
 	// for now we only support the mock backend
-	if ($backend_conn == 'mock') {
-		return new \App\Backend\mock\MockAdelphosBE();
+	if ($backend_conn == 'sock') {
+		return new \App\Backend\sockBE\SocketBE();
 	}
 
 	throw new Exception("Unsupported backend " . $backend_conn);

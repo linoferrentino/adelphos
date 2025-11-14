@@ -5,17 +5,21 @@ namespace App\Action;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\PhpRenderer;
-use Psr\Log\LoggerInterface;
+//use Psr\Log\LoggerInterface;
 use Odan\Session\SessionInterface;
+//use App\Backend\AdelphosBE;
 
+
+use SlimErrorRenderer\Middleware\ExceptionHandlingMiddleware;
 
 final class UserRegisterAction 
 {
 
 	public function __construct(
 		private PhpRenderer $renderer,
-		private LoggerInterface $logger,
-		private SessionInterface $session
+		//private LoggerInterface $logger,
+		private SessionInterface $session,
+	    	//private AdelphosBE $backend
 	) {}
 
 	public function __invoke(Request $request, Response $response): Response
@@ -23,6 +27,12 @@ final class UserRegisterAction
 
 		// here we remove session data for the user.
 		//$this->session->delete(\SES_REGISTRATION_KEY);
+
+		//$daemon_answer = $this->backend->echo_me("hello");
+
+
+		//$hello = new ExceptionHandlingMiddleware(null, null, null, null);
+
 
 		$bread_crumbs = [
 			'Home' => '/',
@@ -32,6 +42,7 @@ final class UserRegisterAction
 
 		$attributes = [
 			'help_page' => 'create_user',
+			//'daemon_answer' => $daemon_answer,
 			'bread_crumbs' => $bread_crumbs
 		];
 

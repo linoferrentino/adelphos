@@ -21,7 +21,6 @@ final class UserDoRegisterAction
 	    private PhpRenderer $renderer,
 	    private SessionInterface $session,
 	    private AdelphosBE $backend,
-	    //private MailerInterface $mailer
 	    private Mailer $mailer
 
     ) {
@@ -33,12 +32,33 @@ final class UserDoRegisterAction
 
     public function __invoke(Request $request, Response $response): Response
     {
+	    //$name = $data['name'] ?? 'Guest';
 
 	    $params = (array)$request->getParsedBody();
 
-	    /*
-	    $json_params = json_encode($params);
-	     */
+	    $email = $params['email'] ?? 'what?';
+
+	    $responseData = ['message' => "Hello, your email is $email"];
+
+
+	    $response->getBody()->write((string)json_encode($responseData, 
+		    JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR));
+	    $response = $response->withStatus(200);
+	    
+
+	    return $response->withHeader('Content-Type', 'application/json');
+
+
+
+	    //return $response->withJson($responseData); // Return JSON response
+
+
+    }
+
+    public function __invoke_OLD(Request $request, Response $response): Response
+    {
+
+	    $params = (array)$request->getParsedBody();
 
 
 	    $validator = new Validator();
@@ -50,9 +70,6 @@ final class UserDoRegisterAction
 	    if ($errors) {
 		    throw new ValidationException($errors);
 	    }
-		/////////////////////////////////////////////////////////
-	    //
-	    //
 
 	    // Create email object
 	    $email = new Email();

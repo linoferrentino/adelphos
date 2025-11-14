@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff69f7243c6ea7b594bdfedb830faf05",
+    "content-hash": "715a13ff975ef891fbf4928f87ec4e42",
     "packages": [
         {
             "name": "cakephp/core",
@@ -1334,6 +1334,57 @@
                 "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
             "time": "2024-09-11T13:17:53+00:00"
+        },
+        {
+            "name": "samuelgfeller/slim-error-renderer",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/samuelgfeller/slim-error-renderer.git",
+                "reference": "23c08149972b3b466aecf7b5eb206b7e9191d623"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/samuelgfeller/slim-error-renderer/zipball/23c08149972b3b466aecf7b5eb206b7e9191d623",
+                "reference": "23c08149972b3b466aecf7b5eb206b7e9191d623",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "SlimErrorRenderer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Slim 4 error handling middleware and exception page renderer",
+            "keywords": [
+                "error",
+                "handler",
+                "renderer",
+                "slim"
+            ],
+            "support": {
+                "issues": "https://github.com/samuelgfeller/slim-error-renderer/issues",
+                "source": "https://github.com/samuelgfeller/slim-error-renderer/tree/1.2.2"
+            },
+            "funding": [
+                {
+                    "url": "https://ko-fi.com/samuelgfeller",
+                    "type": "ko_fi"
+                }
+            ],
+            "time": "2025-08-23T14:14:46+00:00"
         },
         {
             "name": "slim/php-view",
