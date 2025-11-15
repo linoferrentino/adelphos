@@ -49,12 +49,15 @@ $(document).ready(function () {
            data: { email: $('#email').val() }, // Send form data
            success: function (response) {
                console.log(response.message); // Handle success
-               alert(response.message);
+               alert("Success:" +  response.message);
            },
 
 	   error: function(xhr, status, error) {
-		   var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : "An error occurred";
-		   alert("Error: " + errorMessage);
+		   console.log(xhr.responseText)
+		   //var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : "An error occurred";
+		   var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).data['errors']['email'][0] : "An error occurred";
+		   document.getElementById('email').style.backgroundColor = 'red';
+		   alert("Please correct the errors " + errorMessage);
 	   }
            
        });

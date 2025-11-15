@@ -29,13 +29,17 @@ final readonly class ValidationExceptionMiddleware implements MiddlewareInterfac
 			// Create response (status code and header are added later)
 			$response = $this->responseFactory->createResponse();
 
+			
 			$responseData = [
 				'status' => 'error',
 				'message' => $validationException->getMessage(),
 				// The error format is already transformed to the format that the frontend expects in the exception.
 				'data' => ['errors' => $validationException->validationErrors],
 			];
+			
 
+	    		//$responseData = ['message' => "We have a problem"];
+			//
 			//return $this->jsonResponder->encodeAndAddToResponse($response, $responseData, 422);
 
 

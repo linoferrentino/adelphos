@@ -30,7 +30,7 @@ final class UserDoRegisterAction
     
     }
 
-    public function __invoke(Request $request, Response $response): Response
+    public function __invoke_new(Request $request, Response $response): Response
     {
 	    //$name = $data['name'] ?? 'Guest';
 
@@ -55,7 +55,41 @@ final class UserDoRegisterAction
 
     }
 
-    public function __invoke_OLD(Request $request, Response $response): Response
+    public function __invoke(Request $request, Response $response): Response
+    {
+
+	    $params = (array)$request->getParsedBody();
+	    $email = $params['email'] ?? 'what?';
+
+	    
+	    $validator = new Validator();
+
+	    $validator->email('email', false, "Invalid Email");
+
+	    $errors = $validator->validate($params);
+
+	    if (count($errors) > 0) {
+		    // This is the exit point when there are errors.
+		    throw new ValidationException($errors);
+	    }
+
+	   
+	    $responseData = ['message' => "Hello, your email is $email"];
+
+	    $response->getBody()->write((string)json_encode($responseData, 
+		    JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR));
+	    $response = $response->withStatus(200);
+	    
+
+	    return $response->withHeader('Content-Type', 'application/json');
+
+
+
+
+
+    }
+
+    public function __invoke_BAD(Request $request, Response $response): Response
     {
 
 	    $params = (array)$request->getParsedBody();

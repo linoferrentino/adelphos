@@ -17,16 +17,16 @@ return function (App $app) {
 
 
 	//$app->add(\App\Application\Middleware\ValidationExceptionMiddleware::class);
-	//$app->add(new ValidationExceptionMiddleware($app->getResponseFactory()));
+	$app->add(new ValidationExceptionMiddleware($app->getResponseFactory()));
 
 	// Handle exceptions
-	$app->addErrorMiddleware(true, true, true);
+	//$app->addErrorMiddleware(true, true, true);
 
 	
-	//$app->add(NonFatalErrorHandlingMiddleware::class); 
+	$app->add(NonFatalErrorHandlingMiddleware::class); 
 	
 
-	//$app->add(ExceptionHandlingMiddleware::class);
+	$app->add(ExceptionHandlingMiddleware::class);
 };
 
 ?>
