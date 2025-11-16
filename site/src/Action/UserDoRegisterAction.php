@@ -74,7 +74,11 @@ final class UserDoRegisterAction
 	    }
 
 	   
-	    $responseData = ['message' => "Hello, your email is $email"];
+	    
+	    $responseData = ['message' => "I got email: $email", 'redirectUrl' => '/user/login'];
+
+	    $flash = $this->session->getFlash();
+	    $flash->add('success', 'Registration accepted, you can login now.');
 
 	    $response->getBody()->write((string)json_encode($responseData, 
 		    JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR));
@@ -82,7 +86,18 @@ final class UserDoRegisterAction
 	    
 
 	    return $response->withHeader('Content-Type', 'application/json');
+	     
 
+
+	    /*
+	    $flash = $this->session->getFlash();
+
+	    // Add flash message
+	    $flash->add('success', 'Registration accepted, please check your email.');
+
+
+	    return $response->withHeader('Location', "https://www.adelphos.it")->withStatus(302);
+	     */
 
 
 

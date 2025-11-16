@@ -45,7 +45,7 @@ final class HomeAction
 	    
 	    ];
 
-	    $attributes = make_bag_parameters($attributes);
+	    $attributes = make_bag_parameters($attributes, $this->session);
 
 	    return $this->renderer->render($response, 'home/home.html.php', $attributes);
     }

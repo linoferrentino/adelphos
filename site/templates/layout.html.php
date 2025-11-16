@@ -74,7 +74,7 @@
 <?php
 
 $bread_crumbs = $bag['bread_crumbs'] ?? null;
-$flash = $bag['flash'] ?? null;
+$flash = $bag['_bag_flash'] ?? null;
 
 if ((isset($bread_crumbs) == false) && (isset($flash)) == false  ) {
 

@@ -58,7 +58,6 @@ final class LoginAction
 	    
 	    $flash->add('error', 'wrong credentials');
 	    
-	    
 
 	    $attributes = [
 		    'help_page' => '',
@@ -96,7 +95,7 @@ final class LoginAction
 		    'bread_crumbs' => $bread_crumbs
 	    ];
 
-	    $attributes = make_bag_parameters($attributes);
+	    $attributes = make_bag_parameters($attributes, $this->session);
 
 
 	    // Rendering the home.html.php template

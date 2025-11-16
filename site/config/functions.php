@@ -24,7 +24,7 @@ function app_add_menu_items()
 {
 }
 
-function make_bag_parameters($parameters, $session = null) 
+function make_bag_parameters($parameters, $session) 
 {
 
 	if ( \AD_DEBUG == 'y' ) {
@@ -33,7 +33,8 @@ function make_bag_parameters($parameters, $session = null)
 			'_bag_debug_value' => \AD_DEBUG,
 			'_bag_date' => date("Y-m-d H:i:s"),
 			//'_bag_session' => print_r($session, true)
-			'_bag_session_ob' => $session
+			'_bag_session_ob' => $session,
+			'_bag_flash' => $session->getFlash()
 		];
 
 	} else {
