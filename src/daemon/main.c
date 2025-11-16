@@ -45,6 +45,10 @@ int main(int argc, const char *argv[])
 
 	alogi("adelphos daemon version " ADELPHOS_TAG );
 
+	/* maybe a socket was closed */
+	if (unlink(MY_SOCK_PATH) == -1)
+		handle_error("unlink");
+
 	sfd = socket(AF_UNIX, SOCK_STREAM, 0);
 	ok_or_goto_fail(sfd != 0);
 
@@ -65,7 +69,7 @@ int main(int argc, const char *argv[])
 
 	peer_addr_size = sizeof(peer_addr);
 cycle_accept:
-	alogi("Will accept another client, here");
+	alogi("Accept a client, here");
 
 
 	cfd = accept(sfd, (struct sockaddr *) &peer_addr,
@@ -80,8 +84,14 @@ cycle_accept:
 	int rd;
 	char msg[50];
 	rd = read(cfd, msg, 50);
-	ok_or_goto_fail(rd > 0);
+	ok_or_goto_fail(rd >= 0);
 	alogi("Read %d chars %.*s", rd, rd, msg);
+
+	if (rd == 0) {
+		/* EOF */
+		alogi("eof client, will get another.");
+		goto close_client_and_do_another;
+	}
 
 	/* OK, now we sent back the answer.*/
 
@@ -98,8 +108,8 @@ cycle_accept:
 	wd = write(cfd, buf_out, rd);
 	ok_or_goto_fail(wd == rd);
 
+close_client_and_do_another:
 	close(cfd);
-
 	goto cycle_accept;
 
 

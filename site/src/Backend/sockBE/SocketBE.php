@@ -5,6 +5,7 @@ namespace App\Backend\sockBE;
 use App\Backend\AdelphosBE;
 use App\Data\CurrencyCollection;
 use App\Data\UserData;
+use App\Data\UserRegistrationData;
 
 /*
  *
@@ -15,7 +16,7 @@ use App\Data\UserData;
  */
 class SocketBE implements AdelphosBE {
 
-	private $socket;
+	private $socket = null;
 	public $daemon_answer;
 
 
@@ -40,10 +41,28 @@ class SocketBE implements AdelphosBE {
 		return new CurrencyCollection();
 	}
 
+	/*
 	function add_user(UserData $user){
 
 	}
+	 */
 	
+	function add_user(UserRegistrationData $user_data)
+	{
+		// let's encode the data.
+		$request = json_encode($user_data);
+
+		$res = socket_write($this->socket, $request);
+		if ($res === false) {
+			throw new \Exception(socket_strerror(socket_last_error()));
+		}
+
+		$this->daemon_answer = socket_read($this->socket, 200);
+		if ($this->daemon_answer === false) {
+			throw new \Exception(socket_strerror(socket_last_error()));
+		}
+
+	}
 
 	public function open_adelphos_socket()
 	{
@@ -60,6 +79,7 @@ class SocketBE implements AdelphosBE {
 
 		// Ok, now we send some data. 
 
+	/*	
 		$myhello = "42 the meaning of everything";
 		$res = socket_write($this->socket, $myhello);
 		if ($res === false) {
@@ -70,6 +90,8 @@ class SocketBE implements AdelphosBE {
 		if ($this->daemon_answer === false) {
 			goto throw_error;
 		}
+	 */
+		
 
 		// all good
 		return;

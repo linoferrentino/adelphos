@@ -13,6 +13,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
 use App\Module\Mail\Service\Mailer;
+use App\Data\UserRegistrationData;
 
 final class UserDoRegisterAction
 {
@@ -59,7 +60,14 @@ final class UserDoRegisterAction
     {
 
 	    $params = (array)$request->getParsedBody();
-	    $email = $params['email'] ?? 'what?';
+
+	    // just some default parameters
+	    
+	    $email = $params['email'] ?? 'linus@peanuts.org';
+	    $userid = $params['userid'] ?? 'linus';
+	    $family = $params['family'] ?? 'peanuts';
+	    $password = $params['password'] ?? 'schultz';
+	    
 
 	    
 	    $validator = new Validator();
@@ -73,6 +81,11 @@ final class UserDoRegisterAction
 		    throw new ValidationException($errors);
 	    }
 
+	    // If I am here the data is valid
+
+	    $user_data = new UserRegistrationData($userid, $family, $email, $password);
+
+	    $this->backend->add_user($user_data);
 	   
 	    
 	    $responseData = ['message' => "I got email: $email", 'redirectUrl' => '/user/login'];
