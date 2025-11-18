@@ -1,11 +1,16 @@
 # common library for adelphos
 
 add_library(ad_common SHARED
-	trust.c
-	vecptr.c
-	misc.c
 	alog.c
 	crypt.c
+	jfsm.c
+	jsmn.c
+	jsmn_user.c
+	misc.c
+	strstream.c
+	trust.c
+	units.c
+	vecptr.c
 )
 
 target_link_libraries(ad_common PUBLIC m)
