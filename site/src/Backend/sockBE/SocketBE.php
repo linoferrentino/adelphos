@@ -62,6 +62,8 @@ class SocketBE implements AdelphosBE {
 			throw new \Exception(socket_strerror(socket_last_error()));
 		}
 
+		return $this->daemon_answer;
+
 	}
 
 	public function open_adelphos_socket()

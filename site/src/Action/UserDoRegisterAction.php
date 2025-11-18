@@ -85,13 +85,13 @@ final class UserDoRegisterAction
 
 	    $user_data = new UserRegistrationData($userid, $family, $email, $password);
 
-	    $this->backend->add_user($user_data);
+	    $result_daemon = $this->backend->add_user($user_data);
 	   
 	    
 	    $responseData = ['message' => "I got email: $email", 'redirectUrl' => '/user/login'];
 
 	    $flash = $this->session->getFlash();
-	    $flash->add('success', 'Registration accepted, you can login now.');
+	    $flash->add('success', "Registration accepted, $result_daemon you can login now.");
 
 	    $response->getBody()->write((string)json_encode($responseData, 
 		    JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR));
