@@ -114,16 +114,28 @@ cycle_accept:
 
 	/* let's get the message */
 	int rd;
-	char msg[50];
-	rd = read(cfd, msg, 50);
-	ok_or_goto_fail(rd >= 0);
-	alogi("Read %d chars %.*s", rd, rd, msg);
+	uint32_t lreq;
+	/* just to test */
+#define MAX_BUFFER 512
+	char msg[MAX_BUFFER];
 
+	rd = read(cfd, &lreq, sizeof(lreq));
 	if (rd == 0) {
 		/* EOF */
 		alogi("eof client, will get another.");
 		goto close_client_and_do_another;
 	}
+	ok_or_goto_fail(rd == sizeof(lreq));
+	alogi("I will read %d chars", lreq);
+
+	ok_or_goto_fail(lreq <= MAX_BUFFER);
+
+
+	rd = read(cfd, msg, lreq);
+	ok_or_goto_fail(rd == lreq);
+
+	alogi("this is the request %.*s", lreq, msg);
+	
 
 	/* OK, now we sent back the answer.*/
 
@@ -150,10 +162,15 @@ cycle_accept:
 	char *str = jfsm_json_str(fsm);
 	size_t sz = jfsm_str_size(fsm);
 
-	alogi("Sending [%s] to client, len %zd", str, sz);
-	dump_payload(str, sz);
-
+	/* Also in this case I write the length first. */
+	uint32_t lres = (uint32_t)sz;
 	int wd;
+	wd = write(cfd, &lres, sizeof(lres));
+	ok_or_goto_fail(wd == sizeof(lres));
+
+	alogi("Sending [%.*s] to client", lres, str);
+/*	dump_payload(str, sz);*/
+
 	wd = write(cfd, str, sz);
 	ok_or_goto_fail(wd == sz);
 
