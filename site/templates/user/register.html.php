@@ -5,8 +5,10 @@
 $this->setLayout('layout.html.php')
 ?>
 
-<h3>Tell me about yourself and your family (help is available, click above) </h3>
+<h3>Tell me about yourself and your family. </h3>
 <!-- <p> <x?= $bag['daemon_answer'] ?> </p> -->
+
+<h4>Please use at least 5 characters for user/family and password</h4>
 
 
     <form action="/user/do_register"
@@ -43,25 +45,53 @@ $this->setLayout('layout.html.php')
 
 
 document.addEventListener('DOMContentLoaded', function() {
+	
 	var form = document.getElementById('reg_form');
 	var submitButton = document.getElementById('register_submit');
 	form.addEventListener('input', function() {
 
-		$(".form-input").css('background', 'white');
+
+		//something on user and password
+		user = $('#userid').val();
+		family = $('#family').val();
+		can_submit = true;
+
+		if (user.length < 5) {
+			$('#userid').css('backgroundColor', 'red');
+			can_submit = false;
+		} else {
+			$('#userid').css('backgroundColor', 'white');
+		}
+
+		if (family.length < 5) {
+			$('#family').css('backgroundColor', 'red');
+			can_submit = false;
+		} else {
+			$('#family').css('backgroundColor', 'white');
+		}
+
 
 		pass1 = $('#password_1').val();
 		pass2 = $('#password_2').val();
 
-		if (pass1.length == 0)
-			return;
+		if (pass1.length < 5) {
+			$('#password_1').css('backgroundColor', 'red');
+			can_submit = false;
+		} else {
+			$('#password_1').css('backgroundColor', 'white');
+		}
 		
 		if (pass1 != pass2) {
 			$('#password_2').css('backgroundColor', 'red');
-			return;
+			can_submit = false;
+		} else {
+			$('#password_2').css('backgroundColor', 'white');
 		}
 
-		$('#password_2').css('backgroundColor', 'white');
-		submitButton.disabled = false;
+
+		if (can_submit) {
+			submitButton.disabled = false;
+		}
 		
 	});
 });
