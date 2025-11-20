@@ -31,6 +31,11 @@
  * We could design a multiprocess lock for the DB, but in that case
  * probably a real multi user DB like postgreSQL should be used.
  *
+ *
+ * Adelphos does not spead JSON at this level.
+ *
+ * Communication is done using normal c structs.
+ *
  * 
  *
  * */
@@ -81,6 +86,8 @@ typedef void* ad_h;
  * */
 
 /* should be enough :) */
+/* note that 30 is not the length of the struct, the params
+ * might be arbitrarly long. */
 #define MAX_PARAMS 30
 struct generic_pars {
 	char *params[MAX_PARAMS];
@@ -97,6 +104,41 @@ struct create_l0_group_pars {
 
 #define AD_CREATE_L0_PARS_SIZE ((sizeof(struct create_l0_group_pars)) / \
 		(sizeof(char*)))
+
+
+/* It is not necessary to have the structure only with chars. */
+
+struct add_user_in_s
+{
+	char *name;
+	char *family_name;
+	char *password;
+	char *email;
+};
+
+/* It is empty. */
+struct add_user_out_s
+{
+};
+
+
+/* 
+ * All the responses from adelphos have a response code.
+ *
+ * */
+struct adelphos_out_s
+{
+	int8_t ret_code;
+
+	union {
+		struct add_user_out_s ausr;
+	};
+};
+
+
+/* The user added is not yet confirmed. */
+ad_res add_user(struct add_user_in_s *adu);
+
 
 
 /* here I have already done my research. */
@@ -156,7 +198,9 @@ int ad_adelphos_delete(ad_h adelphos);
  * this instantiates the request, but the connection is not made yet.
  *
  * */
+/*
 int ad_adelphos_request_connect(ad_h l0_group_1, ad_h l0_group_2);
+*/
 
 
 /* 

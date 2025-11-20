@@ -22,6 +22,7 @@
 #include <ctype.h>
 
 #include "jfsm.h"
+#include "request.h"
 
 
 #define MY_SOCK_PATH "/tmp/adelphos"
@@ -135,7 +136,8 @@ cycle_accept:
 	ok_or_goto_fail(rd == lreq);
 
 	alogi("this is the request %.*s", lreq, msg);
-	
+
+	req_handle(msg, lreq);
 
 	/* OK, now we sent back the answer.*/
 
@@ -169,13 +171,9 @@ cycle_accept:
 	ok_or_goto_fail(wd == sizeof(lres));
 
 	alogi("Sending [%.*s] to client", lres, str);
-/*	dump_payload(str, sz);*/
 
 	wd = write(cfd, str, sz);
 	ok_or_goto_fail(wd == sz);
-
-	/*wd = write(cfd, buf_out, rd);
-	ok_or_goto_fail(wd == rd);*/
 
 
 	jfsm_free(fsm);

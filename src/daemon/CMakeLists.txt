@@ -1,5 +1,6 @@
 add_executable(add
 	main.c
+	request.c
 )
 
 target_include_directories(add PUBLIC ../common)

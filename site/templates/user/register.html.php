@@ -5,9 +5,6 @@
 $this->setLayout('layout.html.php')
 ?>
 
-<h3>Tell me about yourself and your family. </h3>
-<!-- <p> <x?= $bag['daemon_answer'] ?> </p> -->
-
 <h4>Please use at least 5 characters for user/family and password</h4>
 
 
@@ -40,6 +37,15 @@ $this->setLayout('layout.html.php')
             <button type="submit" class='form-submit' disabled id="register_submit">Register</button>
 </div>
     </form>
+
+<h4>Please note that in adelphos you are always part of a family, the level zero trust group</h4>
+<ul>
+<li>Even a family of one person is a family</li>
+<li>The family needs not to be a 'real' family, but your closest friends</li>
+<li>After this registration you will be able to invite the other members of your family</li>
+<li>At the start you will be the administrator of the family, but this can be changed</li>
+</ul>
+
 
 <script>
 
