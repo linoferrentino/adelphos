@@ -41,24 +41,21 @@ class SocketBE implements AdelphosBE {
 		return new CurrencyCollection();
 	}
 
-	/*
-	function add_user(UserData $user){
-
-	}
-	 */
-
 
 	private function _socket_write_all($str, $len) {
 
-		$res = socket_write($this->socket, $str, $len);
+		$len_written = 0;
 
-		if ($res === false) {
-			throw new \Exception(socket_strerror(socket_last_error()));
-		}
+		while ($len_written < $len) {
 
-		// here I have to make a loop
-		if ($res < $len) {
-			throw new \Exception(socket_strerror(socket_last_error()));
+			$wrb = socket_write($this->socket, $str, $len);
+
+			if ($wrb === false) {
+				throw new \Exception(socket_strerror(socket_last_error()));
+			}
+
+			$len_written += $wrb;
+
 		}
 
 	}
@@ -66,17 +63,26 @@ class SocketBE implements AdelphosBE {
 
 	private function _socket_read_all($len) {
 
-		$str = socket_read($this->socket, $len);
+		$len_read = 0;
 
-		if ($this->daemon_answer === false) {
-			throw new \Exception(socket_strerror(socket_last_error()));
-		}
-		// here I have to make a loop
-		if (strlen($str) < $len) {
-			throw new \Exception(socket_strerror(socket_last_error()));
+		while ($len_read < $len) {
+
+			$str = socket_read($this->socket, $len);
+			if ($str === false) {
+				throw new \Exception(socket_strerror(socket_last_error()));
+			}
+
+			if ($len_read == 0) {
+				$str_tot = $str;
+			} else {
+				$str_tot = $str_tot . $str;
+			}
+
+			$len_read += strlen($str);
+
 		}
 
-		return $str;
+		return $str_tot;
 
 	}
 
@@ -111,24 +117,10 @@ class SocketBE implements AdelphosBE {
 	function add_user(UserRegistrationData $user_data)
 	{
 		// let's encode the data.
-		$request = json_encode($user_data);
+		$request = json_encode($user_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES, JSON_NUMERIC_CHECK);
 
-		// the length of the string is stored.
-
-		/*
-		$res = socket_write($this->socket, $request);
-		if ($res === false) {
-			throw new \Exception(socket_strerror(socket_last_error()));
-		}
-		 */
 		$this->_socket_write_request($request);
 
-		/*
-		$this->daemon_answer = socket_read($this->socket, 200);
-		if ($this->daemon_answer === false) {
-			throw new \Exception(socket_strerror(socket_last_error()));
-		}
-		 */
 		$this->daemon_answer = $this->_socket_read_response();
 
 		return $this->daemon_answer;
@@ -148,21 +140,6 @@ class SocketBE implements AdelphosBE {
 			goto throw_error;
 		}
 
-		// Ok, now we send some data. 
-
-	/*	
-		$myhello = "42 the meaning of everything";
-		$res = socket_write($this->socket, $myhello);
-		if ($res === false) {
-			goto throw_error;
-		}
-
-		$this->daemon_answer = socket_read($this->socket, 200);
-		if ($this->daemon_answer === false) {
-			goto throw_error;
-		}
-	 */
-		
 
 		// all good
 		return;
