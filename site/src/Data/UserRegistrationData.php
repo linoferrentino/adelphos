@@ -17,7 +17,7 @@ namespace App\Data;
 readonly class UserRegistrationData {
 
 	public function __construct(
-		public string $userid,
+		public string $name,
 		public string $family,
 		public string $email,
 		public string $password)

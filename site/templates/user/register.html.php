@@ -5,12 +5,16 @@
 $this->setLayout('layout.html.php')
 ?>
 
-<h4>Please use at least 5 characters for user/family and password</h4>
 
+<h4>In adelphos you are always part of a family, the level zero trust group</h4>
+
+<p>Here you can start a new family, if you want to join an existing family,
+please ask the family administrator to invite you.</p>
 
     <form action="/user/do_register"
           id="reg_form" class="form-container" method="post" autocomplete="off">
 
+<h5>Please use at least 5 characters for user/family and password</h5>
 <div class="form-row">
             <label class="form-label" for="userid">User name:</label>
             <input class="form-input" name="userid" type="text" id="userid">
@@ -38,7 +42,6 @@ $this->setLayout('layout.html.php')
 </div>
     </form>
 
-<h4>Please note that in adelphos you are always part of a family, the level zero trust group</h4>
 <ul>
 <li>Even a family of one person is a family</li>
 <li>The family needs not to be a 'real' family, but your closest friends</li>

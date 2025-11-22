@@ -29,5 +29,8 @@ int req_handle(char *req, size_t len)
 		return 1;
 
 	jsmn_dump_v(&jval);
+
+	/* I do not need the value any more. */
+	jsmn_val_free(&jval);
 	return 0;
 }
