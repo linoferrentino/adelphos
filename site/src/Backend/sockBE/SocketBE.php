@@ -6,6 +6,7 @@ use App\Backend\AdelphosBE;
 use App\Data\CurrencyCollection;
 use App\Data\UserData;
 use App\Data\UserRegistrationData;
+use Odan\Session\SessionInterface;
 
 /*
  *
@@ -21,7 +22,10 @@ class SocketBE implements AdelphosBE {
 
 
 	// in the constructor I will open the socket.
-	function __construct() {
+	// I need the session because I will get the authorization token.
+	function __construct(
+	    private SessionInterface $session
+	) {
 
 		$this->open_adelphos_socket();
 
@@ -113,18 +117,36 @@ class SocketBE implements AdelphosBE {
 		return $response;
 
 	}
-	
-	function add_user(UserRegistrationData $user_data)
-	{
-		// let's encode the data.
-		$request = json_encode($user_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES, JSON_NUMERIC_CHECK);
 
-		$this->_socket_write_request($request);
+
+	
+	// This is the function to create a request.
+	// Not all the requests needs an authorization
+	protected function _do_request($cmd, $needs_auth, $data) {
+
+		$request = [
+			"cmd" => $cmd,
+			"params" => $data
+		];
+
+		if ($needs_auth === true) {
+			$request['token'] = $this->session['token'];
+		}
+	
+		$request_json = json_encode($request, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES, JSON_NUMERIC_CHECK);
+
+		$this->_socket_write_request($request_json);
 
 		$this->daemon_answer = $this->_socket_read_response();
 
 		return $this->daemon_answer;
 
+	}
+
+	
+	function add_user(UserRegistrationData $user_data)
+	{
+		return $this->_do_request('add_user', false, $user_data);
 	}
 
 	public function open_adelphos_socket()

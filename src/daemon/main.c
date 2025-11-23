@@ -78,9 +78,14 @@ int main(int argc, const char *argv[])
 
 	alogi("adelphos daemon version " ADELPHOS_TAG );
 
-	/* maybe a socket was closed */
-	if (unlink(MY_SOCK_PATH) == -1)
-		handle_error("unlink");
+
+	/* Initialization of the requests. */
+	req_init();
+
+
+	/* maybe a socket was closed. Here a failure is not
+	 * a fatal error*/
+	unlink(MY_SOCK_PATH);
 
 	sfd = socket(AF_UNIX, SOCK_STREAM, 0);
 	ok_or_goto_fail(sfd != 0);
@@ -139,18 +144,6 @@ cycle_accept:
 
 	req_handle(msg, lreq);
 
-	/* OK, now we sent back the answer.*/
-
-	/* double end of line to finish answer */
-	/*
-	time_t now = time(NULL);
-	char* answer = "hello %.*s time is %d\n";
-	char buf_out[100];
-	rd = snprintf(buf_out, 100, answer, rd, msg, now);
-	ok_or_goto_fail(rd > 0);
-
-	alogi("Sending [%s] to client, len %d", buf_out, rd);
-	*/
 	/* let's try to send a json output */
 	struct json_fsm *fsm;
 	jfsm_str_init(&fsm);

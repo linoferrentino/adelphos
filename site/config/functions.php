@@ -3,12 +3,12 @@
 
 
 // I instantiate a backend based on a connection string.
-function  instantiate_back_end(string $backend_conn) : \App\Backend\AdelphosBE {
+function  instantiate_back_end(string $backend_conn, $session) : \App\Backend\AdelphosBE {
 
 
 	// for now we only support the mock backend
 	if ($backend_conn == 'sock') {
-		return new \App\Backend\sockBE\SocketBE();
+		return new \App\Backend\sockBE\SocketBE($session);
 	}
 
 	throw new Exception("Unsupported backend " . $backend_conn);

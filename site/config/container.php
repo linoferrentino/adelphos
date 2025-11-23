@@ -87,7 +87,8 @@ return [
 
     AdelphosBE::class => function (ContainerInterface $container) {
         $options = $container->get('settings')['adelphos-backend'];
-	return instantiate_back_end($options['backend-instance']);
+	return instantiate_back_end($options['backend-instance'],
+		$container->get(SessionInterface::class));
     },
 
 

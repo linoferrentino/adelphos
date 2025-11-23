@@ -20,4 +20,12 @@
 
 int req_handle(char *req, size_t len);
 
+/* 
+ *
+ * The function to initialize the requests. It builds the
+ * dictionary of requests.
+ *
+ * */
+int req_init(void);
+
 #endif

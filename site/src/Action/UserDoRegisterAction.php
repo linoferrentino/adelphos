@@ -31,6 +31,7 @@ final class UserDoRegisterAction
     
     }
 
+    /*
     public function __invoke_new(Request $request, Response $response): Response
     {
 	    //$name = $data['name'] ?? 'Guest';
@@ -55,6 +56,7 @@ final class UserDoRegisterAction
 
 
     }
+     */
 
     public function __invoke(Request $request, Response $response): Response
     {
@@ -86,6 +88,9 @@ final class UserDoRegisterAction
 	    $user_data = new UserRegistrationData($userid, $family, $email, $password);
 
 	    $result_daemon = $this->backend->add_user($user_data);
+
+
+	    // OK, this is an AJAX request, so I need to redirect the user.
 	   
 	    
 	    $responseData = ['message' => "I got email: $email", 'redirectUrl' => '/user/login'];
@@ -102,21 +107,9 @@ final class UserDoRegisterAction
 	     
 
 
-	    /*
-	    $flash = $this->session->getFlash();
-
-	    // Add flash message
-	    $flash->add('success', 'Registration accepted, please check your email.');
-
-
-	    return $response->withHeader('Location', "https://www.adelphos.it")->withStatus(302);
-	     */
-
-
-
-
     }
 
+    /*
     public function __invoke_BAD(Request $request, Response $response): Response
     {
 
@@ -181,6 +174,7 @@ final class UserDoRegisterAction
 	    return $this->renderer->render($response, 'user/registration_wait_code.html.php', $attributes);
 
     }
+     */
 
 }
 
