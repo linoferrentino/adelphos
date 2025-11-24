@@ -12,6 +12,7 @@
 #ifndef a_log_h
 #define a_log_h
 
+#include <sys/types.h>
 #include <stdint.h>
 #include <stdio.h>
 

@@ -35,10 +35,12 @@
 	do { perror(msg); exit(EXIT_FAILURE); } while (0)
 
 
+
 #define _LOG_MODULE "daemon-main"
 #define MODULE_LEV ML_TRIVIAL
 #include "alog.h"
 LOG_MODULE_IMP;
+
 
 #include "adelphos_config.h"
 
@@ -154,64 +156,13 @@ redo_cycle_accept:
 	if (cfd == -1)
 		handle_error("accept");
 
-	/* Code to deal with incoming connection(s)... */
 
+	/* I get the request, this for now is here, later
+	 * we might have a separate thread. */
+	res = handle_client(cfd);
+	ok_or_goto_fail(res == 0);
 
-	/* let's get the message */
-	int rd;
-	uint32_t lreq;
-	/* just to test */
-#define MAX_BUFFER 512
-	char msg[MAX_BUFFER];
-
-	rd = read(cfd, &lreq, sizeof(lreq));
-	if (rd == 0) {
-		/* EOF */
-		alogi("eof client, will get another.");
-		goto close_client_and_do_another;
-	}
-	ok_or_goto_fail(rd == sizeof(lreq));
-	alogi("I will read %d chars", lreq);
-
-	ok_or_goto_fail(lreq <= MAX_BUFFER);
-
-
-	rd = read(cfd, msg, lreq);
-	ok_or_goto_fail(rd == lreq);
-
-	alogi("this is the request %.*s", lreq, msg);
-
-	req_handle(msg, lreq);
-
-	/* let's try to send a json output */
-	struct json_fsm *fsm;
-	jfsm_str_init(&fsm);
-
-	jfsm_object_push(fsm);
-	jfsm_member(fsm, "hello");
-	jfsm_value_string(fsm, "world");
-	jfsm_object_pop(fsm);
-	jfsm_finalize(fsm, 1);
-
-	char *str = jfsm_json_str(fsm);
-	size_t sz = jfsm_str_size(fsm);
-
-	/* Also in this case I write the length first. */
-	uint32_t lres = (uint32_t)sz;
-	int wd;
-	wd = write(cfd, &lres, sizeof(lres));
-	ok_or_goto_fail(wd == sizeof(lres));
-
-	alogi("Sending [%.*s] to client", lres, str);
-
-	wd = write(cfd, str, sz);
-	ok_or_goto_fail(wd == sz);
-
-
-	jfsm_str_free(fsm, 1);
-
-close_client_and_do_another:
-	close(cfd);
+	
 	goto cycle_accept;
 
 end:
@@ -223,6 +174,7 @@ fail:
 	if (unlink(MY_SOCK_PATH) == -1)
 		handle_error("unlink");
 
+	req_close();
 
 
 	return res;

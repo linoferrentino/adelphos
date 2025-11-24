@@ -3,6 +3,7 @@
 add_library(ad_common SHARED
 	alog.c
 	crypt.c
+	hash.c
 	jfsm.c
 	jsmn.c
 	jsmn_user.c

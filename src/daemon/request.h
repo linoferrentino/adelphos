@@ -16,16 +16,31 @@
 #ifndef _request_h_
 #define _request_h_
 
-#include <stdlib.h>
+/*#include <stdlib.h>*/
 
-int req_handle(char *req, size_t len);
+/*int req_handle(char *req, size_t len);*/
+
+/* handles the client request. It returns when the
+ * client has finished. */
+/*int handle_client_request(int cfd);*/
 
 /* 
+ *
  *
  * The function to initialize the requests. It builds the
  * dictionary of requests.
  *
  * */
 int req_init(void);
+
+
+/* the function to handle a client, single thread. */
+int handle_client(int cfd);
+
+/*
+ * removes the requests.
+ *
+ */
+void req_close(void);
 
 #endif
