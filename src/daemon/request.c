@@ -26,14 +26,17 @@ LOG_MODULE_IMP;
 
 
 
-
 int req_init(void)
 {
+
+	/* OK, we have now to add the commands which the json 
+	 * interface understands.*/
+
 	return 0;
 }
 
 #define REQ_CMD_KEY "cmd"
-#define REQ_CMD_KEY_SZ sizeof(REQ_CMD_KEY)
+#define REQ_CMD_KEY_SZ (sizeof(REQ_CMD_KEY)-1)
 
 int req_handle(char *req, size_t len)
 {
@@ -47,21 +50,32 @@ int req_handle(char *req, size_t len)
 
 	jsmn_dump_v(&jval);
 
+	jsmn_root(&jval);
+
+	struct jsmn_memento meme;
+        jsmn_mark(&jval, &meme);
+
+
+	const char *vals = NULL;
 	/* first of all we get the command name. */
-	const char *cmd = jsmn_val_member_str(&jval,
-			REQ_CMD_KEY, REQ_CMD_KEY_SZ, NULL);
+	res = jsmn_child_as_str(&jval, &meme,
+			REQ_CMD_KEY, REQ_CMD_KEY_SZ, &vals);
+
+	ok_or_goto_fail(res == 0);
 	
-	if (cmd == NULL) {
+	if (vals == NULL) {
 		alogw("Invalid json");
 		res = 1;
 		goto end;
 	}
 
-	alogi("Wanted %s command", cmd);
+	alogi("Wanted [%s] command", vals);
 
 
 	/* I do not need the value any more. */
+	res = 0;
+fail:
 end:
 	jsmn_val_free(&jval);
-	return 1;
+	return res;
 }

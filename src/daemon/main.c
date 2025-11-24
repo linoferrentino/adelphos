@@ -20,6 +20,9 @@
 #include <sys/un.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <poll.h>
+#include <signal.h>
+
 
 #include "jfsm.h"
 #include "request.h"
@@ -67,6 +70,14 @@ void dump_payload_dbg(const char *file, int line, const char *_p, int len)
   }
 }
 
+static int interrupt_flag = 0;
+
+static void _daemon_sigint(int signal)
+{
+	alogi("Got control-c, exiting");
+	interrupt_flag = 1;
+}
+
 
 int main(int argc, const char *argv[])
 {
@@ -74,21 +85,29 @@ int main(int argc, const char *argv[])
 	int                 sfd, cfd;
 	socklen_t           peer_addr_size;
 	struct sockaddr_un  my_addr, peer_addr;
+	int res;
 
 
 	alogi("adelphos daemon version " ADELPHOS_TAG );
 
 
+        struct sigaction act;
+        memset(&act, 0, sizeof(act));
+        act.sa_handler = _daemon_sigint;
+        sigaction(SIGINT, &act, NULL);
+
+
 	/* Initialization of the requests. */
 	req_init();
-
 
 	/* maybe a socket was closed. Here a failure is not
 	 * a fatal error*/
 	unlink(MY_SOCK_PATH);
 
 	sfd = socket(AF_UNIX, SOCK_STREAM, 0);
-	ok_or_goto_fail(sfd != 0);
+	if (sfd < 0) {
+		handle_error("socket");
+	}
 
 	memset(&my_addr, 0, sizeof(my_addr));
 	my_addr.sun_family = AF_UNIX;
@@ -102,12 +121,32 @@ int main(int argc, const char *argv[])
 	if (listen(sfd, LISTEN_BACKLOG) == -1)
 		handle_error("listen");
 
-	/* Now we can accept incoming connections one
-	   at a time using accept(2). */
 
 	peer_addr_size = sizeof(peer_addr);
+
+	/* OK, let's do a cycle. */
+	struct pollfd pollfd[1];
+
+	pollfd[0].fd = sfd;
+	pollfd[0].events = POLLIN;
+
+
 cycle_accept:
 	alogi("Accept a client, here");
+redo_cycle_accept:
+	if (interrupt_flag != 0) {
+		alogi("requested end");
+		goto end;
+	}
+
+	res = poll(pollfd, 1, 1000);
+	if (res < 0) {
+		goto end;
+	}
+
+	if (res == 0) {
+		goto redo_cycle_accept;
+	}
 
 
 	cfd = accept(sfd, (struct sockaddr *) &peer_addr,
@@ -169,12 +208,14 @@ cycle_accept:
 	ok_or_goto_fail(wd == sz);
 
 
-	jfsm_free(fsm);
+	jfsm_str_free(fsm, 1);
 
 close_client_and_do_another:
 	close(cfd);
 	goto cycle_accept;
 
+end:
+fail:
 
 	if (close(sfd) == -1)
 		handle_error("close");
@@ -184,9 +225,7 @@ close_client_and_do_another:
 
 
 
-
-fail:
-	return 0;
+	return res;
 }
 
 
