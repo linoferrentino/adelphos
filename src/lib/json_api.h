@@ -29,11 +29,13 @@ int json_api_init(void);
 struct json_api_str_s
 {
 	char   *str;
+	/* This must be 4 bytes otherwise you break the protocol */
 	uint32_t sz;
 };
 
 /*
  * Process the json request.
+ *
  *
  * */
 int json_api_proc(struct json_api_str_s *in, struct json_api_str_s *out);

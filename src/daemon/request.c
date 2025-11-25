@@ -16,6 +16,7 @@
  */
 
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "request.h"
 #include "jsmn_user.h"
@@ -28,7 +29,9 @@
 LOG_MODULE_IMP;
 
 
+/*
 static int req_handle(char *req, size_t len);
+*/
 
 int req_init(void)
 {
@@ -56,7 +59,12 @@ int handle_client(int cfd)
 	/* just to test */
 #define MAX_BUFFER 512
 	char msg[MAX_BUFFER];
+	struct json_api_str_s out_s;
+	/* this one is initialized here, because we might realloc it */
+	out_s.str = NULL;
+	out_s.sz = 0;
 
+redo_read:
 	rd = read(cfd, &lreq, sizeof(lreq));
 	if (rd == 0) {
 		/* EOF */
@@ -73,9 +81,20 @@ int handle_client(int cfd)
 
 	alogi("this is the request %.*s", lreq, msg);
 
-	rd = req_handle(msg, lreq);
+	/* Here I have the request. I need the response, as a size
+	 * terminated string. */
+
+	struct json_api_str_s in_s;
+
+	in_s.str = msg;
+	in_s.sz = lreq;
+
+	rd = json_api_proc(&in_s, &out_s);
+
+	/*rd = req_handle(msg, lreq);*/
 	ok_or_goto_fail(rd == 0);
 
+#if 0
 	/* let's try to send a json output */
 	struct json_fsm *fsm;
 	jfsm_str_init(&fsm);
@@ -91,23 +110,34 @@ int handle_client(int cfd)
 
 	/* Also in this case I write the length first. */
 	uint32_t lres = (uint32_t)sz;
+#endif
+
 	int wd;
-	wd = write(cfd, &lres, sizeof(lres));
-	ok_or_goto_fail(wd == sizeof(lres));
+	wd = write(cfd, &out_s.sz, sizeof(out_s.sz));
+	ok_or_goto_fail(wd == sizeof(out_s.sz));
 
-	alogi("Sending [%.*s] to client", lres, str);
+	alogi("Sending [%.*s] to client", out_s.sz, out_s.str);
 
-	wd = write(cfd, str, sz);
-	ok_or_goto_fail(wd == sz);
+	/* write All! */
+	wd = write(cfd, out_s.str, out_s.sz);
+	ok_or_goto_fail(wd == out_s.sz);
+
+	/* I am done with the result */
+
+	goto redo_read;
 
 
+	/*
 	jfsm_str_free(fsm, 1);
+	*/
 
 	/* all good */
 	rd = 0;
 
 fail:
 close_client_and_do_another:
+	/* I am done with the out string */
+	free(out_s.str);
 	close(cfd);
 
 	return rd;
@@ -117,6 +147,7 @@ close_client_and_do_another:
 #define REQ_CMD_KEY "cmd"
 #define REQ_CMD_KEY_SZ (sizeof(REQ_CMD_KEY)-1)
 
+#if 0
 int req_handle(char *req, size_t len)
 {
 	struct jsmn_val jval;
@@ -158,3 +189,4 @@ end:
 	jsmn_val_free(&jval);
 	return res;
 }
+#endif
