@@ -88,6 +88,7 @@ int main(int argc, const char *argv[])
 	socklen_t           peer_addr_size;
 	struct sockaddr_un  my_addr, peer_addr;
 	int res;
+	srandom(time(NULL));
 
 
 	alogi("adelphos daemon version " ADELPHOS_TAG );
