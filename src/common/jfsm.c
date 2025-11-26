@@ -17,15 +17,15 @@
 #include "strstream.h"
 
 #define _LOG_MODULE "jfsm"
-#define MODULE_LEV ML_INFO
+#define MODULE_LEV ML_TRIVIAL
 #include "alog.h"
 
 LOG_MODULE_IMP;
 
 
 enum E_JFSM_STATE {
-  JFSM_WANT_ELEMENT,
-  JFSM_WANT_MEMBER,
+  JFSM_WANT_ELEMENT = 0,
+  JFSM_WANT_MEMBER = 1,
 };
 
 #define MAX_JSON_DEPTH 20
@@ -148,7 +148,11 @@ static int _emit_str_esc(emit_json_char_fn emit, void *userptr, const char *str)
 #define EMIT_USR_STR(x,s)   do { int r = _emit_str_esc(x->emit, x->userptr, s); if (r) return JFSM_ERR_EMIT;} while(0)
 #define EMIT_SEPARATOR(x) do { int r = _emit_separator(x); if (r) return JFSM_ERR_EMIT;} while(0)
 
-#define WANT_ELEMENT(x)  do { if (x->state != JFSM_WANT_ELEMENT) return JFSM_ERR_SYN; } while(0)
+/*#define WANT_ELEMENT(x)  do { if (x->state != JFSM_WANT_ELEMENT) return JFSM_ERR_SYN; } while(0)*/
+
+#define WANT_ELEMENT(x)   ok_or_die(x->state == JFSM_WANT_ELEMENT) 
+	/*return JFSM_ERR_SYN; } while(0)*/
+
 #define END_ELEMENT(x) do { if (x->stack[x->sp] == JFSM_STACK_OBJECT) x->state = JFSM_WANT_MEMBER; } while(0)
 
 static int _emit_separator(struct json_fsm *jfsm){
@@ -211,11 +215,22 @@ int jfsm_free(struct json_fsm *jfsm)
 
 int jfsm_object_push  (struct json_fsm *jfsm)
 {
+
+	ok_or_die_msg(jfsm->state == JFSM_WANT_ELEMENT, "state %d",
+			jfsm->state);
+
+		/*
   if (jfsm->state != JFSM_WANT_ELEMENT){
     alogt("Did not expect an object here.");
     ad_assert(0);
     return JFSM_ERR_SYN;
   }
+  */
+
+	ok_or_die_msg((jfsm->stack[jfsm->sp] != JFSM_STACK_ROOT) ||
+			(jfsm->one_put == 0), "more of one element");
+
+/*
 
   if (jfsm->stack[jfsm->sp] == JFSM_STACK_ROOT){
     if (jfsm->one_put){
@@ -224,39 +239,41 @@ int jfsm_object_push  (struct json_fsm *jfsm)
       return JFSM_ERR_SYN;
     }
   }
+  */
 
-  EMIT_SEPARATOR(jfsm);
+	EMIT_SEPARATOR(jfsm);
 
-  jfsm->state = JFSM_WANT_MEMBER;
+	jfsm->state = JFSM_WANT_MEMBER;
 
-  if (++jfsm->sp == MAX_JSON_DEPTH){
-    return JFSM_ERR_DEPTH;
-  }
-  jfsm->stack[jfsm->sp] = JFSM_STACK_OBJECT;
-  jfsm->one_put = 0;
+	if (++jfsm->sp == MAX_JSON_DEPTH){
+		return JFSM_ERR_DEPTH;
+	}
+	jfsm->stack[jfsm->sp] = JFSM_STACK_OBJECT;
+	jfsm->one_put = 0;
 
-  EMIT_STR(jfsm, "{ ");
-  return 0;
+	EMIT_STR(jfsm, "{ ");
+	return 0;
 }
 
 int jfsm_object_pop   (struct json_fsm *jfsm)
 {
-  if (jfsm->state != JFSM_WANT_MEMBER){
-    return JFSM_ERR_SYN;
-  }
 
-  if (jfsm->stack[jfsm->sp] != JFSM_STACK_OBJECT){
-    return JFSM_ERR_SYN;
-  }
-  jfsm->sp--;
-  if (jfsm->stack[jfsm->sp] != JFSM_STACK_OBJECT){
-    jfsm->state = JFSM_WANT_ELEMENT;
-  }
-  jfsm->one_put = 1;
-  
-  EMIT_STR(jfsm, " } ");
+	ok_or_die_msg(jfsm->state == JFSM_WANT_MEMBER, "state %d",
+			jfsm->state);
 
-  return 0;
+	ok_or_die_msg(jfsm->stack[jfsm->sp] == JFSM_STACK_OBJECT,
+			"stack %d", jfsm->stack[jfsm->sp]);
+
+  	jfsm->sp--;
+
+	if (jfsm->stack[jfsm->sp] != JFSM_STACK_OBJECT){
+		jfsm->state = JFSM_WANT_ELEMENT;
+	}
+	jfsm->one_put = 1;
+
+	EMIT_STR(jfsm, " } ");
+
+	return 0;
 }
 
 
@@ -309,24 +326,29 @@ int jfsm_member_array  (struct json_fsm *jfsm, const char *key)
 	return 0;
 }
 
-int jfsm_member       (struct json_fsm *jfsm, const char *key)
+int jfsm_member(struct json_fsm *jfsm, const char *key)
 {
-  if (jfsm->state != JFSM_WANT_MEMBER){
-    alogw("Not possible a member here. key %s", key);
-    ad_assert(0);
-    return JFSM_ERR_SYN;
-  }
+	ok_or_die_msg(jfsm->state == JFSM_WANT_MEMBER, "st %d",
+			jfsm->state);
+	/*
+	if (jfsm->state != JFSM_WANT_MEMBER){
+		alogw("Not possible a member here. key %s, state %d",
+				key, jfsm->state);
+		exit(1);
+		return JFSM_ERR_SYN;
+	}
+	*/
 
-  EMIT_SEPARATOR(jfsm);
+	EMIT_SEPARATOR(jfsm);
 
-  jfsm->state = JFSM_WANT_ELEMENT;
-  jfsm->one_put = 0;
+	jfsm->state = JFSM_WANT_ELEMENT;
+	jfsm->one_put = 0;
 
-  EMIT_CHAR(jfsm, '"');
-  EMIT_USR_STR(jfsm, key);
-  EMIT_STR(jfsm, "\" : ");
+	EMIT_CHAR(jfsm, '"');
+	EMIT_USR_STR(jfsm, key);
+	EMIT_STR(jfsm, "\" : ");
 
-  return JFSM_EXIT_OK;
+	return JFSM_EXIT_OK;
 }
 
 

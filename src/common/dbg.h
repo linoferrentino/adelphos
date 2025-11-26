@@ -12,11 +12,19 @@
 #define _dbg_h
 
 #include <errno.h>
+#include <stdlib.h>
 
 
 #ifndef NDEBUG
 
 #define ok_or_goto_fail(X) if (!(X)) {fprintf(stderr, "fail @" __FILE__ ":%d (errno %d)\n", __LINE__, errno);goto fail;}
+
+#define ok_or_die(X) if (!(X)) {fprintf(stderr, "Anomaly(%s:%d): ", __FILE__, __LINE__); exit(1);}
+
+#define ok_or_die_msg(X, _msg, ...) if (!(X)) \
+{fprintf(stderr, "Anomaly(%s:%d) \n\t%s\n" _msg "\n", \
+		__FILE__, __LINE__, #X, ##__VA_ARGS__); exit(1);}
+
 
 #define ad_assert(__x__)  do {if (!(__x__)){fprintf(stderr, "ops! -->\n\t\"" #__x__ "\" is false. \n\t" __FILE__ ":%d\n", __LINE__); \
    abort();}} while(0)
@@ -29,6 +37,13 @@
 #else
 
 #define ok_or_goto_fail(X) if (!(X)) {goto fail;}
+
+#define ok_or_die(X) if (!(X)) {syslog(LOG_CRIT, "Anomaly(%s:%d): ", __FILE__, __LINE__); exit(1);}
+
+#define ok_or_die_msg(X, _msg, ...) if (!(X)) \
+{syslog(LOG_CRIT, "Anomaly(%s:%d) %s: " _msg, \
+		__FILE__, __LINE__, #X, ##__VA_ARGS__); exit(1);}
+
 
 #define ad_assert(__x__)  do {} while(0)
 

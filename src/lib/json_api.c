@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "jsmn_user.h"
+#include "jfsm.h"
 #include "hash.h"
 
 #include "json_api.h"
@@ -58,6 +59,11 @@ static int _add_user_handler(struct jsmn_val *json_in,
 		struct json_fsm *json_out)
 {
 	alogt("_add_user_handler called");
+
+	jfsm_member(json_out, "hello_add");
+	jfsm_value_string(json_out, "world! Città € euro!");
+	/*jfsm_value_string(json_out, "world!");*/
+
 	return 0;
 }
 
@@ -114,7 +120,7 @@ static void _add_handler(const char *cmd, json_api_f hndl)
 
 /* The dispatcher is responsible to choose the right handler */
 static int _json_api_dispatcher(struct jsmn_val *jval, 
-				struct json_api_str_s *out)
+				struct json_fsm *jfsm)
 {
 	int res;
 
@@ -153,12 +159,18 @@ static int _json_api_dispatcher(struct jsmn_val *jval,
 		goto end;
 	}
 
+	
+	
 	/* I have to get the payload and pass the object there */
 	/* Create the json out and start the object creation. */
-	res = (phndl->f_hndl)(jval, NULL);
+	res = (phndl->f_hndl)(jval, jfsm);
+
+	
 
 fail:
 end:
+	/* I do not free the string, as it is bound to be given to
+	 * the outside.*/
 	return res;
 
 }
@@ -174,17 +186,37 @@ int json_api_proc(struct json_api_str_s *in, struct json_api_str_s *out)
 	struct jsmn_val jval;
 	int res = jsmn_val_alloc_mod(&jval, in->str, in->sz);
 
+	
+
+
+	/* I create a handler payload where the handler might give
+	 * its output */
+	struct json_fsm *jfsm;
+	jfsm_str_init(&jfsm);
+
+	/* the json starts with an object */
+	jfsm_object_push(jfsm);
+
+	/* I did not get a json */
 	if (res != 0) {
-		res = 1;
+		alogt("?hwat");
+		jfsm_member(jfsm, "error");
+		jfsm_value_string(jfsm, "invalid json");
 		goto end;
 	}
 
+	jfsm_member(jfsm, "payload");
+	jfsm_object_push(jfsm);
+
+
+
 	/* get the handler for this command .*/
-	res = _json_api_dispatcher(&jval, out);
+
+	res = _json_api_dispatcher(&jval, jfsm);
 	ok_or_goto_fail(res == 0);
 
 
-#if 1
+#if 0
 #define hello_from_json_api "hello from json api"
 
 	/* Just a test */
@@ -194,18 +226,41 @@ int json_api_proc(struct json_api_str_s *in, struct json_api_str_s *out)
 
 #else
 
+	/* this ends the payload*/
+	jfsm_object_pop(jfsm);
+
+
+fail:
+end:
+
+	/* Now I pack the response */
+	jfsm_member(jfsm, "res");
+	jfsm_value_int(jfsm, res);
+
+	/* this ends the root */
+	jfsm_object_pop(jfsm);
+
+
 #endif
+
+	/* OK, now I can emit the json */
+	res = jfsm_finalize(jfsm, 0);
+
+	/* very bad: this is a coding error  */
+	ok_or_die(res == 0);
+
+
+	out->str = jfsm_json_str(jfsm);
+	out->sz = jfsm_str_size(jfsm);
 
 
 
 	/* I do not need the value any more. */
-	res = 0;
-fail:
-end:
 	jsmn_val_free(&jval);
+	/* but I do need the string!*/
+	jfsm_str_free(jfsm, 0);
 
-
-	return 0;
+	return res;
 }
 
 int json_api_init(void)
