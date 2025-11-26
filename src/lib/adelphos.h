@@ -4,6 +4,11 @@
  *
  * main library header file.
  *
+ * This is the C low level interface.
+ *
+ * End users should probably use the json_api or the cli_api
+ * to access adelphos.
+ *
  * Copyright (c) 2025. Pasqualino Ferrentino.
  * lino.ferrentino@gmail.com
  *

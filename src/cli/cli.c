@@ -14,6 +14,7 @@
  */
 
 #include <stdint.h>
+/* we do not heed threads. */
 #include <pthread.h>
 #include <string.h>
 
