@@ -15,7 +15,7 @@
 
 #include <stdint.h>
 /* we do not heed threads. */
-#include <pthread.h>
+/*#include <pthread.h>*/
 #include <string.h>
 
 #include "cli.h"
@@ -79,7 +79,7 @@ static struct {
 int cli_cmd_exec(char *cmd)
 {
 	int res = 0;
-	pthread_mutex_lock(&priv.mux);
+	/*pthread_mutex_lock(&priv.mux);*/
 /*
 	struct vecptr *cmdline;
 	vptr_init(&cmdline);
@@ -150,18 +150,18 @@ int cli_cmd_exec(char *cmd)
 
 
 end:
-	pthread_mutex_unlock(&priv.mux);
+	/*pthread_mutex_unlock(&priv.mux);*/
 	return res;
 }
 
 void cli_init(void)
 {
-	pthread_mutex_init(&priv.mux, NULL);
+	/*pthread_mutex_init(&priv.mux, NULL);*/
 }
 
 void cli_end(void)
 {
-	pthread_mutex_destroy(&priv.mux);
+	/*pthread_mutex_destroy(&priv.mux);*/
 }
 
 /*
