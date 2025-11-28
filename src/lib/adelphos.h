@@ -37,13 +37,68 @@
  * probably a real multi user DB like postgreSQL should be used.
  *
  *
- * Adelphos does not spead JSON at this level.
+ * Adelphos does not speak and understand JSON at this level.
  *
  * Communication is done using normal c structs.
  *
  * 
  *
  * */
+
+
+/*
+ * Every object in adelphos has an handle, a non negative integer, which 
+ * can be thought as the id in the database.
+ *
+ * Some objects are not visibile from a certain user.
+ *
+ * Some objects are visibile with limited permissions.
+ *
+ * The way in which an object is taken is decided in the database.
+ *
+ * for example there are methods like list_dir gets the objects in a
+ * particular context, like a group
+ *
+ * But if I want a particular object I need to pass a security context
+ * handle which is basically the authentication token of the user.
+ *
+ *
+ *
+ *
+ *
+ * */
+
+/* the security context, this is used by the db */
+typedef uint64_t sec_hndl_t;
+
+/* This is the handle of an object in adelphos.
+ *
+ * */
+typedef uintptr_t ad_hndl_t;
+
+/* every object has an id. This is the method to get it */
+
+typedef uint64_t ad_id_t;
+
+#define ADELPHOS_INVALID_ID ((ad_id_t)(unsigned)-1)
+
+/* this simple function converts the handle to the id 
+ *
+ * returns ADELPHOS_INVALID_ID if this is not existent (or garbage)
+ *
+ * */
+ad_id_t adob_get_id(ad_hndl_t a_handle);
+
+/*
+ * results from the adelphos library are simply 8-bit integers.
+ */
+typedef int8_t ad_res;
+
+/* tells adelphos that this object can be garbage collected. */
+ad_res adob_gc(ad_hndl_t a_handle);
+
+
+
 
 /* 
  * this is the currency type, currency, like in real life
@@ -52,10 +107,7 @@
  * */
 typedef uint64_t cur_t;
 
-/*
- * results from the adelphos library are simply 8-bit integers.
- */
-typedef int8_t ad_res;
+
 
 /* The success return. */
 #define AD_OK (0)
@@ -80,7 +132,9 @@ int ad_close(void);
 
 
 /* the generic handle for an adelphos object. */
+/*
 typedef void* ad_h;
+*/
 
 /*
  * the api is text based, the parameters are positional, but they have
@@ -191,7 +245,9 @@ ad_res ad_l0_group_create(struct adelphos_param_s *ap);
  * a group should be unique*/
 ad_res ad_adelphos_create(struct adelphos_param_s *ap);
 
+/*
 int ad_adelphos_delete(ad_h adelphos);
+*/
 
 
 /* 
@@ -212,7 +268,9 @@ int ad_adelphos_request_connect(ad_h l0_group_1, ad_h l0_group_2);
  * this finalizes the connection, only at this moment we can have a trust channel
  *
  * */
+/*
 int ad_adelphos_finalize_connect(ad_h l0_group_2, ad_h l0_group_1);
+*/
 
 
 /*
@@ -220,6 +278,7 @@ int ad_adelphos_finalize_connect(ad_h l0_group_2, ad_h l0_group_1);
  * through various gateways.
  *
  */
+#if 0
 struct ad_credit_hop
 {
 	ad_h  creditor;
@@ -227,6 +286,7 @@ struct ad_credit_hop
 	/* this is the amount of credit you have obtained in each hop */
 	cur_t amount;
 };
+#endif
 
 /* 
  * a credit line is a linked lists of credit hops which the system
@@ -235,6 +295,7 @@ struct ad_credit_hop
  * 
  *
  * */
+#if 0
 struct ad_credit_line
 {
 
@@ -247,6 +308,7 @@ struct ad_credit_line
 	/* variable array of hops to arrive to the destination, last pointer is NULL */
 	struct ad_credit_hop **hops;
 };
+#endif
 
 
 /*
@@ -272,6 +334,8 @@ struct ad_credit_line
  * AD_CONGESTED_ROUTE if there is a blocking channel, in this case it returns a partial routing.
  *
  */
+
+#if 0
 ad_res ad_adelphos_route_pay(ad_h l0_group_src, ad_h l0_group_dst, cur_t amount, cur_t max_amount,
 		int max_hops, /* out */ struct ad_credit_line **adl);
 
@@ -294,6 +358,7 @@ ad_res ad_adelphos_do_pay(ad_h l0_group_src, ad_h l0_group_dst, cur_t amount,
  *
  * */
 ad_h ad_adelphos_find(ad_h l0_group, const char* name);
+#endif
 
 
 
