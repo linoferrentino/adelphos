@@ -63,18 +63,23 @@
  * handle which is basically the authentication token of the user.
  *
  *
+ * The handle is temporary, it can change, but the id is fixed for
+ * the lifetime of the object.
  *
  *
  *
  * */
 
 /* the security context, this is used by the db */
-typedef uint64_t sec_hndl_t;
+typedef uint64_t ad_sec_ctx_t;
 
 /* This is the handle of an object in adelphos.
  *
  * */
 typedef uintptr_t ad_hndl_t;
+
+/* The invalid handle. */
+#define AD_NULL ((uintptr_t)NULL)
 
 /* every object has an id. This is the method to get it */
 
@@ -96,6 +101,10 @@ typedef int8_t ad_res;
 
 /* tells adelphos that this object can be garbage collected. */
 ad_res adob_gc(ad_hndl_t a_handle);
+
+/*
+ad_res 
+*/
 
 
 
