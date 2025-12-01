@@ -24,7 +24,14 @@
 /* Initialize the json API. This must be called once */
 int json_api_init(void);
 
-/* the answer from the json api is a string with a dimenstion */
+/* 
+ *
+ * question and answer from the json api is a string with a dimenstion.
+ *
+ * The string contains valid JSON 
+ *
+ *
+ * */
 
 struct json_api_str_s
 {

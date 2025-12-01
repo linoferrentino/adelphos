@@ -50,8 +50,6 @@
  *
  * */
 
-/* the security context, this is used by the db */
-typedef uint64_t ad_sec_ctx_t;
 
 /* This is the handle of an object in adelphos.
  *

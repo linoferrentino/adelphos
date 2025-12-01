@@ -47,6 +47,8 @@
 
 
 #include "ad_object.h"
+#include "ad_errors.h"
+#include "ad_authenticate.h"
 
 
 
@@ -74,11 +76,6 @@ typedef uint64_t cur_t;
 
 
 
-/* The success return. */
-#define AD_OK (0)
-
-/* generic error (when nothing more specific can be given) */
-#define AD_ERR (-1)
 
 
 /* I can initialize the adelphos library with a transient db or a normal
@@ -162,6 +159,28 @@ struct adelphos_out_s
 
 /* The user added is not yet confirmed. */
 ad_res add_user(struct add_user_in_s *adu);
+
+
+struct ad_login_in_s
+{
+	char *user;
+	char *password;
+};
+
+
+struct ad_login_out_s
+{
+	/* the session identifier for this user.*/
+	ad_session_id_t sess_id;
+};
+
+
+/* 
+ * the login return a token which the user must present at
+ * every time the application issues a command. 
+ *
+ * */
+ad_res ad_login(struct ad_login_in_s *in, struct ad_login_out_s *out);
 
 
 

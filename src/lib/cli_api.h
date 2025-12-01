@@ -42,6 +42,9 @@ int cli_exec(const char *cmd);
  * a security context which is then passed to all the commands
  * which are issued
  *
+ * We can have here a mfa challenge, like asking the user
+ * to give an OTP code.
+ *
  * */
 int cli_login(const char *user, const char *password);
 

@@ -14,6 +14,7 @@
 #include <stdint.h>
 #include <sqlite3.h>
 #include <alloca.h>
+#include <sys/stat.h>
 
 #include "adelphos.h"
 #include "trust.h"
@@ -21,6 +22,8 @@
 
 /* just a simple file */
 #define ADELPHOS_DB "ad_db.sqlite3"
+/* this is the memory db, used to */
+#define TRANSIENT_DB ":memory:"
 
 #define _LOG_MODULE "ad"
 #define MODULE_LEV ML_TRIVIAL
@@ -40,6 +43,11 @@ static struct {
 	.init = 0
 };
 
+static void _create_schema()
+{
+	alogi("create the schema");
+}
+
 
 int ad_init(int is_transient, const char *conn_string)
 {
@@ -49,11 +57,34 @@ int ad_init(int is_transient, const char *conn_string)
 		goto end;
 	}
 
+	int create_schema = 0;
+
+	if (is_transient) {
+		create_schema = 1;
+	} else {
+		/* is there the file */
+		struct stat statbuf;
+		res = lstat(ADELPHOS_DB, &statbuf);
+
+		if (res == -1 && errno == ENOENT){
+			alogi("I will create the schema");
+			create_schema = 1;
+		} else {
+			alogi("database existent, I won't create it");
+		}
+
+	}
+
 	/* let's search if this is a temporary db, */
 
 	res = AD_ERR;
+	
 	rc = sqlite3_open(ADELPHOS_DB, &priv.db);
 	ok_or_goto_fail(rc == 0);
+
+	if (create_schema) {
+		_create_schema();
+	}
 
 	res = AD_OK;
 	alogi("Adelphos library initialized");
