@@ -2,6 +2,11 @@
  *
  * miscellanea.
  *
+ * Copyright (c) 2025. Pasqualino Ferrentino.
+ * lino.ferrentino@gmail.com
+ *
+ * Licence: GPL3 or above.
+ *
  *
  */
 

@@ -176,7 +176,7 @@ end:
 }
 
 
-int json_api_proc(struct json_api_str_s *in, struct json_api_str_s *out)
+int json_api_proc(struct byte_buf_s *in, struct byte_buf_s *out)
 {
 	/* Here I have to call the function handler and return the
 	 * result as a size terminated string. */
@@ -184,7 +184,7 @@ int json_api_proc(struct json_api_str_s *in, struct json_api_str_s *out)
 	/* First of all we have to parse the string. */
 
 	struct jsmn_val jval;
-	int res = jsmn_val_alloc_mod(&jval, in->str, in->sz);
+	int res = jsmn_val_alloc_mod(&jval, byte_buf_str(in), in->sz);
 
 	
 
@@ -249,11 +249,7 @@ end:
 	/* very bad: this is a coding error  */
 	ok_or_die(res == 0);
 
-
-	out->str = jfsm_json_str(jfsm);
-	out->sz = jfsm_str_size(jfsm);
-
-
+	byte_buf_set(out, jfsm_json_str(jfsm), jfsm_str_size(jfsm));
 
 	/* I do not need the value any more. */
 	jsmn_val_free(&jval);

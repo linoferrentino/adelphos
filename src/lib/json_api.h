@@ -19,33 +19,20 @@
 #define _json_api_h
 
 #include <stdint.h>
+#include "misc.h"
 
 
 /* Initialize the json API. This must be called once */
 int json_api_init(void);
 
-/* 
- *
- * question and answer from the json api is a string with a dimenstion.
- *
- * The string contains valid JSON 
- *
- *
- * */
 
-struct json_api_str_s
-{
-	char   *str;
-	/* This must be 4 bytes otherwise you break the protocol */
-	uint32_t sz;
-};
 
 /*
  * Process the json request.
  *
  *
  * */
-int json_api_proc(struct json_api_str_s *in, struct json_api_str_s *out);
+int json_api_proc(struct byte_buf_s *in, struct byte_buf_s *out);
 
 
 /* called at the end of the application. */
