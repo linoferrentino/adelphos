@@ -25,53 +25,61 @@
 /*LOG_MODULE_IMP;*/
 
 
+/*
 struct strstream_s {
     char  *pc;
-    size_t len;
-    size_t cur;
+    uint32_t len;
+    uint32_t cur;
 };
+*/
 
-void strstream_reset(struct strstream_s *strs)
+void strstream_reset(strstream_s *strs)
 {
         /* Just reset the counter. No deallocation is made */
-        strs->cur = 0;
+        strs->bsz->cur = 0;
 }
 
-int strstream_emitc(struct strstream_s *strs, char c)
+static void _strstream_grow(strstream_s *strs, uint32_t amount) 
 {
-        if (strs->cur == strs->len){
-		strs->len = strs->len * 1.5 + 20;
-		strs->len -= strs->len % 16;
-		alogx("Allocating %zd bytes", strs->len);
-		strs->pc = (char*)realloc(strs->pc, strs->len);
+	strs->len = (strs->bsz->cur + amount) + (amount / 2) + 30;
+	strs->len -= strs->len % 16;
+	alogt("Realloc to %zd", strs->len);
+	strs->arena = (uint8_t*)realloc(strs->arena, strs->len);
+	ok_or_die(strs->arena != NULL);
+}
+
+int strstream_emitc(strstream_s *strs, char c)
+{
+        if (strs->bsz->cur == strs->len){
+		/* We grow some characters at a time */
+		_strstream_grow(strs, 8);
 	}
 	alogx("putting pc[%zd] = %c (%d)", strs->cur, c, c);
-	strs->pc[strs->cur++] = c;
+	strs->bsz->buf[strs->bsz->cur++] = c;
 	return 0;
 }
 
-static void _strstream_ensure_put(struct strstream_s *strs, size_t count)
+static void _strstream_ensure_put(strstream_s *strs, size_t count)
 {
-	if (strs->cur + count < strs->len) {
+	uint32_t new_last_idx = strs->bsz->cur + count;
+	if (new_last_idx <= strs->len) {
 		return;
 	}
 	/* we must grow */
-	strs->len = (strs->cur + count) + (count / 2) + 30;
-	strs->len -= strs->len % 16;
-	alogt("Realloc to %zd", strs->len);
-	strs->pc = (char*)realloc(strs->pc, strs->len);
+	_strstream_grow(strs, new_last_idx - strs->len);
+	
 }
 
 
-int strstream_emitmem(struct strstream_s *strs, char *c, size_t count)
+int strstream_emitmem(strstream_s *strs, char *c, uint32_t count)
 {
 	_strstream_ensure_put(strs, count);
-	memcpy(&strs->pc[strs->cur], c, count);
-	strs->cur += count;
+	memcpy(&strs->arena[strs->bsz->cur], c, count);
+	strs->bsz->cur += count;
         return 0;
 }
 
-int strstream_emitstr(struct strstream_s *strs, char *c)
+int strstream_emitstr(strstream_s *strs, char *c)
 {
 	size_t lens = strlen(c);
 	/* you do not put the \0 */
@@ -81,44 +89,49 @@ int strstream_emitstr(struct strstream_s *strs, char *c)
 
 
 
-void strstream_init(struct strstream_s **strs)
+void strstream_init(strstream_s **strs)
 {
-        struct strstream_s *tmp = (struct strstream_s*)
-                calloc(1, sizeof(struct strstream_s));
+        strstream_s *tmp = (strstream_s*)
+                calloc(1, sizeof(strstream_s));
         *strs = tmp;
 }
 
-void strstream_free(struct strstream_s *strs)
+void strstream_free(strstream_s *strs)
 {
         if (strs == NULL)
                 return;
-        free(strs->pc);
+        free(strs->arena);
         free(strs);
 }
 
-void strstream_getstr_grab_destroy(struct strstream_s *strs,
-                char **str, size_t *len)
+void strstream_getstr_grab_destroy(strstream_s *strs,
+                char **str, uint32_t *len)
 {
         if (strs == NULL) {
                 *str = NULL;
                 *len = 0;
                 return;
         }
-        strs->pc[strs->cur] = '\0';
-        *str = strs->pc;
-        *len = strs->cur;
+
+	_strstream_ensure_put(strs, 1);
+
+        strs->bsz->buf[strs->bsz->cur] = '\0';
+        *str = (char*)strs->bsz->buf;
+	/* do not advance the length */
+        *len = strs->bsz->cur;
         free(strs);
 }
 
-char* strstream_getstr(struct strstream_s *strs)
+char* strstream_getstr(strstream_s *strs)
 {
-        strs->pc[strs->cur] = '\0';
-        return strs->pc;
+	_strstream_ensure_put(strs, 1);
+        strs->bsz->buf[strs->bsz->cur] = '\0';
+        return (char*)strs->bsz->buf;
 }
 
 
-size_t strstream_getsz(struct strstream_s *strs)
+uint32_t strstream_getsz(strstream_s *strs)
 {
-        return strs->cur;
+        return strs->bsz->cur;
 }
 

@@ -34,16 +34,15 @@ void dump_payload_dbg(const char *file, int line, const unsigned char *_p, int l
 
 #pragma pack(push, 1)
 
-struct buf_size_s {
-};
 
+/* a structure used to hold */
 struct byte_buf_s
 {
 	union{
 		struct {
 
 			/* the valid length of the buffer */
-			uint32_t valid_len;
+			uint32_t cur;
 			union {
 				uint8_t  *buf;
 				uint32_t *i32;
@@ -60,10 +59,11 @@ struct byte_buf_s
 	};
 	*/
 
-	/* size in bytes of the buf, the arena will be 4 bytes longer */
-	uint32_t sz;
+	/* the capacity of the buf, the arena will be 4 bytes longer */
+	uint32_t len;
 
 };
+
 #pragma pack(pop)
 
 /* define a byte buffer */
@@ -75,7 +75,7 @@ struct byte_buf_s
 #define byte_buf_free(x) free(x->buf)
 
 /* simply cast, we expect only utf8 string which are ASCII friendly. */
-#define byte_buf_str(x) (char*)((x)->buf)
+#define byte_buf_str(x) (char*)((x)->bsz->buf)
 
 #define byte_buf_set(x, new_x, new_sz) (x->buf = (uint8_t*)new_x); \
 			            x->sz = new_sz

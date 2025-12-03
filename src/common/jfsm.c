@@ -37,7 +37,7 @@ enum E_JFSM_STATE {
 
 static int emit_str(void *userptr, int c)
 {
-	struct strstream_s *strs = (struct strstream_s*)userptr;
+	strstream_s *strs = (strstream_s*)userptr;
 	return strstream_emitc(strs, (char)c);
 
 }
@@ -58,13 +58,13 @@ struct json_fsm {
 
 char *jfsm_json_str(struct json_fsm *jfsm)
 {
-	struct strstream_s *strs = (struct strstream_s*)(jfsm->userptr);
+	strstream_s *strs = (strstream_s*)(jfsm->userptr);
 	return strstream_getstr(strs);
 }
 
 size_t jfsm_str_size(struct json_fsm *jfsm)
 {
-	struct strstream_s *strs = (struct strstream_s*)(jfsm->userptr);
+	strstream_s *strs = (strstream_s*)(jfsm->userptr);
 	return strstream_getsz(strs);
 }
 
@@ -168,7 +168,7 @@ static int _emit_separator(struct json_fsm *jfsm){
 
 int jfsm_str_init (struct json_fsm **jfsm)
 {
-	struct strstream_s *strs;
+	strstream_s *strs;
 	strstream_init(&strs);
 
 	int r = jfsm_init(jfsm, emit_str, strs, 0);
@@ -195,7 +195,7 @@ int jfsm_init(struct json_fsm **jfsm_pp, emit_json_char_fn emit, void *userptr, 
 int jfsm_str_free(struct json_fsm *jfsm, int free_string)
 {
 	if (free_string) {
-		struct strstream_s *strs = (struct strstream_s*)
+		strstream_s *strs = (strstream_s*)
 			jfsm->userptr;
 		strstream_free(strs);
 
