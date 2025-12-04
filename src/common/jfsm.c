@@ -176,6 +176,21 @@ int jfsm_str_init (struct json_fsm **jfsm)
 	return r;
 }
 
+int jfsm_str_init_ob (struct json_fsm **jfsm, struct byte_buf_s *out)
+{
+	/*strstream_s *strs;
+	strstream_init(&strs);*/
+
+	/**/
+	strstream_reset(out);
+
+	int r = jfsm_init(jfsm, emit_str, out, 0);
+
+	return r;
+}
+
+
+
 int jfsm_init(struct json_fsm **jfsm_pp, emit_json_char_fn emit, void *userptr, int flags)
 {
   struct json_fsm *jfsm = (struct json_fsm*)calloc(1, sizeof(struct json_fsm));

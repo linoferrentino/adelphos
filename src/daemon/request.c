@@ -63,59 +63,47 @@ int handle_client(int cfd)
 
 	/* I start with at least 4 bytes */
 	byte_buf_def_n(in_s, sizeof(uint32_t));
-	/*
-	struct json_api_str_s in_s;
-	struct json_api_str_s out_s;
-
-	memset(&in_s, 0, sizeof(in_s));
-	memset(&out_s, 0, sizeof(out_s));
-	*/
+	
 
 redo_read:
 
 	/* the storage for lreq is already acquired */
-	rd = read_all(cfd, &in_s, sizeof(uint32_t));
+	rd = read_all(cfd, (uint8_t*)&in_s.bsz->cur, sizeof(uint32_t));
 	if (rd == 0) {
 		alogi("EOF client.");
 		goto close_client_and_do_another;
 	}
 	ok_or_goto_fail(rd == 0);
 
-	lreq = *in_s.i32;
+	lreq = in_s.bsz->cur;
 	alogi("I will read %d chars", lreq);
 
-	rd = read_all(cfd, &in_s, *in_s.i32);
+	byte_buf_wipe_ensure((&in_s), lreq);
+
+	rd = read_all(cfd, &in_s.bsz->buf[0], in_s.bsz->cur);
 	ok_or_goto_fail(rd == 0);
 
 	alogi("this is the request %.*s", lreq, byte_buf_str(&in_s));
-
-	/* Here I have the request. I need the response, as a size
-	 * terminated string. */
-
-	/*
-	struct json_api_str_s in_s;
-
-	in_s.str = msg;
-	in_s.sz = lreq;
-	*/
+	
 
 	rd = json_api_proc(&in_s, &out_s);
 
 	/*rd = req_handle(msg, lreq);*/
 	ok_or_goto_fail(rd == 0);
 
-	alogi("Sending [%.*s] to client", out_s.sz, byte_buf_str(&out_s));
+	alogi("Sending [%.*s] to client", out_s.bsz->cur,
+		       	byte_buf_str(&out_s));
 
 	int wd;
-	wd = write_all(cfd, &out_s.sz, sizeof(out_s.sz));
+	wd = write_all(cfd, (uint8_t*)&out_s.bsz->cur,
+			sizeof(out_s.bsz->cur));
 	ok_or_goto_fail(wd == 0);
 
 
 	/* write All! */
-	wd = write_all(cfd, out_s.str, out_s.sz);
+	wd = write_all(cfd, &out_s.bsz->buf[0], out_s.bsz->cur);
 	ok_or_goto_fail(wd == 0);
 
-	/* I am done with the result */
 
 	goto redo_read;
 
@@ -126,8 +114,8 @@ redo_read:
 fail:
 close_client_and_do_another:
 	/* I am done with the out string */
-	byte_buf_free(out_s);
-	byte_buf_free(in_s);
+	byte_buf_free_loc(out_s);
+	byte_buf_free_loc(in_s);
 
 	close(cfd);
 

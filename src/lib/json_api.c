@@ -184,7 +184,8 @@ int json_api_proc(struct byte_buf_s *in, struct byte_buf_s *out)
 	/* First of all we have to parse the string. */
 
 	struct jsmn_val jval;
-	int res = jsmn_val_alloc_mod(&jval, byte_buf_str(in), in->sz);
+	int res = jsmn_val_alloc_mod(&jval, byte_buf_str(in), 
+			byte_buf_len(in));
 
 	
 
@@ -192,14 +193,16 @@ int json_api_proc(struct byte_buf_s *in, struct byte_buf_s *out)
 	/* I create a handler payload where the handler might give
 	 * its output */
 	struct json_fsm *jfsm;
-	jfsm_str_init(&jfsm);
+
+	/* I can start a json object with a byte buffer*/
+	jfsm_str_init_ob(&jfsm, out);
 
 	/* the json starts with an object */
 	jfsm_object_push(jfsm);
 
 	/* I did not get a json */
 	if (res != 0) {
-		alogt("?hwat");
+		alogt("?what");
 		jfsm_member(jfsm, "error");
 		jfsm_value_string(jfsm, "invalid json");
 		goto end;
@@ -249,7 +252,8 @@ end:
 	/* very bad: this is a coding error  */
 	ok_or_die(res == 0);
 
-	byte_buf_set(out, jfsm_json_str(jfsm), jfsm_str_size(jfsm));
+	/* this is not necessay, as we have passed the object */
+	/*byte_buf_set(out, jfsm_json_str(jfsm), jfsm_str_size(jfsm));*/
 
 	/* I do not need the value any more. */
 	jsmn_val_free(&jval);

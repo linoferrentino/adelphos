@@ -38,16 +38,14 @@ void dump_payload_dbg(const char *file, int line, const unsigned char *_p, int l
 /* a structure used to hold */
 struct byte_buf_s
 {
+	/* Important! cur is the first field in this structure */
 	union{
 		struct {
 
 			/* the valid length of the buffer */
 			uint32_t cur;
-			union {
-				uint8_t  *buf;
-				uint32_t *i32;
-			};
-
+			/* this is the place for all the bytes.*/
+			uint8_t  buf[0];
 		} *bsz;
 		uint8_t *arena;
 	};
@@ -69,13 +67,33 @@ struct byte_buf_s
 /* define a byte buffer */
 #define byte_buf_def(x) struct byte_buf_s x; memset(&x,0, sizeof(x))
 
-#define byte_buf_def_n(x, n) struct byte_buf_s x; \
-	x.buf = malloc(n); x.sz = n
+/* this function does NOT move the memory block, no realloc. */
+#define byte_buf_wipe_ensure(_x, _l) do { \
+	if (_x->len >= _l) { \
+		break;\
+	} \
+	free(_x->arena); \
+	_x->arena = malloc(_l + sizeof(_x->bsz->cur)); \
+	ok_or_die(_x->arena != NULL); \
+	_x->len = _l;\
+	_x->bsz->cur = 0; \
+} while(0)
 
-#define byte_buf_free(x) free(x->buf)
+#define byte_buf_def_n(x, n) \
+	byte_buf_def(x); \
+	byte_buf_wipe_ensure((&x), n)
+	
+
+/* Only free a buffer on the stack */
+#define byte_buf_free_loc(x) free(x.arena)
+
+#define byte_buf_free(x) if (x != NULL) { \
+	free(x->arena); free(x); }
 
 /* simply cast, we expect only utf8 string which are ASCII friendly. */
 #define byte_buf_str(x) (char*)((x)->bsz->buf)
+
+#define byte_buf_len(x) ((x)->bsz->cur)
 
 #define byte_buf_set(x, new_x, new_sz) (x->buf = (uint8_t*)new_x); \
 			            x->sz = new_sz
@@ -93,11 +111,11 @@ struct byte_buf_s
  * the return values are 0 OK, -1 error, errno gives the actual error
  *
  * */
-int read_all(int fd, struct byte_buf_s *buf, uint32_t req_len);
+int read_all(int fd, uint8_t *buf, uint32_t req_len);
 
 
 /* here the buffer is preallocated. */
-int write_all(int fd, const struct byte_buf_s *buf, uint32_t req_len);
+int write_all(int fd, const uint8_t *buf, uint32_t req_len);
 
 
 #endif

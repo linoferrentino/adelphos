@@ -32,6 +32,7 @@ extern "C" {
 
 
 typedef int (*emit_json_char_fn)(void *userptr, int jsonc);
+struct byte_buf_s;
 
 struct json_fsm;
 
@@ -50,6 +51,7 @@ int jfsm_init          (struct json_fsm **jfsm, emit_json_char_fn emit,
 
 /* init the builder with a string output. The emitter is fixed*/
 int jfsm_str_init      (struct json_fsm **jfsm);
+int jfsm_str_init_ob   (struct json_fsm **jfsm, struct byte_buf_s *out);
 
 char *jfsm_json_str(struct json_fsm *jfsm);
 size_t jfsm_str_size(struct json_fsm *jfsm);

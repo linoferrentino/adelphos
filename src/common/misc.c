@@ -13,6 +13,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
+
+#include "misc.h"
 
 
 void dump_payload_dbg(const char *file, int line, const unsigned char *_p, int len)
@@ -38,6 +41,57 @@ void dump_payload_dbg(const char *file, int line, const unsigned char *_p, int l
 		buf[72] = '\0';
 		fprintf(stderr, "%s\n", buf);
 	}
+}
+
+int read_all(int fd, uint8_t *buf, uint32_t req_len)
+{
+	uint32_t read_cur = 0;
+
+	if (req_len == 0) {
+		return 0;
+	}
+
+	while(1) {
+		read_cur = read(fd, buf, req_len);
+		if (read_cur <= 0) {
+			return -1;
+		}
+
+		req_len -= read_cur;
+		if (req_len == 0) {
+			return 0;
+		}
+
+		buf += read_cur;
+	}
+
+	return 0;
+}
+
+
+/* here the buffer is preallocated. */
+int write_all(int fd, const uint8_t *buf, uint32_t req_len)
+{
+	uint32_t write_cur = 0;
+	if (req_len == 0) {
+		return 0;
+	}
+
+	while(1) {
+		write_cur = write(fd, buf, req_len);
+		if (write_cur <= 0) {
+			return -1;
+		}
+
+		req_len -= write_cur;
+		if (req_len == 0) {
+			return 0;
+		}
+
+		buf += write_cur;
+	}
+
+	return 0;
 }
 
 
