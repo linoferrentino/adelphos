@@ -124,7 +124,7 @@ static int _json_api_dispatcher(struct jsmn_val *jval,
 {
 	int res;
 
-	/* Only if trivial ZZZ */
+	alogi("this is the json");
 	jsmn_dump_v(jval);
 
 	jsmn_root(jval);
@@ -187,7 +187,7 @@ int json_api_proc(struct byte_buf_s *in, struct byte_buf_s *out)
 	int res = jsmn_val_alloc_mod(&jval, byte_buf_str(in), 
 			byte_buf_len(in));
 
-	
+	alogi("00000000 res %d", res);
 
 
 	/* I create a handler payload where the handler might give

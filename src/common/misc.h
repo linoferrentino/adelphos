@@ -64,24 +64,34 @@ struct byte_buf_s
 
 #pragma pack(pop)
 
+/* utility macro, do not call it outside */
+#define _byte_buf_init(_x, _l) do { \
+	(_x)->arena = malloc(_l + sizeof((_x)->bsz->cur)); \
+	ok_or_die((_x)->arena != NULL); \
+	(_x)->len = _l + sizeof((_x)->bsz->cur);\
+	(_x)->bsz->cur = 0; \
+} while (0)
+
+
 /* define a byte buffer */
-#define byte_buf_def(x) struct byte_buf_s x; memset(&x,0, sizeof(x))
+#define byte_buf_decl(_x) struct byte_buf_s _x
+
+#define byte_buf_def(_x) \
+	byte_buf_decl((_x)); \
+	_byte_buf_init(&_x, 0)
 
 /* this function does NOT move the memory block, no realloc. */
 #define byte_buf_wipe_ensure(_x, _l) do { \
-	if (_x->len >= _l) { \
+	if ((_x)->len >= _l) { \
 		break;\
 	} \
-	free(_x->arena); \
-	_x->arena = malloc(_l + sizeof(_x->bsz->cur)); \
-	ok_or_die(_x->arena != NULL); \
-	_x->len = _l;\
-	_x->bsz->cur = 0; \
+	free((_x)->arena); \
+	_byte_buf_init(_x, _l); \
 } while(0)
 
 #define byte_buf_def_n(x, n) \
-	byte_buf_def(x); \
-	byte_buf_wipe_ensure((&x), n)
+	byte_buf_decl(x); \
+	_byte_buf_init(&x, n)
 	
 
 /* Only free a buffer on the stack */
@@ -95,8 +105,20 @@ struct byte_buf_s
 
 #define byte_buf_len(x) ((x)->bsz->cur)
 
+/*
 #define byte_buf_set(x, new_x, new_sz) (x->buf = (uint8_t*)new_x); \
 			            x->sz = new_sz
+				    */
+
+#define byte_buf_reset(_x) (_x)->bsz->cur = 0
+
+/* this will preserve the buffer */
+#define byte_buf_grow(_x, _l) do { \
+	(_x)->len = ((_x)->bsz->cur + _l) + (_l / 2) + 30; \
+	(_x)->len -= (_x)->len % 16; \
+	(_x)->arena = realloc((_x)->arena, (_x)->len);\
+	ok_or_die((_x)->arena != NULL); \
+} while (0)
 
 /* 
  *

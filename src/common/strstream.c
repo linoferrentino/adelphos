@@ -36,16 +36,19 @@ struct strstream_s {
 void strstream_reset(strstream_s *strs)
 {
         /* Just reset the counter. No deallocation is made */
-        strs->bsz->cur = 0;
+	byte_buf_reset(strs);
 }
 
 static void _strstream_grow(strstream_s *strs, uint32_t amount) 
 {
+	/*
 	strs->len = (strs->bsz->cur + amount) + (amount / 2) + 30;
 	strs->len -= strs->len % 16;
 	alogt("Realloc to %zd", strs->len);
 	strs->arena = (uint8_t*)realloc(strs->arena, strs->len);
 	ok_or_die(strs->arena != NULL);
+	*/
+	byte_buf_grow(strs, amount);
 }
 
 int strstream_emitc(strstream_s *strs, char c)

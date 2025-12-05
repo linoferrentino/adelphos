@@ -17,12 +17,18 @@
 #define _LOG_MODULE "jsmn_user"
 #include "alog.h"
 #include "units.h"
+#include "misc.h"
 
 LOG_MODULE_IMP;
 
 
 int jsmn_val_alloc_mod(struct jsmn_val *jval, char *js, size_t len)
 {
+
+
+	alogi("Will parse");
+	dump_payload((unsigned char*)js, len);
+
 
 	jsmn_parser parser;
 	int expected_tokens = len / 5 + 2;

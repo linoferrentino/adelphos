@@ -63,28 +63,68 @@ int handle_client(int cfd)
 
 	/* I start with at least 4 bytes */
 	byte_buf_def_n(in_s, sizeof(uint32_t));
+
+
+	/* 
+	 * the first byte tells me the mode of the channel
+	 *
+	 * The mode will be kept as is until the connection stops
+	 *
+	 *
+	 * */
+
 	
 
 redo_read:
 
 	/* the storage for lreq is already acquired */
 	rd = read_all(cfd, (uint8_t*)&in_s.bsz->cur, sizeof(uint32_t));
-	if (rd == 0) {
-		alogi("EOF client.");
+	if (rd != 0) {
+		alogi("EOF client or error.");
 		goto close_client_and_do_another;
 	}
 	ok_or_goto_fail(rd == 0);
 
+	/* special case of text interface, if the first byte is t
+	 * then the protocol is text and data will be requested until
+	 * a new line  */
+
+
 	lreq = in_s.bsz->cur;
 	alogi("I will read %d chars", lreq);
 
+	alogi("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb before");
+	dump_payload(in_s.arena, in_s.len);
+
 	byte_buf_wipe_ensure((&in_s), lreq);
 
-	rd = read_all(cfd, &in_s.bsz->buf[0], in_s.bsz->cur);
+	alogi("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb after");
+	dump_payload(in_s.arena, in_s.len);
+
+	alogi("I will read %d chars", in_s.bsz->cur);
+
+	
+	/*
+	uint8_t test[200];
+	*/
+
+
+	rd = read_all(cfd, &in_s.bsz->buf[0], lreq);
+
+
+	/*rd = read_all(cfd, test, lreq);*/
 	ok_or_goto_fail(rd == 0);
 
+	/* after the read the notch is changed. */
+	in_s.bsz->cur = lreq;
+
+	/*
+	dump_payload(test, lreq);
+	*/
+
 	alogi("this is the request %.*s", lreq, byte_buf_str(&in_s));
-	
+
+	dump_payload(in_s.bsz->buf, lreq);
 
 	rd = json_api_proc(&in_s, &out_s);
 
