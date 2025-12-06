@@ -54,6 +54,11 @@ int read_all(int fd, uint8_t *buf, uint32_t req_len)
 	while(1) {
 		read_cur = read(fd, buf, req_len);
 		if (read_cur <= 0) {
+			/* Only in case of EOF at FIRST byte  I return
+			 * AD_EOF */
+			if (read_cur == 0 && read_cur == 0) {
+				return AD_EOF;
+			}
 			return -1;
 		}
 

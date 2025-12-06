@@ -51,6 +51,8 @@ int jfsm_init          (struct json_fsm **jfsm, emit_json_char_fn emit,
 
 /* init the builder with a string output. The emitter is fixed*/
 int jfsm_str_init      (struct json_fsm **jfsm);
+/* You can pass a byte buffer to use, in this case you do not call 
+ * jfsm_str_free but jfsm_str_free_ob */
 int jfsm_str_init_ob   (struct json_fsm **jfsm, struct byte_buf_s *out);
 
 char *jfsm_json_str(struct json_fsm *jfsm);
@@ -61,6 +63,8 @@ size_t jfsm_str_size(struct json_fsm *jfsm);
 int jfsm_free          (struct json_fsm *jfsm);
 
 int jfsm_str_free(struct json_fsm *jfsm, int free_string);
+
+void jfsm_str_free_ob(struct json_fsm *jfsm);
 
 int jfsm_object_push   (struct json_fsm *jfsm);
 int jfsm_object_pop    (struct json_fsm *jfsm);

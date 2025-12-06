@@ -178,10 +178,7 @@ int jfsm_str_init (struct json_fsm **jfsm)
 
 int jfsm_str_init_ob (struct json_fsm **jfsm, struct byte_buf_s *out)
 {
-	/*strstream_s *strs;
-	strstream_init(&strs);*/
-
-	/**/
+	
 	strstream_reset(out);
 
 	int r = jfsm_init(jfsm, emit_str, out, 0);
@@ -205,6 +202,11 @@ int jfsm_init(struct json_fsm **jfsm_pp, emit_json_char_fn emit, void *userptr, 
   *jfsm_pp = jfsm;
   return 0;
 
+}
+
+void jfsm_str_free_ob(struct json_fsm *jfsm)
+{
+	free(jfsm);
 }
 
 int jfsm_str_free(struct json_fsm *jfsm, int free_string)

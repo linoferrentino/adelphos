@@ -66,8 +66,10 @@ struct byte_buf_s
 
 /* utility macro, do not call it outside */
 #define _byte_buf_init(_x, _l) do { \
-	(_x)->arena = malloc(_l + sizeof((_x)->bsz->cur)); \
+	uint32_t tot_size = _l + sizeof((_x)->bsz->cur); \
+	(_x)->arena = malloc(tot_size); \
 	ok_or_die((_x)->arena != NULL); \
+	memset((_x)->arena, '@', tot_size); \
 	(_x)->len = _l + sizeof((_x)->bsz->cur);\
 	(_x)->bsz->cur = 0; \
 } while (0)
@@ -75,6 +77,10 @@ struct byte_buf_s
 
 /* define a byte buffer */
 #define byte_buf_decl(_x) struct byte_buf_s _x
+
+#define byte_buf_avail(_x) ( \
+	(_x)->len - sizeof((_x)->bsz->cur) - (_x)->bsz->cur	\
+		)
 
 #define byte_buf_def(_x) \
 	byte_buf_decl((_x)); \
@@ -130,9 +136,13 @@ struct byte_buf_s
  *
  * req_len is the required len
  *
- * the return values are 0 OK, -1 error, errno gives the actual error
+ * the return values are 0 OK, -1 error, AD_EOF in case of EOF at
+ * first byte. 
+ *
+ * This call expects the file descriptor to be blocking.
  *
  * */
+#define AD_EOF (-2)
 int read_all(int fd, uint8_t *buf, uint32_t req_len);
 
 

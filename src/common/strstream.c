@@ -53,7 +53,8 @@ static void _strstream_grow(strstream_s *strs, uint32_t amount)
 
 int strstream_emitc(strstream_s *strs, char c)
 {
-        if (strs->bsz->cur == strs->len){
+
+        if (byte_buf_avail(strs) == 0) {
 		/* We grow some characters at a time */
 		_strstream_grow(strs, 8);
 	}

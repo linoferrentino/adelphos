@@ -187,8 +187,6 @@ int json_api_proc(struct byte_buf_s *in, struct byte_buf_s *out)
 	int res = jsmn_val_alloc_mod(&jval, byte_buf_str(in), 
 			byte_buf_len(in));
 
-	alogi("00000000 res %d", res);
-
 
 	/* I create a handler payload where the handler might give
 	 * its output */
@@ -257,8 +255,7 @@ end:
 
 	/* I do not need the value any more. */
 	jsmn_val_free(&jval);
-	/* but I do need the string!*/
-	jfsm_str_free(jfsm, 0);
+	jfsm_str_free_ob(jfsm);
 
 	return res;
 }

@@ -80,10 +80,14 @@ redo_read:
 	/* the storage for lreq is already acquired */
 	rd = read_all(cfd, (uint8_t*)&in_s.bsz->cur, sizeof(uint32_t));
 	if (rd != 0) {
-		alogi("EOF client or error.");
+		if (rd == AD_EOF) {
+			alogi("Normal end of client");
+			rd = 0;
+		} else {
+			alogw("Error %d on client.", errno);
+		}
 		goto close_client_and_do_another;
 	}
-	ok_or_goto_fail(rd == 0);
 
 	/* special case of text interface, if the first byte is t
 	 * then the protocol is text and data will be requested until
