@@ -90,7 +90,7 @@ typedef uint64_t cur_t;
 /* not all databases support a transient connection */
 int ad_init(int is_transient, const char* conn_string);
 
-int ad_close(void);
+void ad_close(void);
 
 
 /* the generic handle for an adelphos object. */

@@ -15,15 +15,21 @@
 #include <sqlite3.h>
 #include <alloca.h>
 #include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include "adelphos.h"
 #include "trust.h"
 #include "acrypt.h"
+#include "misc.h"
 
 /* just a simple file */
 #define ADELPHOS_DB "ad_db.sqlite3"
 /* this is the memory db, used to */
 #define TRANSIENT_DB ":memory:"
+
+/* this should be absolute, based on the installation directory . */
+#define SCHEMA_FILE "scripts/sql/sqlite3/init/ad_schema.sql"
 
 #define _LOG_MODULE "ad"
 #define MODULE_LEV ML_TRIVIAL
@@ -43,67 +49,109 @@ static struct {
 	.init = 0
 };
 
-static void _create_schema()
+static int _create_schema()
 {
 	alogi("create the schema");
+
+	struct stat statbuf;
+	int res = lstat(SCHEMA_FILE, &statbuf);
+	ok_or_goto_fail(res == 0);
+
+	/* Ok, now I can read the file */
+	alogi("Schema file %jd", statbuf.st_size);
+
+
+	res = -1;
+	uint8_t *buffer = malloc(statbuf.st_size + 1);
+	ok_or_goto_fail(buffer != NULL);
+
+	int fd = open(SCHEMA_FILE, O_RDONLY);
+	ok_or_goto_fail(fd >= 0);
+
+	res = read_all(fd, buffer, statbuf.st_size);
+	ok_or_goto_fail(res == 0);
+
+	/* add the null at the end */
+	buffer[statbuf.st_size] = '\0';
+
+	/* Now I can execute the command */
+	char *errmsg;
+	res = sqlite3_exec(priv.db, (char*)buffer, NULL, NULL, &errmsg);
+
+	free(buffer);
+
+	if (res != SQLITE_OK) {
+		alogw("Error %s creating schema", errmsg);
+		sqlite3_free(errmsg);
+		/* No point in continuing. */
+		exit(1);
+	}
+	alogi("schema created");
+
+	res = close(fd);
+
+fail:
+	return res;
 }
 
 
 int ad_init(int is_transient, const char *conn_string)
 {
 	int res = AD_OK;
-	int rc;
 	if (__sync_val_compare_and_swap(&priv.init, 0, 1) != 0) {
 		goto end;
 	}
 
 	int create_schema = 0;
 
+	const char * filename_db;
+
 	if (is_transient) {
 		create_schema = 1;
+		filename_db = TRANSIENT_DB;
 	} else {
 		/* is there the file */
 		struct stat statbuf;
+		filename_db = ADELPHOS_DB;
 		res = lstat(ADELPHOS_DB, &statbuf);
+		ok_or_goto_fail( 
+				(res == 0) || (errno == ENOENT)
+				);
 
-		if (res == -1 && errno == ENOENT){
+		if (res < 0){
 			alogi("I will create the schema");
 			create_schema = 1;
 		} else {
 			alogi("database existent, I won't create it");
 		}
+		
 
 	}
 
 	/* let's search if this is a temporary db, */
-
-	res = AD_ERR;
-	
-	rc = sqlite3_open(ADELPHOS_DB, &priv.db);
-	ok_or_goto_fail(rc == 0);
+	res  = sqlite3_open(filename_db, &priv.db);
+	ok_or_goto_fail(res == SQLITE_OK);
 
 	if (create_schema) {
-		_create_schema();
-	}
+		res = _create_schema();
+	} 
 
-	res = AD_OK;
 	alogi("Adelphos library initialized");
 
 fail:
 end:
-	return res;
+	return res == 0 ? 0 : AD_ERR;
 }
 
-int ad_close(void)
+void ad_close(void)
 {
-	int res = AD_OK;
 	if (__sync_val_compare_and_swap(&priv.init, 1, 0) != 1) {
 		goto end;
 	}
 
 	sqlite3_close(priv.db);
 end:
-	return res;
+	;
 }
 
 ad_res add_user(struct add_user_in_s *adu)

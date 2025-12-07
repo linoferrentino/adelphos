@@ -21,6 +21,7 @@
 #include "jsmn_user.h"
 #include "jfsm.h"
 #include "hash.h"
+#include "adelphos.h"
 
 #include "json_api.h"
 #define _LOG_MODULE "json_api"
@@ -263,13 +264,18 @@ end:
 int json_api_init(void)
 {
 
+	/* Initialize the database in memory, just for now */
+	int res = ad_init(1, NULL);
+	ok_or_goto_fail(res == AD_OK);
+
 	s_hash_create(&priv.cmds, 10);
 	
 	/* I add here all the commands that the json api understands. */
 	_add_handler("add_user", _add_user_handler);
 		
 	alogi("json api initialized");
-	return 0;
+fail:
+	return res;
 }
 
 void json_api_free(void)
@@ -278,6 +284,8 @@ void json_api_free(void)
 
 	s_hash_clear(priv.cmds, _free_handler);
 	s_hash_destroy(priv.cmds);
+
+	ad_close();
 
 	alogi("json api removed.");
 
