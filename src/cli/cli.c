@@ -21,6 +21,7 @@
 #include "cli.h"
 
 #include "adelphos.h"
+#include "misc.h"
 
 
 #define _LOG_MODULE "cli"
@@ -30,12 +31,20 @@ LOG_MODULE_IMP;
 
 
 struct cli_output_s;
+struct jsmn_val;
 
 
 
 /*  this is the low level interface */
-typedef int8_t (*cli_cmd_fn_t)(struct adelphos_param_s *ap);
+/*typedef int8_t (*cli_cmd_fn_t)(struct adelphos_param_s *ap);*/
 
+
+/* the function will take the payload, just as the entry point to
+ * the library.*/
+#if 0
+typedef int8_t (*cli_cmd_fn_t)(struct jsmn_val *payload);
+
+  
 /* this is the struct to execute a command */
 struct cmd_exec {
 
@@ -47,10 +56,12 @@ struct cmd_exec {
 
 	/* this is the number of params that the function wants,
 	 * they are positional, and there are no default.*/
-	uint8_t n_pars;
+	/*uint8_t n_pars;*/
 
 };
+#endif
 
+#if 0
 static int8_t _cli_create_adelphos_cmd(struct adelphos_param_s *ap);
 static int8_t _cli_create_l0g_cmd(struct adelphos_param_s *ap);
 
@@ -61,6 +72,7 @@ static struct cmd_exec priv_cmds[] = {
 	{ NULL, NULL }
 
 };
+#endif
 
 static struct {
 
@@ -68,13 +80,23 @@ static struct {
 
 	pthread_mutex_t mux;
 
-	struct cmd_exec *cmd_defs;
+	/*struct cmd_exec *cmd_defs;*/
 
 } priv = {
 	.init = 0,
-	.cmd_defs = &priv_cmds[0]
+	/*cmd_defs = &priv_cmds[0]*/
 };
 
+int cli_cmd_exec(char *cmd, size_t sz)
+{
+	alogi("executing command [%.*s]", (int)sz, cmd);
+	dump_payload((uint8_t*)cmd, sz);
+	return 0;
+}
+
+
+
+#if 0
 /* executes a command, we will tokenize the command. */
 int cli_cmd_exec(char *cmd)
 {
@@ -84,7 +106,9 @@ int cli_cmd_exec(char *cmd)
 	struct vecptr *cmdline;
 	vptr_init(&cmdline);
 	*/
+	/*
 	struct adelphos_param_s ap;
+	*/
 
 	char **tk_it = &ap.gp.params[0];
 
@@ -153,15 +177,25 @@ end:
 	/*pthread_mutex_unlock(&priv.mux);*/
 	return res;
 }
+#endif
 
 void cli_init(void)
 {
 	/*pthread_mutex_init(&priv.mux, NULL);*/
+	if (priv.init != 0) {
+		return;
+	}
+
+	priv.init = 1;
 }
 
 void cli_end(void)
 {
 	/*pthread_mutex_destroy(&priv.mux);*/
+	if (priv.init == 0) {
+		return;
+	}
+	priv.init = 0;
 }
 
 /*
@@ -171,6 +205,7 @@ void cli_end(void)
  * and the GUI function.
  *
  */
+#if 0
 static int8_t _cli_create_l0g_cmd(struct adelphos_param_s *ap)
 {
 	/* the parameters are 
@@ -193,6 +228,7 @@ static int8_t _cli_create_l0g_cmd(struct adelphos_param_s *ap)
 	return res;
 }
 
+
 static int8_t _cli_create_adelphos_cmd(struct adelphos_param_s *ap)
 {
 	alogt("I will create an adelphos, here.");
@@ -202,3 +238,4 @@ static int8_t _cli_create_adelphos_cmd(struct adelphos_param_s *ap)
 
 	return 0;
 }
+#endif

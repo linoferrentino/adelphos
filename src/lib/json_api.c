@@ -61,9 +61,12 @@ static int _add_user_handler(struct jsmn_val *json_in,
 {
 	alogt("_add_user_handler called");
 
+	/* OK, now I have to pass the message to the
+	 * library, I need to convert to the authorization middleware..
+	 * */
+
 	jfsm_member(json_out, "hello_add");
 	jfsm_value_string(json_out, "world! Città € euro!");
-	/*jfsm_value_string(json_out, "world!");*/
 
 	return 0;
 }

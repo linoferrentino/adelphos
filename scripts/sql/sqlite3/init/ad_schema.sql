@@ -1,12 +1,6 @@
 -- Adelphos database, schema screation.
 -- Creates an empty schema.
 
--- this is the data database
--- there is then the session/gui database which holds
--- temporary data, but it is not here.
---.open ad_db.sqlite3
-
-
 -- the configuration table.
 create table adelphos_conf(
 	key text,
@@ -15,8 +9,7 @@ create table adelphos_conf(
 ) without rowid;
 
 -- increment this for every change
-insert into adelphos_conf(key, value) values ("schema_version", "3");
-
+insert into adelphos_conf(key, value) values ("schema_version", "0.11");
 
 
 create table currency (
@@ -53,11 +46,11 @@ create table ln_group (
 	group_id integer primary key,
 
 	-- this is the parent group for myself.
-	parent_group_id integer,
+	parent_group_id integer
 
-	lev integer,
+	-- lev integer,
 
-	name text
+	-- name text
 
 	-- there is not a joining password, the ln_group is
 	-- automatically instantiated.
@@ -125,56 +118,115 @@ create table adelphos (
 	phone text,
 
 	-- every adelphos has its own public key.
-	public_key blob,
 
-	-- the private key is NOT stored, but only visualized one time
 
-	-- her password encrypted. 
+	-- their password encrypted. 
 	ad_pass text,
 
 	-- 0 adult, 1 minor
 	is_minor integer,
 
-	-- an adelphos is part of a group of level zero, his/her family
+	-- an adelphos is part of a group of level zero, their family
 	l0_id integer,
 
-	-- every adelphos has a counter for his/her cheques
-	cheque_next_id integer,
-
+	-- every adelphos has a counter for their cheques
+	-- cheque_next_id integer,
        
-	foreign key (l0_id) references l0_group (group_id),
+	foreign key (l0_id) references l0_group (group_id)
+		on delete restrict,
 
 	-- the email is unique in the system.
 	unique (email) on conflict abort
 );
 
--- only the l1 members are stored in a table, as only l1
--- groups are totally connected.
+create table position (
 
--- No! All groups are totally connected, we do not have
--- the members here.
-/*
-create table l1_members (
+	position_id integer primary key,
 
-	l1_group_id integer      not null,
-	l0_group_id integer      not null,
-	is_administrator integer not null,
+	position_text text,
 
-	primary key (l0_group_id, l1_group_id),
-	foreign key (l0_group_id) references l0_group (group_id),
-	foreign key (l1_group_id) references l1_group (group_id)
+	-- a position belongs to a group
+	group_owner_id integer,
+
+	service_fee integer
+
+);
+
+
+create table trust_travel (
+
+	pos_1 integer not null,
+	pos_2 integer not null,
+
+	-- the person who takes the person
+	ad_carrier_id integer not null,
+
+	-- how many people am I willing to take with me?
+	n_people integer,
+
+	-- schedule? Automatic? Manual?
+	primary key (pos_1, pos_2, ad_carrier_id)
+
 
 ) without rowid;
-*/
 
 
+-- somebody is willing to carry an object from one place to another
+create table trust_carrier (
 
--- a trust_channel is between two users of different l1 groups 
--- the groups can then be part of the same l2 group, or the same l3 group or...
-create table trust_channel (
+	-- from a position to another.
+	pos_1 integer not null,
+	pos_2 integer not null,
 
+	-- the person who takes the object.
+	ad_carrier_id integer not null,
+
+	maximum_weigth real,
+	maximum_dimension real,
+
+	cost integer,
+
+	-- schedule? Automatic? Manual?
+
+	primary key (pos_1, pos_2, ad_carrier_id)
+
+) without rowid;
+
+
+create table announce (
+
+	announce_id integer primary key,
+
+	-- the person who holds the item
+	ad_id integer,
+
+	-- where do I want the item to be collected.
+	pos_id integer,
+
+	text_announce text,
+
+	cost_item integer
+
+);
+
+
+-- a trust_channel is between two adelphoi or between two groups
+-- if the trust line is between two users (l0) the l1 groups in
+-- which they belong gets connected.
+
+create table trust_line (
+
+
+	-- If I have the role of admin my trust line is
+	-- between two groups, but this won't survive if
+	-- I change the admin.
 	ad_1 integer not null,
 	ad_2 integer not null,
+
+	-- the trust line is fractal, it has an integer.
+	lev integer,
+
+	-- the trust line can be between two groups.
 
 	-- the channel holds two groups together of the same level,
 	-- at least of level 2
@@ -202,10 +254,6 @@ create table trust_channel (
 ) without rowid;
 
 
--- now I can have a bunch of cheques, which are credits from l1 adelphoi
--- the credits are always in the currency of the sender!
--- the cheques of a person circulate only in l1 of that person
--- so the cheque does not propagate in a large network.
 create table cheque (
 
 	-- a monotonically increasing for the cheque in the source object

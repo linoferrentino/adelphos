@@ -109,10 +109,12 @@ typedef void* ad_h;
 /* should be enough :) */
 /* note that 30 is not the length of the struct, the params
  * might be arbitrarly long. */
+/*
 #define MAX_PARAMS 30
 struct generic_pars {
 	char *params[MAX_PARAMS];
 };
+*/
 
 
 struct create_l0_group_pars {	 
@@ -196,6 +198,7 @@ struct create_adelphos_pars {
 #define AD_CREATE_ADELPHOS_SIZE ((sizeof(struct create_adelphos_pars)) / \
 		(sizeof(char*)))
 
+#if 0
 struct adelphos_param_s {
 
 	/* 
@@ -217,8 +220,10 @@ struct adelphos_param_s {
 	};
 
 };
+#endif
 
 
+#if 0
 
 /* API relative to an l0_group */
 ad_res ad_l0_group_create(struct adelphos_param_s *ap);
@@ -228,6 +233,7 @@ ad_res ad_l0_group_create(struct adelphos_param_s *ap);
 /* creates an adelphos based on a l0_group, adelphos names inside
  * a group should be unique*/
 ad_res ad_adelphos_create(struct adelphos_param_s *ap);
+#endif
 
 /*
 int ad_adelphos_delete(ad_h adelphos);

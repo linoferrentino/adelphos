@@ -13,6 +13,7 @@
 #ifndef _cli_h_
 #define _cli_h_
 
+#include <stddef.h>
 
 
 /* 
@@ -31,8 +32,10 @@ void cli_init(void);
 /* call this at the end to release the mutex. */
 void cli_end(void);
 
+#if 0
 #define CMD_EXEC_UNDEFINED_CMD 1
 #define CMD_NOT_ENOUGH_PARS    2
+#endif
 
 /* 
  * this function is thread safe. 
@@ -45,7 +48,7 @@ void cli_end(void);
  * cmd could be modified, but it is not freed
  *
  * */
-int cli_cmd_exec(char *cmd);
+int cli_cmd_exec(char *cmd, size_t sz);
 
 
 #endif

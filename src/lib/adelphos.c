@@ -159,6 +159,7 @@ ad_res add_user(struct add_user_in_s *adu)
 	return 0;
 }
 
+#if 0
 ad_res ad_l0_group_create(struct adelphos_param_s *ap)
 {
 	/* I have to insert the data here .*/
@@ -205,3 +206,4 @@ ad_res ad_l0_group_create(struct adelphos_param_s *ap)
 fail:
 	return res;
 }
+#endif
