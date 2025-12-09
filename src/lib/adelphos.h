@@ -64,6 +64,57 @@ ad_res adob_gc(ad_hndl_t a_handle);
 ad_res 
 */
 
+struct ad_args_provider_s;
+
+/* an interface that gets arguments as list of objects or other elements */
+struct ad_list_args_provider_s;
+
+/* 
+ *
+ * One function will take a key and gets a value 
+ *
+ * */
+typedef const char* (*kv_get_f_t)(void *param, const char *key);
+
+/* Another function can get a key and a nested object, that
+ * can be another kv provider or an array, I have to know
+ * the format of the parsed object   */
+typedef struct ad_args_provider_s (*kv_get_sub_kv)(void *param,
+		const char *key);
+
+struct ad_args_provider_s
+{
+
+	kv_get_f_t kv_get;
+
+};
+
+
+/* 
+ *
+ * structure that holds all the possible parameters for an
+ * adelphos command.
+ *
+ *
+ * In this way I can pass parameters from different modalities,
+ *
+ * text files, binary data, json entities.
+ *
+ * */
+struct adelphos_in_s
+{
+	struct ad_args_provider_s *a_prov;
+
+	/* an opaque pointer which implementors can use to get
+	 * the key value parameters. */
+	void *param;
+};
+
+
+
+/* This to test the args provider */
+ad_res add_user_marshall(struct adelphos_in_s *in);
+
 
 
 
@@ -157,6 +208,26 @@ struct adelphos_out_s
 		struct add_user_out_s ausr;
 	};
 };
+
+/* this is the start of the C interface. */
+
+/*
+ *
+ * I could have a Python interface like this
+ *
+ *
+ * import adelphos
+ *
+ * ad = adelphos.connection("user", "pass")
+ *
+ * ad.create_trust_line("to user bob", "equity", kv...)
+ *
+ * # the command are fixed, some parameters are fixed, but some
+ * others are not, and are passed with a key value pair
+ *
+ *
+ *
+ */
 
 
 /* The user added is not yet confirmed. */

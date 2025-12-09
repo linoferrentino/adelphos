@@ -27,7 +27,7 @@
 #include "cli.h"
 */
 #include "cli.h"
-#include "cli_api.h"
+/*#include "cli_api.h"*/
 
 #define _LOG_MODULE "main"
 #define MODULE_LEV ML_TRIVIAL
@@ -61,6 +61,8 @@ int main(int argc, const char *argv[])
 	size_t tot_size = 0;
 	/* chained size, where to write next */
 	size_t chsz = 0;
+
+	/* I convert it to a byte buffer */
 	
 
 	alogi("Enter command: .quit exit");

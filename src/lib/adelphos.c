@@ -159,6 +159,23 @@ ad_res add_user(struct add_user_in_s *adu)
 	return 0;
 }
 
+ad_res add_user_marshall(struct adelphos_in_s *in)
+{
+
+	ad_res res = AD_ERR;
+	/* I take the user name */
+	const char *user_name = (in->a_prov->kv_get)(in->param, "user");
+	ok_or_goto_fail(user_name != NULL);
+	alogt("I will add the user %s", user_name);
+
+
+	res = AD_OK;
+fail:
+	return res;
+}
+
+
+
 #if 0
 ad_res ad_l0_group_create(struct adelphos_param_s *ap)
 {

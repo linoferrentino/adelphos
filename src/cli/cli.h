@@ -48,6 +48,7 @@ void cli_end(void);
  * cmd could be modified, but it is not freed
  *
  * */
+/*struct byte_buf_s;*/
 int cli_cmd_exec(char *cmd, size_t sz);
 
 

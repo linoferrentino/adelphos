@@ -21,6 +21,7 @@
 #include "cli.h"
 
 #include "adelphos.h"
+/*#include "json_api.h"*/
 #include "misc.h"
 
 
@@ -82,16 +83,77 @@ static struct {
 
 	/*struct cmd_exec *cmd_defs;*/
 
+	/* 
+	 *
+	 * I have here the session identifier,
+	 *
+	 * until then every request fails, as I do not
+	 * have the token.
+	 *
+	 * */
+
+
 } priv = {
 	.init = 0,
 	/*cmd_defs = &priv_cmds[0]*/
 };
 
+
+static const char* _cli_kv_arg(void *param, const char *key);
+
+static struct ad_args_provider_s _my_prov = {
+	.kv_get = _cli_kv_arg
+};
+
+static const char* _cli_kv_arg(void *param, const char *key)
+{
+	alogt("Requested key %s from pointer %p", key, param);
+
+	return "lino";
+}
+
+
+/* this struct holds the marshalled data which is used to parse
+ * the linear text given by the cli.*/
+struct marshalled_data_s
+{
+	/* I have the dictionary, string -> id */
+
+	/* a session identifier */
+
+	/* then a list of verbs  */
+
+	/* a list of flags flagged true */
+
+	/* a list of flags flagged false */
+
+};
+
+
+
 int cli_cmd_exec(char *cmd, size_t sz)
 {
 	alogi("executing command [%.*s]", (int)sz, cmd);
 	dump_payload((uint8_t*)cmd, sz);
-	return 0;
+
+
+	/* I have to transform this in a json value */
+
+	/* OK, suppose now that the command is a add_user command.*/
+
+	/* how will I get it? */
+
+	/* the key is to transform a linear view of the text
+	 * in a hierarchical one */
+
+	struct adelphos_in_s in;
+	in.a_prov = &_my_prov;
+	in.param = NULL;
+
+	ad_res res = add_user_marshall(&in);
+
+
+	return res == AD_OK ? 0 : -1;
 }
 
 
@@ -186,6 +248,9 @@ void cli_init(void)
 		return;
 	}
 
+	/*json_api_init();*/
+	ad_init(1, NULL);
+
 	priv.init = 1;
 }
 
@@ -195,6 +260,10 @@ void cli_end(void)
 	if (priv.init == 0) {
 		return;
 	}
+
+	/*json_api_free();*/
+	ad_close();
+
 	priv.init = 0;
 }
 
