@@ -76,6 +76,12 @@ struct ad_list_args_provider_s;
  * */
 typedef const char* (*kv_get_f_t)(void *param, const char *key);
 
+/*
+ *
+ * The type of the function which gets the command.
+ * */
+typedef const char* (*get_cmd_f_t)(void *param);
+
 /* Another function can get a key and a nested object, that
  * can be another kv provider or an array, I have to know
  * the format of the parsed object   */
@@ -86,6 +92,8 @@ struct ad_args_provider_s
 {
 
 	kv_get_f_t kv_get;
+	get_cmd_f_t get_cmd_f;
+
 
 };
 
@@ -116,6 +124,8 @@ struct adelphos_in_s
 ad_res add_user_marshall(struct adelphos_in_s *in);
 
 
+/* this is the generic function to call adelphos from a marshalled data */
+ad_res ad_exec_marshall(struct adelphos_in_s *in);
 
 
 /* 

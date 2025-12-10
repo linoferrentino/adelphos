@@ -100,9 +100,11 @@ static struct {
 
 
 static const char* _cli_kv_arg(void *param, const char *key);
+static const char* _cli_get_cmd(void *param);
 
 static struct ad_args_provider_s _my_prov = {
-	.kv_get = _cli_kv_arg
+	.kv_get = _cli_kv_arg,
+	.get_cmd_f = _cli_get_cmd
 };
 
 static const char* _cli_kv_arg(void *param, const char *key)
@@ -113,11 +115,22 @@ static const char* _cli_kv_arg(void *param, const char *key)
 }
 
 
+/* gets the command */
+const char* _cli_get_cmd(void *param)
+{
+	alogt("Requested the command");
+	return "add_user";
+}
+
+
 /* this struct holds the marshalled data which is used to parse
  * the linear text given by the cli.*/
 struct marshalled_data_s
 {
 	/* I have the dictionary, string -> id */
+
+	/* this is the command */
+	const char *cmd;
 
 	/* a session identifier */
 
@@ -130,11 +143,48 @@ struct marshalled_data_s
 };
 
 
+/* this function will modify the string, so be careful */
+static int _create_marshalled_data(char *cmd, size_t sz)
+{
+
+	char *str1;
+	char *saveptr1;
+	char *token;
+	int j;
+
+	for (j = 1, str1 = cmd; ; j++, str1 = NULL) {
+		token = strtok_r(str1, " \t\n\r", &saveptr1);
+		if (token == NULL)
+			break;
+
+		alogt("token %d -> %s", j, token);
+
+		/*
+		for (str2 = token; ; str2 = NULL) {
+			subtoken = strtok_r(str2, argv[3], &saveptr2);
+			if (subtoken == NULL)
+				break;
+			printf("\t --> %s\n", subtoken);
+		}
+		*/
+	}
+	
+
+
+
+	return 0;
+}
+
+
 
 int cli_cmd_exec(char *cmd, size_t sz)
 {
 	alogi("executing command [%.*s]", (int)sz, cmd);
 	dump_payload((uint8_t*)cmd, sz);
+
+
+	ad_res res = _create_marshalled_data(cmd, sz);
+	ok_or_goto_fail(res == 0);
 
 
 	/* I have to transform this in a json value */
@@ -150,9 +200,10 @@ int cli_cmd_exec(char *cmd, size_t sz)
 	in.a_prov = &_my_prov;
 	in.param = NULL;
 
-	ad_res res = add_user_marshall(&in);
+	res = ad_exec_marshall(&in);
 
 
+fail:
 	return res == AD_OK ? 0 : -1;
 }
 

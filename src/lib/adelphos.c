@@ -159,6 +159,20 @@ ad_res add_user(struct add_user_in_s *adu)
 	return 0;
 }
 
+ad_res ad_exec_marshall(struct adelphos_in_s *in)
+{
+	ad_res res = AD_ERR;
+	const char *cmd = (in->a_prov->get_cmd_f)(in->param);
+
+	alogt("I will marshall the command %s", cmd);
+
+
+	res = AD_OK;
+	return res;
+
+
+}
+
 ad_res add_user_marshall(struct adelphos_in_s *in)
 {
 

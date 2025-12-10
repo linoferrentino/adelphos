@@ -149,10 +149,11 @@ int main(int argc, const char *argv[])
 					tot_size, chsz,
 					total_command[chsz]);
 
-			ok_or_die(total_command[chsz] == '@');
+			char *chained = &total_command[chsz];
+			ok_or_die(*chained == '@');
 
 
-			memcpy(total_command + chsz, cmd, cur_size);
+			memcpy(chained, cmd, cur_size);
 			free(cmd);
 
 			/*dump_payload((uint8_t*)total_command, tot_size);*/
@@ -176,7 +177,8 @@ int main(int argc, const char *argv[])
 		
 
 		total_command = cmd;
-		tot_size = cur_size;
+		/* we have the NULL */
+		tot_size = cur_size + 1;
 
 
 exec_command:
